@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="javafx.WordsFXController">
+	<top>
+		<HBox>
+			<TextField fx:id="wordsText" promptText="&lt;enter words&gt;"/>
+			<Button fx:id="processButton" text="Process" onAction="#handleProcessWords"/>
+		</HBox>
+	</top>
+	<center>
+		<GridPane hgap="20">
+			<Label text="Word count:" 		GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+	        <Label fx:id="wordCountText" 	GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+		</GridPane>
+	</center>
+	<left>
+		<VBox>
+			<ListView fx:id="wordsList"/>
+			<Button text="Use from list" onAction="#handleUseFromList"/>
+		</VBox>
+	</left>
+</BorderPane>

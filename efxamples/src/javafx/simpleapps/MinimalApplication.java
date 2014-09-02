@@ -1,4 +1,4 @@
-package javafx;
+package javafx.simpleapps;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

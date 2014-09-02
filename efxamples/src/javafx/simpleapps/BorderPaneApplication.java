@@ -1,4 +1,4 @@
-package javafx;
+package javafx.simpleapps;
 
 import java.util.List;
 

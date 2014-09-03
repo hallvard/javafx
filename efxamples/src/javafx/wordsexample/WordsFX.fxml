@@ -20,7 +20,7 @@
 	<center>
 		<GridPane hgap="20">
 			<Label text="Word count:" 		GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-	        <Label fx:id="wordCountText" 	GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+	        <Label fx:id="wordCountText" text="0"	GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 		</GridPane>
 	</center>
 	<left>

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 
 <HBox xmlns:fx="http://javafx.com/fxml"
-	fx:controller="javafx.fxmlexamples.Example5Controller">
+	fx:controller="javafx.fxmlexamples.Example4Controller">
 	<TextField fx:id="textField" text="Type something here!"/>
 	<Button text="Click me!" onAction="#handleUpcaseAction"/>
 </HBox>

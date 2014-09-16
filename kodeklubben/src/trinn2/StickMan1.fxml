@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+
+<Pane xmlns:fx="http://javafx.com/fxml"
+	 minWidth="400" minHeight="600">
+	<Group layoutY="50">
+		<Circle layoutX="100" layoutY="20" radius="20" stroke="black" fill="white"/>
+		<Circle layoutX="112" layoutY="20" radius="2" stroke="black" fill="blue"/>
+		<Line layoutX="120" layoutY="20" startX="0" startY="-4" endX="3" endY="0" stroke="black"/>
+		<Line layoutX="120" layoutY="20" startX="3" startY="0" endX="0" endY="1" stroke="black"/>
+		<Line layoutX="100" layoutY="40" endX="0" endY="30" stroke="black"/>
+		<Group layoutX="100" layoutY="50" visible="true">
+			<Line layoutY="0"  endX="-10" endY="10" stroke="black"/>
+			<Line layoutY="0"  endX= "10" endY="10" stroke="black"/>
+			<Line layoutY="20" endX="-10" endY="15" stroke="black"/>
+			<Line layoutY="20" endX= "10" endY="15" stroke="black"/>
+		</Group>
+	</Group>
+</Pane>

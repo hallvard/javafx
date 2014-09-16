@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+	 minWidth="400">
+	<top>
+	    <Button text="Start!" onKeyPressed="#keyPressed"/>
+	</top>
+	<center>
+		<Pane fx:id="stickManPane" minWidth="400" minHeight="600" onKeyPressed="#keyPressed">
+			<Group fx:id="stickMan">
+				<Circle layoutX="100" layoutY="20" radius="20" stroke="black" fill="white"/>
+				<Circle fx:id="leftEye" layoutX="92" layoutY="20" radius="2" stroke="black" fill="blue"/>
+				<Circle fx:id="rightEye" layoutX="110" layoutY="20" radius="2" stroke="black" fill="blue"/>
+				<Line layoutX="100" layoutY="40" endX="0" endY="30" stroke="black"/>
+				<Group fx:id="armsAndLegs1" layoutX="100" layoutY="50" visible="true">
+					<Line layoutY="0"  endX= "-5" endY="10" stroke="black"/>
+					<Line layoutY="0"  endX= "10" endY="10" stroke="black"/>
+					<Line layoutY="20" endX="-10" endY="15" stroke="black"/>
+					<Line layoutY="20" endX=  "5" endY="15" stroke="black"/>
+				</Group>
+				<Group fx:id="armsAndLegs2" layoutX="100" layoutY="50" visible="false">
+					<Line layoutY="0"  endX="-10" endY="10" stroke="black"/>
+					<Line layoutY="0"  endX=  "5" endY="10" stroke="black"/>
+					<Line layoutY="20" endX= "-5" endY="15" stroke="black"/>
+					<Line layoutY="20" endX= "10" endY="15" stroke="black"/>
+				</Group>
+			</Group>
+		</Pane>
+	</center>
+</BorderPane>

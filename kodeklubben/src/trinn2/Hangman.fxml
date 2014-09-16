@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+	 minWidth="400">
+	<top>
+		<VBox>
+		    <Text fx:id="ask" text="Velkommen til Hangman!"/>
+			<HBox>
+			    <TextField fx:id="input" text="" onAction="#checkInput"/>
+			    <Button text="Guess!" onAction="#checkInput"/>
+			</HBox>
+		    <Text fx:id="message" text=""/>
+		</VBox>
+	</top>
+	<center>
+		<Pane minWidth="400" minHeight="600">
+			<Circle fx:id="man1" layoutX="100" layoutY="20" radius="20" stroke="black" fill="white"/>
+			<Line fx:id="man2" layoutX="100" layoutY="40" endX="0" endY="30" stroke="black"/>
+			<Line fx:id="man3" layoutX="100" layoutY="50" endX="-20" endY="10" stroke="black"/>
+			<Line fx:id="man4" layoutX="100" layoutY="50" endX="20" endY="10" stroke="black"/>
+			<Line fx:id="man5" layoutX="100" layoutY="70" endX="-20" endY="10" stroke="black"/>
+			<Line fx:id="man6" layoutX="100" layoutY="70" endX="20" endY="10" stroke="black"/>
+			<Group fx:id="man7">
+				<Line layoutX="90" layoutY="15" startX="0" startY="0" endX="5" endY="5" stroke="black"/>
+				<Line layoutX="90" layoutY="15" startX="0" startY="5" endX="5" endY="0" stroke="black"/>
+				<Line layoutX="105" layoutY="15" startX="0" startY="0" endX="5" endY="5" stroke="black"/>
+				<Line layoutX="105" layoutY="15" startX="0" startY="5" endX="5" endY="0" stroke="black"/>
+			</Group>
+		</Pane>
+	</center>
+</BorderPane>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.Pane?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<Pane xmlns:fx="http://javafx.com/fxml" minWidth="400" minHeight="200">
+    <Circle layoutX="30" layoutY="40" radius="20" stroke="black" fill="red"/>
+    <Rectangle layoutX="40" layoutY="45" width="40" height="30" stroke="yellow" fill="blue"/>
+	<Group>
+		<Text layoutX="70" layoutY="3¬0" text="Hei"/>
+		<ImageView layoutX="120" layoutY="20">
+			<Image url="@kodeklubben_logo.png"/>
+		</ImageView>
+	</Group>
+</Pane>

@@ -35,7 +35,6 @@ public class StickMan3 extends Application {
     
     @FXML
     void initialize() {
-    	stickManPane.requestFocus();
     	update();
     }
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import javafx.scene.layout.BorderPane?>
+<?import trinn2.ImageGrid?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml">
+	 <top>
+	 	<Button text="Restart" onAction="#restartAction"/>
+	 </top>
+	 <center>
+		<ImageGrid fx:id="imageGrid"
+			onKeyPressed="#keyPressed"
+			columnCount="20" rowCount="20"
+			imageUrlFormat="/trinn2/${key}.png"
+			>
+		</ImageGrid>
+	 </center>
+	 <bottom>
+	 	<Label fx:id="statusLabel" text="Status"/>
+	 </bottom>
+</BorderPane>

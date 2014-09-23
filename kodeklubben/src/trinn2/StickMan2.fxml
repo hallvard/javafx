@@ -17,7 +17,7 @@
 	 minWidth="400">
 	<top>
 		<HBox>
-		    <Button text="Walk!" onAction="#walk" onKeyPressed="#keyPressed"/>
+		    <Button text="Walk!" onAction="#walk"/>
 		</HBox>
 	</top>
 	<center>

@@ -12,9 +12,7 @@ public class StickMan1 extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setController(this);
-        Parent root = (Parent) fxmlLoader.load(this.getClass().getResourceAsStream("StickMan1.fxml"));
+        Parent root = FXMLLoader.load(this.getClass().getResource("StickMan1.fxml"));
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

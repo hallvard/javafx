@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml">
+ 	<TextField fx:id="valueField" promptText="Value" editable="false" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="4"/>
+ 
+ 	<Button text="7" onAction="#append" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+ 	<Button text="8" onAction="#append" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+ 	<Button text="9" onAction="#append" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+ 	<Button text="+" onAction="#op" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+
+ 	<Button text="4" onAction="#append" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+ 	<Button text="5" onAction="#append" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+ 	<Button text="6" onAction="#append" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+ 	<Button text="-" onAction="#op" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+ 	
+ 	<Button text="1" onAction="#append" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+ 	<Button text="2" onAction="#append" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+ 	<Button text="3" onAction="#append" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+ 	<Button text="*" onAction="#op" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+ 	
+ 	<Button text="0" onAction="#append" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+ 	<Button text="." onAction="#append" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+ 	<Button text="=" onAction="#compute" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+ 	<Button text="/" onAction="#op" GridPane.columnIndex="3" GridPane.rowIndex="4"/>
+</GridPane>

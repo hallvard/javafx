@@ -3,12 +3,26 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import trinn2.ImageGrid?>
 
-<?import java.util.Map.Entry?>
+<?import java.lang.String?>
+<?import java.util.ArrayList?>
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml">
+	<fx:define>
+		<ArrayList fx:id="imageNames">
+			<String fx:value="Chat"/>
+			<String fx:value="Clock"/>
+			<String fx:value="Friends"/>
+			<String fx:value="Home"/>
+			<String fx:value="Mail"/>
+			<String fx:value="Movie"/>
+			<String fx:value="Music"/>
+			<String fx:value="Phone"/>
+			<String fx:value="Search"/>
+		</ArrayList>
+	</fx:define>
 	 <top>
 	 	<Button text="New game" onAction="#newAction"/>
 	 </top>

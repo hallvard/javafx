@@ -2,7 +2,6 @@ package trinn2;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Labeled;
-import javafx.scene.input.KeyCode;
 
 public class Eat extends ImageGridGame<Integer> {
 
@@ -13,7 +12,8 @@ public class Eat extends ImageGridGame<Integer> {
 	double points = 0;
 	long startTime = 0;
 	
-	@FXML void initialize() {
+	@FXML
+	protected void initialize() {
 		super.initialize();
 		restartAction();
 	}
@@ -52,19 +52,8 @@ public class Eat extends ImageGridGame<Integer> {
 	}
 
 	@Override
-	boolean keyPressed(KeyCode code) {
-		int nextX = playerX, nextY = playerY;
-		if (code == KeyCode.LEFT) {
-			nextX = nextX - 1;
-		} else if (code == KeyCode.RIGHT) {
-			nextX = nextX + 1;
-		} else if (code == KeyCode.UP) {
-			nextY = nextY - 1;
-		} else if (code == KeyCode.DOWN) {
-			nextY = nextY + 1;
-		} else {
-			return false;
-		}
+	protected boolean keyPressed(int dx, int dy) {
+		int nextX = playerX + dx, nextY = playerY + dy;
 		if (isValidXY(nextX, nextY)) {
 			setCell(playerX, playerY, -1);
 			updateCell(playerX, playerY);

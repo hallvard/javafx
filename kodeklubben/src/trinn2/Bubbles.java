@@ -1,5 +1,7 @@
 package trinn2;
 
+import java.util.List;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -8,20 +10,22 @@ public class Bubbles extends ImageGridGame<String> {
 	@FXML
 	Label statusLabel;
 	
-	String[] imageNames = {"Chat", "Clock", "Friends", "Home", "Mail", "Movie", "Music", "Phone", "Search"};
+	@FXML
+	List<String> imageNames;
 
 	int points = 0;
 	
-	@FXML void initialize() {
+	@FXML
+	protected void initialize() {
 		super.initialize();
 		newAction();
 	}
 
 	String getRandomImageName() {
-		int imageNum = randomInt(0, imageNames.length - 1);
-		return imageNames[imageNum];
+		int imageNum = randomInt(0, imageNames.size() - 1);
+		return imageNames.get(imageNum);
 	}
-	
+
 	@FXML
 	void newAction() {
 		fillGrid(null);
@@ -31,7 +35,7 @@ public class Bubbles extends ImageGridGame<String> {
 	}
 
 	@Override
-	void updateGrid() {
+	protected void updateGrid() {
 		super.updateGrid();
 		statusLabel.setText(points + " points. Remaining possibilities: " + countPossibilities());
 	}

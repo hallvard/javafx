@@ -1,7 +1,6 @@
 package trinn2;
 
 import java.net.URL;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -15,7 +14,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,16 +22,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.util.Builder;
-import javafx.util.BuilderFactory;
 
-public abstract class ImageGridGame<T> extends Application implements BuilderFactory {
+public abstract class ImageGridGame<T> extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		URL url = this.getClass().getResource(this.getClass().getSimpleName() + ".fxml");
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setBuilderFactory(this);
         fxmlLoader.setController(this);
         fxmlLoader.setLocation(url);
         Parent root = (Parent) fxmlLoader.load();
@@ -45,7 +40,7 @@ public abstract class ImageGridGame<T> extends Application implements BuilderFac
 	protected ImageGrid<T> imageGrid;
 
 	@FXML
-	void initialize() {
+	protected void initialize() {
 		for (Map.Entry<T, String> entry : imageGrid.getImageKeyMapEntries()) {
 			imageGrid.setImage(entry.getKey(), entry.getValue(), this);
 		}
@@ -98,19 +93,19 @@ public abstract class ImageGridGame<T> extends Application implements BuilderFac
 	public void foreachCell(CellProcedure proc) {
 		foreachCell(proc, 0, 0, imageGrid.getColumnCount(), imageGrid.getRowCount());
 	}
-
-	void updateGrid() {
-		foreachCell((x, y) -> updateCell(x, y));
-	}
-
-	void updateCell(int x, int y) {
+	protected void updateCell(int x, int y) {
 		imageGrid.setImage(getCell(x, y), x, y);
 	}
 
-	void fillCells(T value, int startX, int startY, int width, int height) {
+	protected void updateGrid() {
+		foreachCell((x, y) -> updateCell(x, y));
+	}
+
+
+	protected void fillCells(T value, int startX, int startY, int width, int height) {
 		foreachCell((x, y) -> setCell(x, y, value), startX, startY, width, height);
 	}
-	void fillGrid(T value) {
+	protected void fillGrid(T value) {
 		fillCells(value, 0, 0, imageGrid.getColumnCount(), imageGrid.getRowCount());
 	}
 
@@ -136,13 +131,31 @@ public abstract class ImageGridGame<T> extends Application implements BuilderFac
 	//
 
 	@FXML
-	void keyPressed(KeyEvent keyEvent) {
-		if (keyPressed(keyEvent.getCode())) {
+	protected void keyPressed(KeyEvent keyEvent) {
+		KeyCode code = keyEvent.getCode();
+		boolean consumed = false;
+		consumed = keyPressed(code);
+		if (! consumed) {
+			if (code == KeyCode.LEFT) {
+				consumed = keyPressed(-1,  0);
+			} else if (code == KeyCode.RIGHT) {
+				consumed = keyPressed( 1,  0);
+			} else if (code == KeyCode.UP) {
+				consumed = keyPressed( 0, -1);
+			} else if (code == KeyCode.DOWN) {
+				consumed = keyPressed( 0,  1);
+			}
+		}
+		if (consumed) {
 			keyEvent.consume();
 		}
 	}
 
-	boolean keyPressed(KeyCode code) {
+	protected boolean keyPressed(KeyCode code) {
+		return false;
+	}
+
+	protected boolean keyPressed(int dx, int dy) {
 		return false;
 	}
 
@@ -188,39 +201,19 @@ public abstract class ImageGridGame<T> extends Application implements BuilderFac
 		}, delay);
 	}
 
-	//
-
-	private JavaFXBuilderFactory defaultBuilderFactory = new JavaFXBuilderFactory();
-
-	@Override
-	public Builder<?> getBuilder(Class<?> type) {
-		return (type == Map.Entry.class) ? new SimpleEntryBuilder() : defaultBuilderFactory.getBuilder(type);
+	public void runRegularly(int delay, Runnable task) {
+		runRegularly(new Timer(), delay, task);
 	}
-
-	public static class SimpleEntryBuilder<K,V> implements Builder<Map.Entry<K, V>> {
-
-		private K key;
-		private V value;
-		
-		public K getKey() {
-			return key;
-		}
-
-		public void setKey(K key) {
-			this.key = key;
-		}
-
-		public V getValue() {
-			return value;
-		}
-		
-		public void setValue(V value) {
-			this.value = value;
-		}
-		
-		@Override
-		public Map.Entry<K, V> build() {
-			return new AbstractMap.SimpleEntry<K,V>(key, value);
-		}
+	
+	private static void runRegularly(Timer timer, int delay, Runnable task) {
+		timer.schedule(new TimerTask() {
+			public void run() {
+				try {
+					Platform.runLater(task);
+					runRegularly(timer, delay, task);
+				} catch (Exception e) {
+				}
+			}
+		}, delay);
 	}
 }

@@ -24,72 +24,38 @@ public class Calc extends Application {
         primaryStage.show();
     }
 
-    private Double operand1 = null;
-    private Double operand2 = null;
-    private String operandString = null;
-    private String operator = null;
-
-    @FXML
-    private TextField valueField;
+    @FXML TextField operand1Field;
+    @FXML TextField operatorField;
+    @FXML TextField operand2Field;
 
     @FXML
     private void append(ActionEvent actionEvent) {
     	String label = ((Button) actionEvent.getSource()).getText();
-    	if (operandString == null) {
-    		operandString = "";
+    	TextField operandField = operand2Field;
+    	if (operatorField.getText().equals("")) {
+    		operandField = operand1Field;
     	}
-    	operandString += label;
-    	update();
-    }
-    
-    private void update() {
-    	String text = operandString;
-    	if (text == null) {
-    		Double operand = operand2;
-    		if (operand == null) {
-    			operand = operand1;
-    		}
-			text = String.valueOf(operand);
-    	}
-    	valueField.setText(text);
-    }
-
-    private void pushOperand() {
-    	Double operand = operand1;
-    	if (operandString != null) {
-    		try {
-				operand = Double.valueOf(operandString);
-			} catch (NumberFormatException e) {
-			}
-    	}
-    	operandString = null;
-    	if (operand1 == null) {
-    		operand1 = operand;
-    	} else {
-    		operand2 = operand;
-    	}
+		operandField.setText(operandField.getText() + label);
     }
     
     @FXML
     private void op(ActionEvent actionEvent) {
     	String label = ((Button) actionEvent.getSource()).getText();
-    	pushOperand();
-    	operator = label;
-    	update();
+    	operatorField.setText(label);
     }
 
     private void compute(BinaryOperator<Double> op) {
-    	pushOperand();
-    	if (operand1 != null && operand2 != null) {
-    		operand1 = op.apply(operand1, operand2);
-    	}
-    	operand2 = null;
-    	update();
+    	double operand1 = Double.valueOf(operand1Field.getText());
+    	double operand2 = Double.valueOf(operand2Field.getText());
+    	double result = op.apply(operand1, operand2);
+    	operand1Field.setText(String.valueOf(result));
+    	operatorField.setText("");
+    	operand2Field.setText("");
     }
     
     @FXML
     private void compute() {
-    	switch (operator) {
+    	switch (operatorField.getText()) {
     	case "+": compute((n1, n2) -> n1 + n2); break;
     	case "-": compute((n1, n2) -> n1 - n2); break;
     	case "*": compute((n1, n2) -> n1 * n2); break;

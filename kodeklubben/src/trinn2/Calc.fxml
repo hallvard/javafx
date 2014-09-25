@@ -5,25 +5,27 @@
 <?import javafx.scene.control.TextField?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml">
- 	<TextField fx:id="valueField" promptText="Value" editable="false" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="4"/>
- 
- 	<Button text="7" onAction="#append" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
- 	<Button text="8" onAction="#append" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
- 	<Button text="9" onAction="#append" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
- 	<Button text="+" onAction="#op" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+ 	<TextField fx:id="operand1Field" prefColumnCount="8" alignment="BOTTOM_RIGHT" editable="false" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="4"/>
+ 	<TextField fx:id="operatorField" prefColumnCount="1" alignment="BOTTOM_CENTER" editable="false" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+ 	<TextField fx:id="operand2Field" prefColumnCount="8" alignment="BOTTOM_RIGHT" editable="false" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="4"/>
 
- 	<Button text="4" onAction="#append" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
- 	<Button text="5" onAction="#append" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
- 	<Button text="6" onAction="#append" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
- 	<Button text="-" onAction="#op" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+ 	<Button text="7" onAction="#append" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+ 	<Button text="8" onAction="#append" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+ 	<Button text="9" onAction="#append" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+ 	<Button text="+" onAction="#op" 	GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+
+ 	<Button text="4" onAction="#append" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+ 	<Button text="5" onAction="#append" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+ 	<Button text="6" onAction="#append" GridPane.rowIndex="4" GridPane.columnIndex="2"/>
+ 	<Button text="-" onAction="#op" 	GridPane.rowIndex="4" GridPane.columnIndex="3"/>
  	
- 	<Button text="1" onAction="#append" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
- 	<Button text="2" onAction="#append" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
- 	<Button text="3" onAction="#append" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
- 	<Button text="*" onAction="#op" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+ 	<Button text="1" onAction="#append" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+ 	<Button text="2" onAction="#append" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+ 	<Button text="3" onAction="#append" GridPane.rowIndex="5" GridPane.columnIndex="2"/>
+ 	<Button text="*" onAction="#op" 	GridPane.rowIndex="5" GridPane.columnIndex="3"/>
  	
- 	<Button text="0" onAction="#append" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
- 	<Button text="." onAction="#append" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
- 	<Button text="=" onAction="#compute" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
- 	<Button text="/" onAction="#op" GridPane.columnIndex="3" GridPane.rowIndex="4"/>
+ 	<Button text="0" onAction="#append" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+ 	<Button text="." onAction="#append" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+ 	<Button text="=" onAction="#compute" GridPane.rowIndex="6" GridPane.columnIndex="2"/>
+ 	<Button text="/" onAction="#op" 	 GridPane.rowIndex="6" GridPane.columnIndex="3"/>
 </GridPane>

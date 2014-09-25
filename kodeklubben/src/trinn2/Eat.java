@@ -1,6 +1,8 @@
 package trinn2;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Labeled;
 
 public class Eat extends ImageGridGame<Integer> {
@@ -9,6 +11,8 @@ public class Eat extends ImageGridGame<Integer> {
 	Labeled statusLabel;
 
 	int playerX, playerY;
+	int playerDx = 0, playerDy = 0;
+	boolean contMove = false;
 	double points = 0;
 	long startTime = 0;
 	
@@ -18,20 +22,40 @@ public class Eat extends ImageGridGame<Integer> {
 		restartAction();
 	}
 
-	void movePlayer(int x, int y) {
-		playerX = x;
-		playerY = y;
-		setCell(playerX, playerY, 0);
-	}
-	
 	@FXML
 	void restartAction() {
 		fillGrid(-1);
-		movePlayer(imageGrid.getColumnCount() / 2, imageGrid.getRowCount() / 2);
+		playerDx = 0;
+		playerDy = 0;
+		movePlayerTo(imageGrid.getColumnCount() / 2, imageGrid.getRowCount() / 2);
 		points = 0;
 		startTime = System.currentTimeMillis();
 		newFood();
 		updateGrid();
+	}
+
+	private void movePlayerTo(int x, int y) {
+		setCell(playerX, playerY, -1);
+		updateCell(playerX, playerY);
+		playerX = x;
+		playerY = y;
+		setCell(playerX, playerY, 0);
+		updateCell(playerX, playerY);
+	}
+
+	@FXML
+	void toggleContMove(ActionEvent actionEvent) {
+		contMove = ((CheckBox) actionEvent.getSource()).isSelected();
+		if (contMove) {
+			startTicking(500);
+		} else {
+			stopTicking();
+		}
+		ensureKeyboardFocus();
+	}
+
+	protected void tick() {
+		step(playerDx, playerDy);
 	}
 
 	void newFood() {
@@ -51,21 +75,26 @@ public class Eat extends ImageGridGame<Integer> {
 		statusLabel.setText(((double) Math.round(pointsPrMillis * 1000)) / 1000 + " points pr. second (" + points + " points in " + millis / 1000 + " seconds)");
 	}
 
-	@Override
-	protected boolean keyPressed(int dx, int dy) {
+	protected void step(int dx, int dy) {
 		int nextX = playerX + dx, nextY = playerY + dy;
 		if (isValidXY(nextX, nextY)) {
-			setCell(playerX, playerY, -1);
-			updateCell(playerX, playerY);
 			int cell = getCell(nextX, nextY);
-			movePlayer(nextX, nextY);
-			updateCell(playerX, playerY);
+			movePlayerTo(nextX, nextY);
 			if (cell > 0) {
 				points += cell;
 				newFood();
 			}
+			updateStatus();
 		}
-		updateStatus();
+	}
+	
+	@Override
+	protected boolean keyPressed(int dx, int dy) {
+		playerDx = dx;
+		playerDy = dy;
+		if (! contMove) {
+			step(dx, dy);
+		}
 		return true;
 	}
 

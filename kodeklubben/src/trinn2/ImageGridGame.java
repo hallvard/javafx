@@ -34,6 +34,11 @@ public abstract class ImageGridGame<T> extends Application {
         Parent root = (Parent) fxmlLoader.load();
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+        ensureKeyboardFocus();
+	}
+
+	protected void ensureKeyboardFocus() {
+		imageGrid.requestFocus();
 	}
 
 	@FXML
@@ -44,7 +49,6 @@ public abstract class ImageGridGame<T> extends Application {
 		for (Map.Entry<T, String> entry : imageGrid.getImageKeyMapEntries()) {
 			imageGrid.setImage(entry.getKey(), entry.getValue(), this);
 		}
-		imageGrid.requestFocus();
 	}
 
 	// fields and methods for managing the grid
@@ -200,20 +204,48 @@ public abstract class ImageGridGame<T> extends Application {
 			}
 		}, delay);
 	}
-
-	public void runRegularly(int delay, Runnable task) {
-		runRegularly(new Timer(), delay, task);
-	}
 	
-	private static void runRegularly(Timer timer, int delay, Runnable task) {
-		timer.schedule(new TimerTask() {
+	private Timer tickTimer = null;
+	private int tickDelay = 500;
+	
+	private void keepTicking() {
+		tickTimer.schedule(new TimerTask() {
 			public void run() {
-				try {
-					Platform.runLater(task);
-					runRegularly(timer, delay, task);
-				} catch (Exception e) {
+				if (Platform.isFxApplicationThread()) {
+					tick();
+					keepTicking();
+				} else {
+					Platform.runLater(this);
 				}
 			}
-		}, delay);
+		}, tickDelay);
+	}
+
+	public void startTicking(int delay) {
+		if (tickTimer == null) {
+			tickTimer = new Timer();
+		}
+		setTickDelay(delay);
+		keepTicking();
+	}
+
+	public void stopTicking() {
+		if (tickTimer != null) {
+			tickTimer.cancel();
+		}
+		tickTimer = null;
+	}
+	
+	public void setTickDelay(int delay) {
+		this.tickDelay = delay;
+	}
+	
+	protected void tick() {
+	}
+	
+	@Override
+	public void stop() throws Exception {
+		stopTicking();
+		super.stop();
 	}
 }

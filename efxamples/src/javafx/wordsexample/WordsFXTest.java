@@ -29,7 +29,6 @@ public class WordsFXTest extends GuiTest {
 	
 	@Test
 	public void testHandleProcess() {
-		controller.wordsText.setText("");
 		clickOn(controller.wordsText).type("Hello word test");
 		clickOn(controller.processButton);
 		assertEquals("3", controller.wordCountText.getText());

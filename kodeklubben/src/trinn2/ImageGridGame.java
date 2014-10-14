@@ -132,6 +132,10 @@ public abstract class ImageGridGame<T> extends Application {
 		return countCells(fun, 0, 0, imageGrid.getColumnCount(), imageGrid.getRowCount());
 	}
 
+	public int countCellsIf(CellFunction<Boolean> fun) {
+		return countCells((x, y) -> fun.applyCell(x, y) ? 1 : 0, 0, 0, imageGrid.getColumnCount(), imageGrid.getRowCount());
+	}
+
 	//
 
 	@FXML

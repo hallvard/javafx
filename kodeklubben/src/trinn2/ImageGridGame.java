@@ -14,17 +14,32 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public abstract class ImageGridGame<T> extends Application {
 
+	// fxml loading on startup
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		URL url = this.getClass().getResource(this.getClass().getSimpleName() + ".fxml");
@@ -136,7 +151,7 @@ public abstract class ImageGridGame<T> extends Application {
 		return countCells((x, y) -> fun.applyCell(x, y) ? 1 : 0, 0, 0, imageGrid.getColumnCount(), imageGrid.getRowCount());
 	}
 
-	//
+	// keys
 
 	@FXML
 	protected void keyPressed(KeyEvent keyEvent) {
@@ -167,17 +182,143 @@ public abstract class ImageGridGame<T> extends Application {
 		return false;
 	}
 
+	// cursor
+	
+	void setCursor(Cursor cursor) {
+		imageGrid.setCursor(cursor);
+	}
+	
+	void setCursorIf(boolean state, Cursor cursor, Cursor defaultCursor) {
+		setCursor(state ? cursor : defaultCursor);
+	}
+	
+	// mouse and drag and drop
+
+	<R> R applyCell(CellFunction<R> fun, Node child) {
+		Integer x = null, y = null;
+		for (Node node = child; node != imageGrid; node = node.getParent()) {
+			if ((x = GridPane.getColumnIndex(node)) != null) {
+				break;
+			}
+		}
+		for (Node node = child; node != imageGrid; node = node.getParent()) {
+			if ((y = GridPane.getRowIndex(node)) != null) {
+				break;
+			}
+		}
+		if (x != null && y != null) {
+			return fun.applyCell(x, y);
+		}
+		return null;
+	}
+
 	@FXML
 	void mouseClicked(MouseEvent mouseEvent) {
 		Node child = mouseEvent.getPickResult().getIntersectedNode();
-		Integer x = GridPane.getColumnIndex(child);
-		Integer y = GridPane.getRowIndex(child);
-		if (x != null && y != null) {
-			mouseClicked(x, y);
+		Boolean result = applyCell((x, y) -> mouseClicked(x, y), child);
+		if (result != null) {
+			mouseEvent.consume();
+		}
+	}
+	boolean mouseClicked(int x, int y) {
+		return false;
+	}
+	
+	private Point2D dragStart = null;
+	private ImageView dragNode = null, feedbackNode = null;
+
+	@FXML
+	void mouseMoved(MouseEvent mouseEvent) {
+		Node child = mouseEvent.getPickResult().getIntersectedNode();
+		applyCell((x, y) -> {
+			Boolean result = mouseMoved(x, y);
+			if (result != null) {
+				mouseEvent.consume();
+			}
+			return dragNode;
+		} , child);
+	}
+	Boolean mouseMoved(int x, int y) {
+		return null;
+	}
+	
+	@FXML
+	void mousePressed(MouseEvent mouseEvent) {
+		Node child = mouseEvent.getPickResult().getIntersectedNode();
+		applyCell((x, y) -> {
+			Boolean result = mousePressed(x, y);
+			if (result != null) {
+				if (result) {
+					dragNode = imageGrid.getImageView(getCell(x, y), x, y);
+					feedbackNode = createFeedbackImageView(dragNode);
+					dragNode.setVisible(false);
+					dragStart = new Point2D(mouseEvent.getX(), mouseEvent.getY());
+				}
+				mouseEvent.consume();
+			}
+			return dragNode;
+		} , child);
+	}
+	Boolean mousePressed(int x, int y) {
+		return null;
+	}
+
+	private ImageView createFeedbackImageView(ImageView dragNode) {
+		ImageView imageView = new ImageView(dragNode.getImage());
+		imageView.setManaged(false);
+		imageView.setMouseTransparent(true);
+		Bounds bounds = dragNode.getLayoutBounds();
+		Node node = dragNode;
+		while (node != imageGrid) {
+			bounds = node.localToParent(bounds);
+			node = node.getParent();
+		}
+		imageView.setLayoutX(bounds.getMinX());
+		imageView.setLayoutY(bounds.getMinY());
+		imageGrid.getChildren().add(imageView);
+		return imageView;
+	}
+	
+	@FXML
+	void mouseDragged(MouseEvent mouseEvent) {
+		if (dragStart != null && dragNode != null) {
+			Node child = mouseEvent.getPickResult().getIntersectedNode();
+			Boolean result = applyCell((x, y) -> mouseDragged(x, y), child);
+			if (result != null) {
+				relocateDragNode(mouseEvent);
+			}
+			mouseEvent.consume();
 		}
 	}
 
-	void mouseClicked(int x, int y) {
+	private void relocateDragNode(MouseEvent mouseEvent) {
+		feedbackNode.setTranslateX(dragStart != null ? mouseEvent.getX() - dragStart.getX() : 0);
+		feedbackNode.setTranslateY(dragStart != null ? mouseEvent.getY() - dragStart.getY() : 0);
+	}
+
+	boolean mouseDragged(int x, int y) {
+		return false;
+	}
+	
+	@FXML
+	void mouseReleased(MouseEvent mouseEvent) {
+		if (dragStart != null && dragNode != null) {
+			Node child = mouseEvent.getPickResult().getIntersectedNode();
+			applyCell((x, y) -> mouseReleased(x, y), child);
+		}
+		dragStart = null;
+		if (dragNode != null) {
+			relocateDragNode(mouseEvent);
+			dragNode.setVisible(true);
+		}
+		if (feedbackNode != null) {
+			imageGrid.getChildren().remove(feedbackNode);
+		}
+		dragNode = null;
+		mouseEvent.consume();
+	}
+	boolean mouseReleased(int x, int y) {
+		return false;
 	}
 
 	//
@@ -186,7 +327,7 @@ public abstract class ImageGridGame<T> extends Application {
 		return min + (int) (Math.random() * (max - min + 1));
 	}
 	
-	//
+	// animation
 
 	public void runDelayed(int delay, Runnable... tasks) {
 		runDelayed(new Timer(), delay, new LinkedList<Runnable>(Arrays.asList(tasks)));
@@ -251,5 +392,28 @@ public abstract class ImageGridGame<T> extends Application {
 	public void stop() throws Exception {
 		stopTicking();
 		super.stop();
+	}
+	
+	// images
+
+	Image createTextImage(Object o, Font font, Paint stroke, Paint fill) {
+		Text text = new Text(String.valueOf(o));
+		text.setFont(font);
+		return createShapeImage(text, stroke, fill, Color.TRANSPARENT);
+	}
+	
+	Image createShapeImage(Shape shape, Paint stroke, Paint fill, Paint background) {
+		shape.setStroke(stroke);
+		shape.setFill(fill);
+		return createNodeImage(shape, background);
+	}
+	
+	Image createNodeImage(Node node, Paint background) {
+		StackPane pane = new StackPane();
+		pane.getChildren().add(node);
+		SnapshotParameters params = new SnapshotParameters();
+		params.setFill(background);
+		WritableImage image = pane.snapshot(params, null);
+		return image;
 	}
 }

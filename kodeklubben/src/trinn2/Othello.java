@@ -76,9 +76,9 @@ public class Othello extends ImageGridGame<Boolean> {
 	}	
 
 	@Override
-	void mouseClicked(int x, int y) {
+	boolean mouseClicked(int x, int y) {
 		if (player == null) {
-			return;
+			return false;
 		}
 		final int count = turnPieces(player, x, y, false);
 		if (count > 0) {
@@ -92,6 +92,7 @@ public class Othello extends ImageGridGame<Boolean> {
 					}
 			);
 		}
+		return true;
 	}
 
 	int turnPieces(boolean player, int x, int y, boolean reallyTurn) {

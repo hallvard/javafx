@@ -8,9 +8,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javafx.geometry.Dimension2D;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class ImageGrid<T> extends GridPane {
 
@@ -31,6 +42,24 @@ public class ImageGrid<T> extends GridPane {
 		setDimensions(columns, rows);
 	}
 
+	private Dimension2D cellSize = null;
+	
+	public void setCellSize(int width, int height) {
+		cellSize = new Dimension2D(width, height);
+	}
+
+	private String[][] cellColors = null;
+	
+	public void setCellColors(int colCount, String... colors) {
+		cellColors = new String[colors.length / colCount][];
+		for (int row = 0; row < colors.length / colCount; row++) {
+			cellColors[row] = new String[colCount];
+			for (int col = 0; col < colCount; col++) {
+				cellColors[row][col] = colors[row * colCount + col];
+			}
+		}
+	}
+	
 	private ImageView[] imageViews = null;
 
 	public void setDimensions(int columns, int rows) {
@@ -153,17 +182,34 @@ public class ImageGrid<T> extends GridPane {
 		return image;
 	}
 
-	public Image setImage(T imageKey, int column, int row) {
-		Image image = getImage(imageKey);
+	ImageView getImageView(T imageKey, int column, int row) {
 		int imagePos = row * columns + column;
 		ImageView imageView = imageViews[imagePos];
-		if (imageView != null) {
-			imageView.setImage(image);
-		} else {
-			imageView = new ImageView(image);
+		if (imageView == null) {
+			imageView = new ImageView();
 			imageViews[imagePos] = imageView;
-			add(imageView, column, row);
+			Node node = imageView;
+			if (cellSize != null) {
+				StackPane pane = new StackPane();
+				pane.setPrefSize(cellSize.getWidth(), cellSize.getHeight());
+				pane.getChildren().add(node);
+				if (cellColors != null) {
+					String[] rowColors = cellColors[row % cellColors.length];
+					String color = rowColors[column % rowColors.length];
+					pane.setStyle("-fx-background-color: " + color + ";");
+				}
+				StackPane.setAlignment(imageView, Pos.CENTER);
+				node = pane;
+			}
+			add(node, column, row);
 		}
+		return imageView;
+	}
+	
+	public Image setImage(T imageKey, int column, int row) {
+		ImageView imageView = getImageView(imageKey, column, row);
+		Image image = getImage(imageKey);
+		imageView.setImage(image);
 		return image;
 	}
 }

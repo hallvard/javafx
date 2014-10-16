@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Labeled;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class Eat extends ImageGridGame<Integer> {
 
@@ -19,6 +21,11 @@ public class Eat extends ImageGridGame<Integer> {
 	@FXML
 	protected void initialize() {
 		super.initialize();
+		for (int num = 0; num < 10; num++) {
+			imageGrid.setCellSize(20, 20);
+			imageGrid.setCellColors(1, "black");
+			imageGrid.setImage(num, createTextImage(num, Font.font("Arial", 12), Color.WHITE, Color.BLACK));
+		}
 		restartAction();
 	}
 

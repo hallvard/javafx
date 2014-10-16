@@ -19,7 +19,6 @@
 		<ImageGrid fx:id="imageGrid"
 			onKeyPressed="#keyPressed"
 			columnCount="20" rowCount="20"
-			imageUrlFormat="/trinn2/${key}.png"
 			>
 		</ImageGrid>
 	 </center>

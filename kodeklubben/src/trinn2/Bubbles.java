@@ -41,7 +41,7 @@ public class Bubbles extends ImageGridGame<String> {
 	}
 
 	@Override
-	void mouseClicked(int x, int y) {
+	boolean mouseClicked(int x, int y) {
 		final int count = burstCells(getCell(x, y), x, y, 1);
 		if (count > 0) {
 			updateGrid();
@@ -57,6 +57,7 @@ public class Bubbles extends ImageGridGame<String> {
 					}
 			);
 		}
+		return true;
 	}
 
 	int burstCells(String value, int x, int y, int limit) {

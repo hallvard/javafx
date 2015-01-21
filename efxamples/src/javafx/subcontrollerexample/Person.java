@@ -1,12 +1,12 @@
 package javafx.subcontrollerexample;
 
-import javafx.beans.property.ReadOnlyProperty;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Person {
 	
-	private SimpleStringProperty nameProperty = new SimpleStringProperty();
-	private SimpleStringProperty emailProperty = new SimpleStringProperty();
+	private Property<String> nameProperty = new SimpleStringProperty();
+	private Property<String> emailProperty = new SimpleStringProperty();
 	
 	public String getName() {
 		return nameProperty.getValue();
@@ -14,7 +14,7 @@ public class Person {
 	public void setName(String name) {
 		nameProperty.setValue(name);
 	}
-	public ReadOnlyProperty<String> nameProperty() {
+	public Property<String> nameProperty() {
 		return nameProperty;
 	}
 
@@ -24,7 +24,7 @@ public class Person {
 	public void setEmail(String email) {
 		emailProperty.setValue(email);
 	}
-	public ReadOnlyProperty<String> emailProperty() {
+	public Property<String> emailProperty() {
 		return emailProperty;
 	}
 }

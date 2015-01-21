@@ -1,5 +1,6 @@
 package javafx.subcontrollerexample;
 
+import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -7,24 +8,21 @@ import javafx.scene.control.TextField;
 
 public class PersonController {
 
+	@FXML private TextField nameTextField;
+	@FXML private TextField emailTextField;
+
 	@FXML
-	private TextField nameTextField;
-	
+	private void nameTextFieldFocusChange(ReadOnlyBooleanProperty property, Boolean oldValue, Boolean newValue) {
+		if (! newValue) {
+			updateNameModel();
+		}
+	}
+
 	@FXML
-	private TextField emailTextField;
-	
-	@FXML
-	private void initialize() {
-		nameTextField.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-			if (! newValue) {
-				updateNameModel();
-			}
-		});
-		emailTextField.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-			if (! newValue) {
-				updateEmailModel();
-			}
-		});
+	private void emailTextFieldFocusChange(ReadOnlyBooleanProperty property, Boolean oldValue, Boolean newValue) {
+		if (! newValue) {
+			updateEmailModel();
+		}
 	}
 
 	private Person model;
@@ -66,11 +64,6 @@ public class PersonController {
 	private void updateNameView() {
 		String name = (model != null ? model.getName() : null);
 		nameTextField.setText(name != null ? name : "");
-	}
-
-	private void updateModel() {
-		updateNameModel();
-		updateEmailModel();
 	}
 
 	private void updateEmailModel() {

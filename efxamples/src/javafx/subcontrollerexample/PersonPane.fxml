@@ -6,7 +6,11 @@
 
 <GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="javafx.subcontrollerexample.PersonController" hgap="20">
 	<Label text="Name:" 									GridPane.columnIndex="0" 	GridPane.rowIndex="0"/>
-    <TextField fx:id="nameTextField" promptText="Name" 		GridPane.columnIndex="1" 	GridPane.rowIndex="0"/>
+    <TextField fx:id="nameTextField" promptText="Name" 		GridPane.columnIndex="1" 	GridPane.rowIndex="0"
+    	onFocusedChange="#nameTextFieldFocusChange"
+    />
 	<Label text="Email:" 									GridPane.columnIndex="0"	GridPane.rowIndex="1"/>
-    <TextField fx:id="emailTextField" promptText="Email"	GridPane.columnIndex="1" 	GridPane.rowIndex="1"/>
+    <TextField fx:id="emailTextField" promptText="Email"	GridPane.columnIndex="1" 	GridPane.rowIndex="1"
+    	onFocusedChange="#emailTextFieldFocusChange"
+    />
 </GridPane>

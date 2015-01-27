@@ -1,5 +1,6 @@
 package trinn2;
 
+import game.imagegrid.ImageGridGame;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -75,17 +76,21 @@ public class Othello extends ImageGridGame<Boolean> {
 		return countCellsIf((x, y) -> turnPieces(player, x, y, false) > 0);
 	}	
 
+	private boolean turningPieces = false;
+	
 	@Override
-	boolean mouseClicked(int x, int y) {
-		if (player == null) {
+	protected boolean mouseClicked(int x, int y) {
+		if (player == null || turningPieces) {
 			return false;
 		}
 		final int count = turnPieces(player, x, y, false);
 		if (count > 0) {
 			setCell(x, y, player);
 			updateGrid();
+			turningPieces = true;
 			runDelayed(500,
 					() -> {
+						turningPieces = false;
 						turnPieces(player, x, y, true);
 						nextPlayer();
 						updateGrid();

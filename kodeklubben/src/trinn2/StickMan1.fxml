@@ -21,7 +21,7 @@
 		<Line layoutX="120" layoutY="20" startX="0" startY="-4" endX="3" endY="0" stroke="black"/>
 		<Line layoutX="120" layoutY="20" startX="3" startY="0" endX="0" endY="1" stroke="black"/>
 		<Line layoutX="100" layoutY="40" endX="0" endY="30" stroke="black"/>
-		<Group layoutX="100" layoutY="50" visible="true">
+		<Group layoutX="100" layoutY="70" visible="true">
 			<Line layoutY="0"  endX="-10" endY="10" stroke="black"/>
 			<Line layoutY="0"  endX= "10" endY="10" stroke="black"/>
 			<Line layoutY="20" endX="-10" endY="15" stroke="black"/>

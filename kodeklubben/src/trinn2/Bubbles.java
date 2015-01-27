@@ -1,5 +1,7 @@
 package trinn2;
 
+import game.imagegrid.ImageGridGame;
+
 import java.util.List;
 
 import javafx.fxml.FXML;
@@ -41,7 +43,7 @@ public class Bubbles extends ImageGridGame<String> {
 	}
 
 	@Override
-	boolean mouseClicked(int x, int y) {
+	protected boolean mouseClicked(int x, int y) {
 		final int count = burstCells(getCell(x, y), x, y, 1);
 		if (count > 0) {
 			updateGrid();

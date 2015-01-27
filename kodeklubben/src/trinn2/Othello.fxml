@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
  
 <?import javafx.scene.layout.BorderPane?>
-<?import trinn2.ImageGrid?>
+<?import game.imagegrid.ImageGrid?>
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>

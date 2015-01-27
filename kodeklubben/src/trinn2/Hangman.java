@@ -92,7 +92,7 @@ public class Hangman extends Application {
 		if (tries > 0) {
 			ask.setText("Du gjettet " + word);
 		} else {
-			ask.setText("Du klarte ikke å gjette " + word);
+			ask.setText("Du klarte ikke å gjette '" + word + "'");
 		}
 	}
 

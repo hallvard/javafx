@@ -1,5 +1,6 @@
 package trinn2;
 
+import game.imagegrid.ImageGridGame;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.paint.Color;
@@ -92,7 +93,7 @@ public class Chess extends ImageGridGame<String> {
 	private int sourceX, sourceY;
 	
 	@Override
-	Boolean mouseMoved(int x, int y) {
+	protected Boolean mouseMoved(int x, int y) {
 		String piece = getCell(x, y);
 		boolean accept = piece != null && getPiecePlayer(piece) == player;
 		setCursorIf(accept, Cursor.HAND, Cursor.DEFAULT);
@@ -100,7 +101,7 @@ public class Chess extends ImageGridGame<String> {
 	}
 
 	@Override
-	Boolean mousePressed(int x, int y) {
+	protected Boolean mousePressed(int x, int y) {
 		sourceX = x;
 		sourceY = y;
 		sourcePiece = getCell(x, y);
@@ -110,14 +111,14 @@ public class Chess extends ImageGridGame<String> {
 	}
 	
 	@Override
-	boolean mouseDragged(int x, int y) {
+	protected boolean mouseDragged(int x, int y) {
 		boolean acceptDrop = acceptDrop(sourcePiece, sourceX, sourceY, getCell(x, y), x, y);
 		setCursorIf(acceptDrop, Cursor.CLOSED_HAND, Cursor.WAIT);
 		return acceptDrop;
 	}
 
 	@Override
-	boolean mouseReleased(int x, int y) {
+	protected boolean mouseReleased(int x, int y) {
 		setCursor(Cursor.DEFAULT);
 		if (acceptDrop(sourcePiece, sourceX, sourceY, getCell(x, y), x, y)) {
 			String cell = getCell(sourceX, sourceY);

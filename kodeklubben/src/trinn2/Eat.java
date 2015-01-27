@@ -1,5 +1,6 @@
 package trinn2;
 
+import game.imagegrid.ImageGridGame;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;

@@ -1,4 +1,4 @@
-package trinn2;
+package game.imagegrid;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -11,17 +11,10 @@ import java.util.Map.Entry;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Shape;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 public class ImageGrid<T> extends GridPane {
 

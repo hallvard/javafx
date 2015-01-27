@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import javafx.scene.layout.BorderPane?>
+<?import game.card.CardStackView?>
+<?import game.card.CardFanView?>
+<?import game.card.CardView?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import game.card.CardView?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml">
+	 <top>
+	 	<HBox>
+		 	<TextField fx:id="txField" promptText="Translate X" text="20" onAction="#setTranslate"/>
+		 	<TextField fx:id="tyField" promptText="Translate Y" text="5" onAction="#setTranslate"/>
+	 	</HBox>
+	 </top>
+	 <center>
+		<CardStackView fx:id="stack" cardTranslateX="50" cardTranslateY="10">
+			<CardView suitNum="1" cardNum="6"/>
+			<CardView cardNum="1"/>
+			<CardView faceDown="true"/>
+		</CardStackView>
+	 </center>
+	 <bottom>
+	 	<VBox>
+		 	<TextField fx:id="rotateField" promptText="Rotate" text="10" onAction="#setRotate"/>
+			<CardFanView fx:id="fan" cardRotate="20">
+				<CardView suitNum="1" cardNum="6"/>
+				<CardView cardNum="1"/>
+				<CardView faceDown="true"/>
+			</CardFanView>
+	 	</VBox>
+	 </bottom>
+</BorderPane>

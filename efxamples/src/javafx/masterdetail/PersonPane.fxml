@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.control.DatePicker?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="javafx.subcontrollerexample.PersonController" hgap="20">
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="javafx.masterdetail.PersonController" hgap="20">
 	<Label text="Name:"
 		GridPane.columnIndex="0" 	GridPane.rowIndex="0"
 	/>

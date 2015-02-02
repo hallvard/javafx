@@ -1,15 +1,14 @@
 package javafx.subcontrollerexample;
 
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ListCell;
 
 class PersonCell extends ListCell<Person> {
 	
-	private ChangeListener<String> nameChangeListener = (ObservableValue<? extends String> property, String oldValue, String newValue) -> {
+	private ChangeListener<String> nameChangeListener = (property, oldValue, newValue) -> {
 		updateItemInternal(getItem(), false);
 	};
-	private ChangeListener<String> emailChangeListener = (ObservableValue<? extends String> property, String oldValue, String newValue) -> {
+	private ChangeListener<String> emailChangeListener = (property, oldValue, newValue) -> {
 		updateItemInternal(getItem(), false);
 	};
 	

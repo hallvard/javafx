@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-	fx:controller="javafx.subcontrollerexample.MasterDetailController">
+	fx:controller="javafx.masterdetail.MasterDetailController">
 	<left>
 		<VBox>
 			<ListView fx:id="personListView"/>

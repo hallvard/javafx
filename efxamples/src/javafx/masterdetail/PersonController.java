@@ -1,4 +1,4 @@
-package javafx.subcontrollerexample;
+package javafx.masterdetail;
 
 import java.time.LocalDate;
 

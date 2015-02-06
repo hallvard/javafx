@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import javafx.scene.layout.BorderPane?>
+<?import games.imagegrid.ImageGrid?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="games.othello.Othello">
+	 <top>
+	 	<Button text="New game" onAction="#newAction"/>
+	 </top>
+	 <center>
+		<ImageGrid fx:id="imageGrid" 
+			onMouseClicked="#mouseClicked"
+			columnCount="8" rowCount="8"
+			>
+		</ImageGrid>
+	 </center>
+	 <bottom>
+	 	<Label fx:id="statusLabel" text="Status"/>
+	 </bottom>
+</BorderPane>

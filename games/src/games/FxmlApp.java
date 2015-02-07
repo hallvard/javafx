@@ -26,6 +26,7 @@ public class FxmlApp extends Application {
 		URL url = this.getClass().getResource(fxmlFileName);
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(url);
+        fxmlLoader.setBuilderFactory(new FxmlBuilderFactory());
         Parent root = (Parent) fxmlLoader.load();
         controller = fxmlLoader.getController();
         primaryStage.setScene(new Scene(root));

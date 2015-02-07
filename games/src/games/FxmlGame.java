@@ -55,7 +55,7 @@ public abstract class FxmlGame {
 	}
 	
 	private Timer tickTimer = null;
-	private int tickDelay = 500;
+	private int tickDelay = 0;
 	
 	private void keepTicking() {
 		if (tickTimer == null) {
@@ -80,14 +80,14 @@ public abstract class FxmlGame {
 				tickTimer.cancel();
 			}
 			tickTimer = null;
-		} else {
+		} else if (this.tickDelay > 0) {
 			if (tickTimer == null) {
 				tickTimer = new Timer();
 			}
 			keepTicking();
 		}
 	}
-	
+
 	protected void tick() {
 	}
 	

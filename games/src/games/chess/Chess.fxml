@@ -11,7 +11,7 @@
 	 	<Button text="New game" onAction="#newAction"/>
 	 </top>
 	 <center>
-		<ImageGrid fx:id="imageGrid" 
+		<ImageGrid fx:id="imageGrid" prefWidth="400" prefHeight="400"
 			onMouseMoved="#mouseMoved"
 			onMousePressed="#mousePressed"
 			onMouseDragged="#mouseDragged"

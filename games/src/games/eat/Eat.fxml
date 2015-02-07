@@ -16,7 +16,7 @@
 	 	</HBox>
 	 </top>
 	 <center>
-		<ImageGrid fx:id="imageGrid"
+		<ImageGrid fx:id="imageGrid" prefWidth="400" prefHeight="400"
 			onTick="#handleTick"
 			onKeyPressed="#keyPressed"
 			columnCount="20" rowCount="20"

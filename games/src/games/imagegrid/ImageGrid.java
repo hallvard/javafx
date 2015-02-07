@@ -51,7 +51,7 @@ public class ImageGrid<T> extends GridPane {
 		setDimensions(columns, rows);
 	}
 
-	private Dimension2D cellDimension = new Dimension2D(50, 50);
+	private Dimension2D cellDimension = null;
 	
 	public void setCellSize(int size) {
 		cellDimension = new Dimension2D(size, size);
@@ -64,6 +64,10 @@ public class ImageGrid<T> extends GridPane {
 	//
 
 	private String[][] cellColors = null;
+//	{
+//		{"white", "grey"},
+//		{"grey", "white"}
+//	};
 	
 	public void setCellColors(int colCount, String... colors) {
 		cellColors = new String[colors.length / colCount][];
@@ -131,6 +135,9 @@ public class ImageGrid<T> extends GridPane {
 		Image image = images.get(imageUrl);
 		if (image == null) {
 			URL url = null;
+			if (imageUrlFormat != null) {
+				imageUrl = formatUrl(imageUrl);
+			}
 			try {
 				url = new URL(imageUrl);
 			} catch (MalformedURLException e) {
@@ -154,6 +161,10 @@ public class ImageGrid<T> extends GridPane {
 			}
 		}
 		return image;
+	}
+
+	private String formatUrl(String imageUrl) {
+		return imageUrlFormat.replace("${key}", String.valueOf(imageUrl));
 	}
 	
 	public void setImage(T imageKey, Image image) {
@@ -187,7 +198,7 @@ public class ImageGrid<T> extends GridPane {
 	private Image getImage(T imageKey) {
 		Image image = images.get(imageKey);
 		if (image == null && imageUrlFormat != null) {
-			String imageKey2 = imageUrlFormat.replace("${key}", String.valueOf(imageKey));
+			String imageKey2 = formatUrl(String.valueOf(imageKey));
 			image = getImage(imageKey2);
 			if (image != null) {
 				images.put(imageKey, image);

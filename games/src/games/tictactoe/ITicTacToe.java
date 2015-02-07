@@ -26,6 +26,11 @@ public interface ITicTacToe {
 	public int countCells(Boolean value);
 	
 	/**
+	 * @return The returns the winner, null for none, true for 'x' and false for 'o'
+	 */
+	public Boolean getWinner();
+	
+	/**
 	 * Initializes a game with a String representation of a level. All other game state should be cleared.
 	 * @param level The level represented as a String, e.g. the standard representation
 	 * with lines separated by newlines or vertical bars.

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import games.imagegrid.ImageGrid?>
+ 
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="games.sokoban.sokoban1.SokobanFX"
+    prefHeight="600" prefWidth="500"
+    >
+	<top>
+		<HBox>
+			<TextField fx:id="levelTextField" HBox.hgrow="ALWAYS" promptText="Level" onAction="#startGame"/>
+			<Button text="Start" onAction="#startGame"/>
+		</HBox>
+	</top>
+	<center>
+		<ImageGrid fx:id="imageGrid"
+			imageUrlFormat="/games/sokoban/${key}.png"
+			onKeyPressed="#keyPressed"
+		>
+			<imageKeyMapEntries>
+				<java.util.Map.Entry key="#" 	value="wall16x16"/>
+				<java.util.Map.Entry key=" " 	value="empty16x16"/>
+				<java.util.Map.Entry key="." 	value="target16x16"/>
+				<java.util.Map.Entry key="\@" 	value="player16x16"/>
+				<java.util.Map.Entry key="+" 	value="player_on_target16x16"/>
+				<java.util.Map.Entry key="\$" 	value="box16x16"/>
+				<java.util.Map.Entry key="*" 	value="box_on_target16x16"/>
+			</imageKeyMapEntries>
+		</ImageGrid>
+	</center>
+	<bottom>
+		<Text fx:id="messageText" VBox.vgrow="ALWAYS">
+			<font>
+               	<Font name="Courier"/>
+           	</font>
+        </Text>
+	</bottom>
+</BorderPane>

@@ -10,12 +10,12 @@ import javafx.scene.control.Label;
 public class Bubbles extends ImageGridGame<String> {
 
 	@FXML
-	Label statusLabel;
+	private Label statusLabel;
 	
 	@FXML
-	List<String> imageNames;
+	private List<String> imageNames;
 
-	int points = 0;
+	private int points = 0;
 	
 	@FXML
 	protected void initialize() {
@@ -23,13 +23,13 @@ public class Bubbles extends ImageGridGame<String> {
 		newAction();
 	}
 
-	String getRandomImageName() {
+	private String getRandomImageName() {
 		int imageNum = randomInt(0, imageNames.size() - 1);
 		return imageNames.get(imageNum);
 	}
 
 	@FXML
-	void newAction() {
+	private void newAction() {
 		fillGrid(null);
 		refillCells();
 		points = 0;
@@ -57,7 +57,7 @@ public class Bubbles extends ImageGridGame<String> {
 		return true;
 	}
 
-	int burstCells(String value, int x, int y, int limit) {
+	private int burstCells(String value, int x, int y, int limit) {
 		if (x < 0 || x >= imageGrid.getColumnCount() || y < 0 || y >= imageGrid.getRowCount()) {
 			return 0;
 		}
@@ -77,7 +77,7 @@ public class Bubbles extends ImageGridGame<String> {
 		return 0;
 	}
 	
-	void collapseCells() {
+	private void collapseCells() {
 		for (int x = 0; x < imageGrid.getColumnCount(); x++) {
 			int dropCount = 0;
 			for (int y = imageGrid.getRowCount() - 1; y >= 0; y--) {
@@ -92,7 +92,7 @@ public class Bubbles extends ImageGridGame<String> {
 		}
 	}
 
-	void refillCells() {
+	private void refillCells() {
 		foreachCell((x, y) -> {
 			if (getCell(x, y) == null) {
 				setCell(x, y, getRandomImageName());

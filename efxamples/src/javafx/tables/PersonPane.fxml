@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.DatePicker?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="javafx.tables.PersonController" hgap="20">
+	<Label text="Name:"
+		GridPane.columnIndex="0" 	GridPane.rowIndex="0"
+	/>
+    <TextField fx:id="nameField" promptText="Name" 	 	prefColumnCount="30"
+    	GridPane.columnIndex="1" 	GridPane.rowIndex="0"
+    	onTextChange="#nameFieldChange"
+    	onFocusedChange="#nameFieldFocusChange"
+    />
+    <Text fx:id="nameFieldValid"
+		GridPane.columnIndex="2" 	GridPane.rowIndex="0"
+    	fill="red"
+    />
+	<Label text="Email:"
+		GridPane.columnIndex="0"	GridPane.rowIndex="1"
+	/>
+    <TextField fx:id="emailField" promptText="Email"
+    	GridPane.columnIndex="1" 	GridPane.rowIndex="1"
+    	onTextChange="#emailFieldChange"
+    	onFocusedChange="#emailFieldFocusChange"
+    />
+    <Text fx:id="emailFieldValid"
+    	GridPane.columnIndex="2" 	GridPane.rowIndex="1"
+    	fill="red"
+    />
+	<Label text="Birthday:"
+		GridPane.columnIndex="0"	GridPane.rowIndex="2"
+	/>
+    <DatePicker fx:id="birthdayField"
+    	GridPane.columnIndex="1" 	GridPane.rowIndex="2"
+    	onFocusedChange="#birthdayFieldFocusChange"
+    />
+</GridPane>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+	fx:controller="javafx.tables.MasterDetailController">
+	<left>
+		<VBox>
+			<TableView fx:id="personTableView" editable="true">
+				<columns>
+					<TableColumn fx:id="personTableNameColumn" text="Name" />
+					<TableColumn fx:id="personTableEmailColumn" text="Email" />
+				</columns>
+			</TableView>
+			<Button text="Add" onAction="#addPerson"/>
+		</VBox>
+	</left>
+	<center>
+		<fx:include fx:id="personPane" source="PersonPane.fxml"/>
+	</center>
+</BorderPane>

@@ -18,11 +18,8 @@ public class SokobanFX extends ImageGridGame<String> {
 		super.initialize();
 	}
 
-	private ISokoban sokoban = new Sokoban();
-	
-	public void setSokoban(ISokoban sokoban) {
-		this.sokoban = sokoban;
-	}
+	@FXML
+	private ISokoban sokoban;
 	
 	private int playerX, playerY;
 	

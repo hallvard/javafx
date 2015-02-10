@@ -8,6 +8,7 @@ import javafx.scene.text.Text;
 
 public class TicTacToeFX extends ImageGridGame<Boolean> {
 
+	@FXML
 	private ITicTacToe ticTacToe;
 
 	@FXML

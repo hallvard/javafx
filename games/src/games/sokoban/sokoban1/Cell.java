@@ -1,6 +1,7 @@
 package games.sokoban.sokoban1;
 
 
+
 public class Cell {
 
 	public static int char2StaticCellValue(char c) {

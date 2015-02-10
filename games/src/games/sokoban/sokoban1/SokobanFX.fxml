@@ -14,9 +14,19 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="games.sokoban.sokoban1.SokobanFX"
     prefHeight="600" prefWidth="500"
     >
+    <fx:define>
+    	<!--
+    		Bytt ut 'Sokoban' under med navnet på den klassen du har laget,
+    	 	som implementerer ISokoban-grensesnittet (la fx:id være).
+    		Pass på å bruke hele navnet, med pakken foran, f.eks. sokoban.Sokoban 	
+   	 	 -->
+    	<Sokoban fx:id="sokoban"/>
+    </fx:define>
 	<top>
 		<HBox>
-			<TextField fx:id="levelTextField" HBox.hgrow="ALWAYS" promptText="Level" onAction="#startGame"/>
+			<TextField fx:id="levelTextField" HBox.hgrow="ALWAYS" promptText="Level" onAction="#startGame"
+				text="#######|#.@ # #|#$* $ #|#   $ #|# ..  #|#  *  #|#######"
+			/>
 			<Button text="Start" onAction="#startGame"/>
 		</HBox>
 	</top>

@@ -19,7 +19,7 @@
     		Bytt ut 'tictactoepakken.TicTacToeklassen' under med det fulle navnet på klassen du har laget og
     	 	som implementerer ITicTacToe-grensesnittet. La fx:id="ticTacToe" være.
    	 	 -->
-    	<TicTacToe fx:id="ticTacToe"/>
+    	<tictactoepakken.TicTacToeklassen fx:id="ticTacToe"/>
     </fx:define>
 	<top>
 		<Button text="Start" onAction="#startGame"/>

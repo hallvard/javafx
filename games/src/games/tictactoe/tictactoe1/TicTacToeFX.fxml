@@ -16,11 +16,10 @@
     >
     <fx:define>
     	<!--
-    		Bytt ut 'TicTacToe' under med navnet på den klassen du har laget,
-    	 	som implementerer ITicTacToe-grensesnittet (la fx:id være).
-    		Pass på å bruke hele navnet, med pakken foran, f.eks. tictactoe.TicTacToe 	
+    		Bytt ut 'tictactoepakken.TicTacToeklassen' under med det fulle navnet på klassen du har laget og
+    	 	som implementerer ITicTacToe-grensesnittet. La fx:id="ticTacToe" være.
    	 	 -->
-    	<TicTacToe fx:id="ticTacToe"/>
+    	<tictactoepakken.TicTacToeklassen fx:id="ticTacToe"/>
     </fx:define>
 	<top>
 		<Button text="Start" onAction="#startGame"/>

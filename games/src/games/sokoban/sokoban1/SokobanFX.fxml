@@ -16,11 +16,10 @@
     >
     <fx:define>
     	<!--
-    		Bytt ut 'Sokoban' under med navnet på den klassen du har laget,
-    	 	som implementerer ISokoban-grensesnittet (la fx:id være).
-    		Pass på å bruke hele navnet, med pakken foran, f.eks. sokoban.Sokoban 	
+    		Bytt ut 'sokobanpakken.Sokobanklassen' under med det fulle navnet på klassen du har laget og
+    	 	som implementerer ISokoban-grensesnittet. La fx:id="sokoban" være.
    	 	 -->
-    	<Sokoban fx:id="sokoban"/>
+    	<sokobanpakken.Sokobanklassen fx:id="sokoban"/>
     </fx:define>
 	<top>
 		<HBox>

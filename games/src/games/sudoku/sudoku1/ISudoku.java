@@ -2,12 +2,9 @@ package games.sudoku.sudoku1;
 
 public interface ISudoku {
 	
-	/**
-	 * Returns the width/height of a block in this game, which determines the grid width, height and number of blocks.
-	 * The standard size is 3, giving a 3x3 block and 9 possible values, but 4 is also common.
-	 * @return The size of a block
-	 */
-	public int getBlockSize();
+
+	int BOARD_SIZE = 9;
+	int BLOCK_SIZE = 3;
 
 	/**
 	 * @param x The x-coordinate of the cell
@@ -24,32 +21,32 @@ public interface ISudoku {
 	public Integer getCellValue(int x, int y);
 
 	/**
-	 * Checks the validity of a particular row
+	 * Checks if a particular row has a legal assignment of numbers
 	 * @param row The row to check
-	 * @return true of the row is valid, false if it is not
+	 * @return true of the row is legal, false if it is not
 	 */
-	public boolean isValidRow(int row);
+	public boolean isLegalRow(int row);
 
 	/**
-	 * Checks the validity of a particular column
+	 * Checks if a particular column has a legal assignment of numbers
 	 * @param column The column to check
-	 * @return true of the column is valid, false if it is not
+	 * @return true of the column is legal, false if it is not
 	 */
-	public boolean isValidColumn(int col);
+	public boolean isLegalColumn(int col);
 	
 	/**
 	 * Checks the validity of a particular block
 	 * @param block The block to check
 	 * @return true of the block is valid, false if it is not
 	 */
-	public boolean isValidBlock(int block);
+	public boolean isLegalBlock(int block);
 	
 	/**
-	 * Checks the validity of the whole grid, i.e. all the rows columns and blocks.
-	 * This method does not check if the current solution is correct, only the validity so far.
-	 * @return true of the grid is valid, false if it is not
+	 * Checks the legality of the whole grid, i.e. all the rows columns and blocks.
+	 * This method does not check if the current solution is correct, only the legality so far.
+	 * @return true of the grid is legal, false if it is not
 	 */
-	public boolean isValid();
+	public boolean isLegalGrid();
 	
 	/**
 	 * Counts the filled cells in either the initial or current configuration
@@ -71,10 +68,10 @@ public interface ISudoku {
 	 * @param value The value to check
 	 * @return true of the value is valid to place at position x, y
 	 */
-	public boolean isValid(int x, int y, int value);
+	public boolean isValidAssignment(int x, int y, int value);
 
 	/**
-	 * Places a number and returns if it was invalid.
+	 * Places a number.
 	 * @param x The x-coordinate of the cell
 	 * @param y The y-coordinate of the cell
 	 */

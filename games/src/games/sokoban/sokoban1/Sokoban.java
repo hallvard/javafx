@@ -1,7 +1,5 @@
 package games.sokoban.sokoban1;
 
-import games.sokoban.ISokoban;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package games.tictactoe.tictactoe1;
 
 import games.imagegrid.ImageGridGame;
-import games.tictactoe.ITicTacToe;
 import javafx.fxml.FXML;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;

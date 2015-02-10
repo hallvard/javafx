@@ -1,4 +1,4 @@
-package games.sudoku;
+package games.sudoku.sudoku1;
 
 public interface ISudoku {
 	

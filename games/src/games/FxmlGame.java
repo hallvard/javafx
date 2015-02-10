@@ -7,9 +7,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.event.EventTarget;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;

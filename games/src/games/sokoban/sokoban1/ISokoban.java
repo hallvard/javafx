@@ -1,4 +1,4 @@
-package games.sokoban;
+package games.sokoban.sokoban1;
 
 public interface ISokoban {
 

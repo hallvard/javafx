@@ -1,6 +1,5 @@
 package games.sokoban.sokoban1;
 
-import games.sokoban.ISokoban;
 
 public class Cell {
 

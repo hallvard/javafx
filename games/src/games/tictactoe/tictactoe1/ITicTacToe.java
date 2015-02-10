@@ -1,4 +1,4 @@
-package games.tictactoe;
+package games.tictactoe.tictactoe1;
 
 public interface ITicTacToe {
 	

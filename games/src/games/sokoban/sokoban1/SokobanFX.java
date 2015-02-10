@@ -1,7 +1,6 @@
 package games.sokoban.sokoban1;
 
 import games.imagegrid.ImageGridGame;
-import games.sokoban.ISokoban;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;

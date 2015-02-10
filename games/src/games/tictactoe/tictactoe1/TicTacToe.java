@@ -1,6 +1,5 @@
 package games.tictactoe.tictactoe1;
 
-import games.tictactoe.ITicTacToe;
 
 public class TicTacToe implements ITicTacToe {
 	

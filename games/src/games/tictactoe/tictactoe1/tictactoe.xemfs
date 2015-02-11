@@ -1,0 +1,14 @@
+emfs
+/games/ #java #package
+	FxmlApp.java			 	@ git@github.com:hallvard/javafx/games/src/games/FxmlApp.java;
+	FxmlBuilderFactory.java 	@ git@github.com:hallvard/javafx/games/src/games/FxmlBuilderFactory.java;
+	FxmlGame.java				@ git@github.com:hallvard/javafx/games/src/games/FxmlGame.java;
+	imagegrid/ #java #package
+		ImageGrid.java		@ git@github.com:hallvard/javafx/games/src/games/imagegrid/ImageGrid.java;
+		ImageGridGame.java		@ git@github.com:hallvard/javafx/games/src/games/imagegrid/ImageGridGame.java;
+		;
+	tictactoe/ #java #package
+		tictactoe1/ #java #package
+			ITicTacToe.java	@ git@github.com:hallvard/javafx/games/src/games/tictactoe/tictactoe1/ITicTacToe.java;
+			TicTacToeFX.java	@ git@github.com:hallvard/javafx/games/src/games/tictactoe/tictactoe1/TicTacToeFX.java;
+			TicTacToeFX.fxml	@ git@github.com:hallvard/javafx/games/src/games/tictactoe/tictactoe1/TicTacToeFX.fxml;

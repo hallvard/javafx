@@ -1,12 +1,9 @@
 package games.sudoku.sudoku1;
 
 public interface ISudoku {
-	
 
 	int BOARD_SIZE = 9;
-	int BLOCK_SIZE = 3;
-	int SIZE_IN_BLOCKS = BOARD_SIZE/BLOCK_SIZE;
-
+	int BLOCK_SIZE = (int) Math.sqrt(BOARD_SIZE);
 	
 	/**
 	 * @param x The x-coordinate of the cell
@@ -75,9 +72,10 @@ public interface ISudoku {
 	public boolean isValidAssignment(int x, int y, Integer value);
 
 	/**
-	 * Places a number.
+	 * Places a number or clears the cell.
 	 * @param x The x-coordinate of the cell
 	 * @param y The y-coordinate of the cell
+	 * @param value The new value, null to clear cell
 	 */
 	public void placeDigit(int x, int y, Integer value);
 

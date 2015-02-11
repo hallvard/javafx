@@ -5,12 +5,31 @@ public class Cell {
 	private boolean assignable;
 	private Integer value;
 
+	public Cell(Integer value) {
+		this.value = value;
+		this.assignable = false;
+	}
+
+	public Cell() {
+		this.value = null;
+		this.assignable = true;
+	}
+
 	public boolean isAssignable() {
-		return assignable;
+		return this.assignable;
 	}
 
 	public void setValue(Integer value) {
-		this.value = value;
+		
+		if(value != null && (value < 1 || value > 9)){
+			throw new IllegalArgumentException();
+		}
+		
+		if(this.assignable){
+			this.value = value;
+		} else{
+			throw new IllegalStateException();
+		}
 	}
 
 	public Integer getValue() {
@@ -18,7 +37,7 @@ public class Cell {
 	}
 
 	public boolean isEmpty() {
-		return value == null;
+		return this.value == null;
 	}
 
 }

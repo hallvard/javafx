@@ -5,14 +5,9 @@ public interface ISudoku {
 
 	int BOARD_SIZE = 9;
 	int BLOCK_SIZE = 3;
+	int SIZE_IN_BLOCKS = BOARD_SIZE/BLOCK_SIZE;
 
-	/**
-	 * @param x The x-coordinate of the cell
-	 * @param y The y-coordinate of the cell
-	 * @return The initial content of the cell
-	 */
-	public Integer getInitialValue(int x, int y);
-
+	
 	/**
 	 * @param x The x-coordinate of the cell
 	 * @param y The y-coordinate of the cell
@@ -20,6 +15,13 @@ public interface ISudoku {
 	 */
 	public Integer getCellValue(int x, int y);
 
+	/**
+	 * Returns which block the specified cell belongs to, given by a flat index.
+	 * @param x The x-coordinate of the cell
+	 * @param y The y-coordinate of the cell
+	 */
+	public int getBlock(int x, int y);
+	
 	/**
 	 * Checks if a particular row has a legal assignment of numbers
 	 * @param row The row to check
@@ -48,12 +50,6 @@ public interface ISudoku {
 	 */
 	public boolean isLegalGrid();
 	
-	/**
-	 * Counts the filled cells in either the initial or current configuration
-	 * @param initial whether or not the count the initial or current configuration
-	 * @return The number of filled cells
-	 */
-	public int countFilledCells(boolean initial);
 	
 	/**
 	 * Initializes a game with a String representation of a level. All other game state should be cleared.
@@ -62,18 +58,35 @@ public interface ISudoku {
 	public void init(String level);
 
 	/**
+	 * Checks validity of assigning any value in the specified cell.
+	 * @param x The x-coordinate of the cell
+	 * @param y The y-coordinate of the cell
+	 * @return
+	 */
+	public boolean isAssignable(int x, int y);
+	
+	/**
 	 * Checks the validity of placing a certain value in the specified cell
 	 * @param x The x-coordinate of the cell
 	 * @param y The y-coordinate of the cell
 	 * @param value The value to check
 	 * @return true of the value is valid to place at position x, y
 	 */
-	public boolean isValidAssignment(int x, int y, int value);
+	public boolean isValidAssignment(int x, int y, Integer value);
 
 	/**
 	 * Places a number.
 	 * @param x The x-coordinate of the cell
 	 * @param y The y-coordinate of the cell
 	 */
-	public void placeDigit(int x, int y, int value);
+	public void placeDigit(int x, int y, Integer value);
+
+	/**
+	 * Checks whether the current assignment of values is a successful solution of the puzzle.
+	 */
+	public boolean isSolved();
+
+
+
+	
 }

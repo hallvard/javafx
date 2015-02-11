@@ -11,11 +11,20 @@ public class Sudoku implements ISudoku{
 	private List<Cell> cells;
 
 	@Override
-	public Integer getInitialValue(int x, int y) {
-		// TODO Auto-generated method stub
-		return null;
+	public void init(String level) {
+		cells = new ArrayList<Cell>();
+		
+		for(int i = 0; i < level.length(); i++){
+			char character = level.charAt(i);
+			if(character == '.'){
+				cells.add(new Cell());
+			}
+			else{
+				cells.add(new Cell(Character.getNumericValue(character)));
+			}
+		}
 	}
-
+	
 	@Override
 	public Integer getCellValue(int x, int y) {
 		return getCell(x, y).getValue();
@@ -23,34 +32,47 @@ public class Sudoku implements ISudoku{
 
 	@Override
 	public boolean isLegalBlock(int block) {
-		return isLegalSet(getBlockIterator(block));
+		return isLegalNumberSet(getBlockIterator(block));
 	}
 
 	@Override
 	public boolean isLegalGrid() {
-		return isLegalSet(cells.iterator());
+		boolean legal = true;
+		
+		for(int i = 0; i < ISudoku.BOARD_SIZE; i++){
+			legal = legal && isLegalRow(i) && isLegalColumn(i);
+		}
+		
+		int maxBlocks = ISudoku.SIZE_IN_BLOCKS*ISudoku.SIZE_IN_BLOCKS;
+		for(int i = 0; i < maxBlocks; i++){
+			legal = legal && isLegalBlock(i);
+		}
+		
+		return legal;
 	}
 	
 	@Override
 	public boolean isLegalRow(int row) {
-		return isLegalSet(getRowIterator(row));
+		return isLegalNumberSet(getRowIterator(row));
 	}
 
 
 	@Override
 	public boolean isLegalColumn(int col) {
-		return isLegalSet(getColumnIterator(col));
+		return isLegalNumberSet(getColumnIterator(col));
 	}
 
-	private boolean isLegalSet(Iterator<Cell> iterator) {
+	private boolean isLegalNumberSet(Iterator<Cell> iterator) {
 		Set<Integer> entries = new HashSet<Integer>();
 		while(iterator.hasNext()){
 			Cell currentCell = iterator.next();
 			if(! currentCell.isEmpty()){
-				if(entries.contains(currentCell.getValue()))
+				if(entries.contains(currentCell.getValue())){
 					return false;
-				else
+				}
+				else{
 					entries.add(currentCell.getValue());
+				}
 			}
 		}
 		
@@ -95,10 +117,8 @@ public class Sudoku implements ISudoku{
 	
 	private Iterator<Cell> getBlockIterator(int block) {
 		return new Iterator<Cell>() {
-			int sizeInBlocks = ISudoku.BOARD_SIZE/ISudoku.BLOCK_SIZE;
-			
-			int rowOffset = Math.floorDiv(block, sizeInBlocks) * 3;
-			int colOffset = (block % (sizeInBlocks)) * 3;
+			int rowOffset = Math.floorDiv(block, ISudoku.SIZE_IN_BLOCKS) * 3;
+			int colOffset = (block % (ISudoku.SIZE_IN_BLOCKS)) * 3;
 			
 			int row = 0;
 			int col = 0;
@@ -123,24 +143,9 @@ public class Sudoku implements ISudoku{
 	}
 
 
-	@Override
-	public int countFilledCells(boolean initial) {
-		int filled = 0;
-		
-		for (Cell cell : cells)
-			if(!cell.isEmpty())
-				filled++;
-		
-		return filled;
-	}
 
 	@Override
-	public void init(String level) {
-		cells = new ArrayList<Cell>();
-	}
-
-	@Override
-	public boolean isValidAssignment(int x, int y, int value) {
+	public boolean isValidAssignment(int x, int y, Integer value) {
 		return getCell(x, y).isAssignable();
 	}
 
@@ -150,11 +155,41 @@ public class Sudoku implements ISudoku{
 
 
 	@Override
-	public void placeDigit(int x, int y, int value) {
+	public void placeDigit(int x, int y, Integer value) {
 		if(getCell(x, y).isAssignable())
 			getCell(x, y).setValue(value);
 		else
 			throw new IllegalStateException();
+	}
+
+	@Override
+	public int getBlock(int x, int y) {
+		return (Math.floorDiv(y, ISudoku.BLOCK_SIZE)) * ISudoku.SIZE_IN_BLOCKS + Math.floorDiv(x, ISudoku.BLOCK_SIZE); 
+	}
+
+	@Override
+	public boolean isAssignable(int x, int y) {
+		return getCell(x, y).isAssignable();
+	}
+
+	@Override
+	public boolean isSolved() {
+		if(isLegalGrid() && countEmptyCells() == 0){
+			return true;
+		}
+		
+		return false;
+	}
+
+	private int countEmptyCells() {
+		int count = 0;
+		for (Cell cell : this.cells) {
+			if(cell.isEmpty()){
+				count++;
+			}
+		}
+		
+		return count;
 	}
 
 }

@@ -18,7 +18,7 @@
     		Bytt ut 'sudokupakken.Sudokuklassen' under med det fulle navnet på klassen du har laget og
     	 	som implementerer ISudoku-grensesnittet. La fx:id="sudoku" være.
    	 	 -->
-    	<games.sudoku.sudoku1.Sudoku fx:id="sudoku"/>
+    	<sudokupakken.Sudokuklassen fx:id="sudoku"/>
     </fx:define>
 	<top>
 		<HBox>

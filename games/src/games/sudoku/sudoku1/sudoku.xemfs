@@ -1,0 +1,14 @@
+emfs
+/games/ #java #package
+	FxmlApp.java			 	@ git@github.com:hallvard/javafx/games/src/games/FxmlApp.java;
+	FxmlBuilderFactory.java 	@ git@github.com:hallvard/javafx/games/src/games/FxmlBuilderFactory.java;
+	FxmlGame.java				@ git@github.com:hallvard/javafx/games/src/games/FxmlGame.java;
+	imagegrid/ #java #package
+		ImageGrid.java		@ git@github.com:hallvard/javafx/games/src/games/imagegrid/ImageGrid.java;
+		ImageGridGame.java		@ git@github.com:hallvard/javafx/games/src/games/imagegrid/ImageGridGame.java;
+		;
+	sudoku/ #java #package
+		sudoku1/ #java #package
+			ISudoku.java	@ git@github.com:hallvard/javafx/games/src/games/sudoku/sudoku1/ISudoku.java;
+			SudokuFX.java	@ git@github.com:hallvard/javafx/games/src/games/sudoku/sudoku1/SudokuFX.java;
+			SudokuFX.fxml	@ git@github.com:hallvard/javafx/games/src/games/sudoku/sudoku1/SudokuFX.fxml;

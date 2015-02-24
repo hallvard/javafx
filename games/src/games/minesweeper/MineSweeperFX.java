@@ -12,11 +12,7 @@ import javafx.scene.text.Text;
 public class MineSweeperFX extends ImageGridGame<String> {
 
 	@FXML
-	private Slider widthSlider;
-	@FXML
-	private Slider heightSlider;
-	@FXML
-	private Slider bombCountSlider;
+	private Slider widthSlider, heightSlider, bombCountSlider;
 
 	@FXML
 	private Text messageText;

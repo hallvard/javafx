@@ -5,17 +5,17 @@ import java.util.List;
 
 public class Battleship implements IBattleship {
 
-	private int boardSize;
+	private int dimension;
 	private List<Cell> board;
 
 	private Cell getCell(int x, int y) {
-		return board.get(y * boardSize + x);
+		return board.get(y * dimension + x);
 	}
 
 	@Override
 	public void init(String level) {
 		board = new ArrayList<Cell>();
-		boardSize = (int) Math.sqrt(level.length());
+		dimension = (int) Math.sqrt(level.length());
 
 		for (int i = 0; i < level.length(); i++) {
 			board.add(new Cell(level.charAt(i)));
@@ -24,7 +24,7 @@ public class Battleship implements IBattleship {
 
 	@Override
 	public int getDimension() {
-		return boardSize;
+		return dimension;
 	}
 	
 	@Override
@@ -33,14 +33,9 @@ public class Battleship implements IBattleship {
 	}
 
 	@Override
-	public boolean isGameOver() {
-		for (int i = 0; i < board.size(); i++) {
-			if (board.get(i).getCharacter() == IBattleship.CELL_HIT && !board.get(i).hasBeenHit()) {
-				return false;
-			}
-		}
-		return true;
-	}
+    public boolean isGameOver() {
+        return board.stream().noneMatch(c -> c.getCharacter() == IBattleship.CELL_HIT && !c.hasBeenHit());
+    }
 
 	@Override
 	public boolean fire(int x, int y) {

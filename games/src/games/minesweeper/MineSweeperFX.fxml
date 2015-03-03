@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import games.imagegrid.ImageGrid?>
+<?import javafx.scene.control.Slider?>
+ 
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="games.minesweeper.MineSweeperFX"
+    prefHeight="600" prefWidth="500"
+    >
+    <fx:define>
+    	<!--
+    		Bytt ut 'minesweeperpakken.MineSweeperklassen' under med det fulle navnet på klassen du har laget og
+    	 	som implementerer IMineSweeper-grensesnittet. La fx:id="minesweeper" være.
+   	 	 -->
+    	<games.minesweeper.MineSweeper fx:id="mineSweeper"/>
+    </fx:define>
+	<top>
+		<HBox>
+			<Slider fx:id="widthSlider" min="5" max="30" value="10" showTickMarks="true" showTickLabels="true">
+				<tooltip>
+			        <Tooltip text="Width"/>
+			    </tooltip>
+			</Slider>
+			<Slider fx:id="heightSlider" min="5" max="30" value="10" showTickMarks="true" showTickLabels="true">
+				<tooltip>
+			        <Tooltip text="Height"/>
+			    </tooltip>
+			</Slider>
+			<Slider fx:id="bombCountSlider" min="1" max="20" value="7" showTickMarks="true" showTickLabels="true">
+				<tooltip>
+			        <Tooltip text="Bomb count"/>
+			    </tooltip>
+			</Slider>
+			<Button text="Start" onAction="#startGame"/>
+		</HBox>
+	</top>
+	<center>
+		<ImageGrid fx:id="imageGrid"
+			cellSize="30" hgap="1" vgap="1"
+			onMouseClicked="#mouseClicked"/>
+	</center>
+	<bottom>
+		<Text fx:id="messageText" VBox.vgrow="ALWAYS">
+			<font>
+               	<Font name="Courier"/>
+           	</font>
+        </Text>
+	</bottom>
+</BorderPane>

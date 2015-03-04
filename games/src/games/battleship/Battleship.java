@@ -33,7 +33,7 @@ public class Battleship implements IBattleship {
 	}
 
 	@Override
-	public boolean isHit(int x, int y) {
+	public boolean isCellHit(int x, int y) {
 		return getCell(x, y).isHit();
 	}
 

@@ -30,7 +30,7 @@ public interface IBattleship {
 	 * @param y The y-coordinate of the cell
 	 * @return The hit state of the cell.
 	 */
-	public boolean isHit(int x, int y);
+	public boolean isCellHit(int x, int y);
 
 	/**
 	 * Counts the ships that are hit or not.

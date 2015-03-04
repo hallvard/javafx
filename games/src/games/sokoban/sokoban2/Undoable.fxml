@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="games.sokoban.sokoban2.UndoableController">
+	<Button text="Undo" onAction="#undo"/>
+	<Button text="Redo" onAction="#redo"/>
+</VBox>

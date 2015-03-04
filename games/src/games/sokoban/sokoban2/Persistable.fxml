@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Tooltip?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="games.sokoban.sokoban2.PersistableController">
+    <fx:define>
+		<ContextMenu fx:id="clipboardMenu">
+			<items>
+               <MenuItem text="Copy" onAction="#copyToClipboard"/>
+               <MenuItem text="Paste" onAction="#pasteFromClipboard"/>
+			</items>
+        </ContextMenu>
+    </fx:define>
+
+	<TextArea fx:id="stateText"/>
+	<HBox>
+		<Button text="Load" onAction="#loadStateFromText">
+		    <tooltip>
+		        <Tooltip  text="Starts a game based on the text area content"/>
+		    </tooltip>
+		</Button>
+		<Button text="Save" onAction="#saveStateToText">
+		    <tooltip>
+		        <Tooltip text="Sets the text area content to the game's toString()"/>
+		    </tooltip>
+		</Button>
+		<Button text="Copy" onAction="#copyToClipboard">
+		    <tooltip>
+		        <Tooltip text="Copies the text area content to the system clipboard"/>
+		    </tooltip>
+		</Button>
+		<Button text="Paste" onAction="#pasteFromClipboard">
+		    <tooltip>
+		        <Tooltip text="Pastes the content of the system clipboard to the text area"/>
+		    </tooltip>
+		</Button>
+	</HBox>
+</VBox>

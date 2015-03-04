@@ -1,0 +1,22 @@
+emfs
+/games/ #java #package $repo="@github.com:hallvard/javafx/games/src/games/"
+	FxmlApp.java			 	@ git@github.com:hallvard/javafx/games/src/games/FxmlApp.java;
+	FxmlBuilderFactory.java 	@ git@github.com:hallvard/javafx/games/src/games/FxmlBuilderFactory.java;
+	FxmlGame.java				@ git@github.com:hallvard/javafx/games/src/games/FxmlGame.java;
+	imagegrid/ #java #package
+		ImageGrid.java		@ git@github.com:hallvard/javafx/games/src/games/imagegrid/ImageGrid.java;
+		ImageGridGame.java		@ git@github.com:hallvard/javafx/games/src/games/imagegrid/ImageGridGame.java;
+		;
+	sokoban/ #java #package
+		sokoban1/ #java #package
+			ISokoban.java	@ git@github.com:hallvard/javafx/games/src/games/sokoban/sokoban1/ISokoban.java;
+			SokobanFX.java	@ git@github.com:hallvard/javafx/games/src/games/sokoban/sokoban1/SokobanFX.java;
+			SokobanFX.fxml	@ git@github.com:hallvard/javafx/games/src/games/sokoban/sokoban1/SokobanFX.fxml;
+			;
+		box_on_target16x16.png	@ git@github.com:hallvard/javafx/games/src/games/sokoban/box_on_target16x16.png;
+		box16x16.png			@ git@github.com:hallvard/javafx/games/src/games/sokoban/box16x16.png;
+		empty16x16.png			@ git@github.com:hallvard/javafx/games/src/games/sokoban/empty16x16.png;
+		player_on_target16x16.png	@ git@github.com:hallvard/javafx/games/src/games/sokoban/player_on_target16x16.png;
+		player16x16.png			@ git@github.com:hallvard/javafx/games/src/games/sokoban/player16x16.png;
+		target16x16.png			@ git@github.com:hallvard/javafx/games/src/games/sokoban/target16x16.png;
+		wall16x16.png			@ git@github.com:hallvard/javafx/games/src/games/sokoban/wall16x16.png;

@@ -20,7 +20,8 @@
     	 	som implementerer IBattleship-grensesnittet (la fx:id være).
     		Pass på å bruke hele navnet, med pakken foran, f.eks. battleship.Battleship	
    	 	 -->
-    	<battleship.Battleshipklassen fx:id="battleship"/>
+    	<games.battleship.Battleship fx:id="battleship1"/>
+    	<games.battleship.Battleship fx:id="battleship2"/>
     </fx:define>
 	<top>
 		<HBox>
@@ -44,9 +45,9 @@
 			onMousePressed="#mouseClicked" hgap="1" vgap="1"
 		>
 			<imageKeyMapEntries>
-				<java.util.Map.Entry key="~" 	value="ocean64x64"/>
-				<java.util.Map.Entry key="." 	value="miss64x64"/>
-				<java.util.Map.Entry key="X" 	value="hit64x64"/>
+				<java.util.Map.Entry key="~" value="ocean64x64"/>
+				<java.util.Map.Entry key="." value="miss64x64"/>
+				<java.util.Map.Entry key="X" value="hit64x64"/>
 			</imageKeyMapEntries>
 		</ImageGrid>
 	</center>

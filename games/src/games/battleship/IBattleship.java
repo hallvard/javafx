@@ -3,8 +3,7 @@ package games.battleship;
 public interface IBattleship {
 	
 	public static final char CELL_OCEAN = '~';
-	public static final char CELL_HIT = 'X';
-	public static final char CELL_MISS = '.';
+	public static final char CELL_EMPTY = '.';
 	
 	/**
 	 * Initializes a game with a String representation of a level. All other game state should be cleared.
@@ -15,19 +14,30 @@ public interface IBattleship {
 	/**
 	 * @return The width/height of the grid, as the height and width should be equal.
 	 */
-	public int getDimension();
+	public int getSize();
 	
 	/**
+	 * Get the character representation of a cell.
 	 * @param x The x-coordinate of the cell
 	 * @param y The y-coordinate of the cell
-	 * @return The String representation of a cell. Must be either "~", "." or "X".
+	 * @return The character representation of a cell. Must be {@link CELL_OCEAN}, {@link CELL_EMPTY} or another character that represents a ship (type).
 	 */
-	public String getCellString(int x, int y);
+	public char getCellCharacter(int x, int y);
 	
 	/**
-	 * @return Returns true if game is over.
+	 * Gets the hit state of the cell, i.e. if it has been fired at.
+	 * @param x The x-coordinate of the cell
+	 * @param y The y-coordinate of the cell
+	 * @return The hit state of the cell.
 	 */
-	public boolean isGameOver();
+	public boolean isHit(int x, int y);
+
+	/**
+	 * Counts the ships that are hit or not.
+	 * @param hit the hit value or null to ignore
+	 * @return the ship count
+	 */
+    public int countShips(Boolean hit);
 	
 	/**
 	 * Fires a shot for the current player. 

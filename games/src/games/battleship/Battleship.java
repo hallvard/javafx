@@ -5,41 +5,56 @@ import java.util.List;
 
 public class Battleship implements IBattleship {
 
-	private int dimension;
+	private int size;
 	private List<Cell> board;
 
 	private Cell getCell(int x, int y) {
-		return board.get(y * dimension + x);
+		return board.get(y * size + x);
 	}
 
 	@Override
 	public void init(String level) {
 		board = new ArrayList<Cell>();
-		dimension = (int) Math.sqrt(level.length());
-
+		size = (int) Math.sqrt(level.length());
 		for (int i = 0; i < level.length(); i++) {
 			board.add(new Cell(level.charAt(i)));
 		}
 	}
 
 	@Override
-	public int getDimension() {
-		return dimension;
+	public int getSize() {
+		return size;
 	}
 	
 	@Override
-	public String getCellString(int x, int y) {
-		return getCell(x, y).toString();
+	public char getCellCharacter(int x, int y) {
+		Cell cell = getCell(x, y);
+		return cell.isHit() ? cell.getCharacter() : IBattleship.CELL_OCEAN;
 	}
 
 	@Override
-    public boolean isGameOver() {
-        return board.stream().noneMatch(c -> c.getCharacter() == IBattleship.CELL_HIT && !c.hasBeenHit());
+	public boolean isHit(int x, int y) {
+		return getCell(x, y).isHit();
+	}
+
+	@Override
+    public int countShips(Boolean hit) {
+		int count = 0;
+		for (Cell cell : board) {
+			char c = cell.getCharacter();
+			if (c != IBattleship.CELL_OCEAN && c != IBattleship.CELL_EMPTY) {
+				if (hit == null || cell.isHit() == hit) {
+					count++;
+				}
+			}
+		}
+        return count;
     }
 
 	@Override
 	public boolean fire(int x, int y) {
-		getCell(x, y).setHit(true);
-		return (getCell(x, y).getCharacter() == IBattleship.CELL_HIT);
+		Cell cell = getCell(x, y);
+		cell.setHit(true);
+		return (cell.getCharacter() != IBattleship.CELL_EMPTY);
 	}
 }

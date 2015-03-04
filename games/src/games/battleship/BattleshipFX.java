@@ -7,55 +7,48 @@ import javafx.scene.text.Text;
 
 public class BattleshipFX extends ImageGridGame<String> {
 
-	@FXML
-	private TextField player1LevelTextField;
+	@FXML private TextField player1LevelTextField;
+	@FXML private TextField player2LevelTextField;
+
+	private TextField[] playerLevelTextFields;
 	
 	@FXML
-	private TextField player2LevelTextField;
-
-	@FXML
 	private Text messageText;
+
+	@FXML private IBattleship battleship1;
+	@FXML private IBattleship battleship2;
+	
+	private IBattleship[] battleships;
 
 	@FXML
 	protected void initialize() {
 		super.initialize();
+		playerLevelTextFields = new TextField[]{player1LevelTextField, player2LevelTextField};
+		battleships = new IBattleship[]{battleship1, battleship2};
 	}
 
-	@FXML
-	private IBattleship battleship;
-
-	private IBattleship[] battleships = new IBattleship[2];
-	private int player = 1; // 1 or 2
-	private int winner = -1;
-	private int selectedX, selectedY;
+	private int player = 0, winner = -1; // 0 or 1, index into arrays
 	private String[] responses = {", you're up!", ", it's time to show who's boss.", ", fire at will!", ", don't just sit there.", ", you know what to do."};
 
 	private String randomResponse() {
 		return responses[(int) (Math.random() * responses.length)];
 	}
-	
+
 	@FXML
 	private void startGame() {
-		
 		fillGrid(null);
-		String p1Level = player1LevelTextField.getText();
-		String p2Level = player2LevelTextField.getText();
-		
-		if (p1Level.length() != p2Level.length())
-			throw new IllegalArgumentException("The two levels are not of the same dimensions!");
-		
-		battleship.init(p1Level);
-		battleships[0] = battleship;
-		battleships[1] = new Battleship();
-		battleships[1].init(p2Level);
-
-		imageGrid.setRowCount(battleship.getDimension());
-		imageGrid.setColumnCount(battleship.getDimension());
-		for (int y = 0; y < battleship.getDimension(); y++) {
-			for (int x = 0; x < battleship.getDimension(); x++) {
-				setCell(x, y, battleship.getCellString(x, y));
+		int size = 0;
+		for (int player = 0; player < battleships.length; player++) {
+			String levelText = playerLevelTextFields[player].getText();
+			battleships[player].init(levelText);
+			if (size == 0) {
+				size = battleships[player].getSize();
+			} else if (battleships[player].getSize() != size) {
+				throw new IllegalArgumentException("The level sizes are not the same!");
 			}
 		}
+		imageGrid.setDimensions(size, size);
+		updateCells();
 		updateStatus("Game started. It is Player " + player + "'s turn.");
 	}
 
@@ -63,32 +56,35 @@ public class BattleshipFX extends ImageGridGame<String> {
 		messageText.setText(status);
 	}
 
-	@Override
-	protected boolean mouseClicked(int x, int y) {
-		selectedX = x;
-		selectedY = y;
-		update();
-		return true;
+	private void updateCell(int x, int y) {
+		setCell(x, y, String.valueOf(battleships[player].getCellCharacter(x, y)));
 	}
 
-	private void update() {
+	private void updateCells() {
+		foreachCell((x, y) -> updateCell(x, y));
+	}
 
-		boolean hit = battleship.fire(selectedX, selectedY);
-		setCell(selectedX, selectedY, battleship.getCellString(selectedX, selectedY));
-
-		if (battleship.isGameOver() && winner == -1) winner = player;
-
-		int nextPlayer = (player == 1) ? 2 : 1;
-		
-		if (winner != -1) updateStatus("GAME OVER! Player " + winner + " won.");
-		else {
-			String status =  (hit) ? "Player " + player + " hit! " : "Player " + player + " missed! ";
-			updateStatus(status + "Player " + nextPlayer + randomResponse());
+	
+	@Override
+	protected boolean mouseClicked(int x, int y) {
+		if (winner < 0) {
+			IBattleship battleship = battleships[player];
+			boolean hit = battleship.fire(x, y);
+			updateCell(x, y);
+			int notHitShipCount = battleship.countShips(false);
+			if (notHitShipCount == 0) {
+				winner = player;
+				updateStatus("GAME OVER! Player " + (winner + 1) + " won.");
+			} else {
+				String status = "Player " + (player + 1) + (hit ? " hit!" : "missed!");
+				player = (player + 1) % 2;
+				runDelayed(2000, () -> {
+					updateCells();
+					updateStatus(status + " Player " + (player + 1) + randomResponse());
+				});
+			}
 		}
-
-		player = nextPlayer;
-		battleship = (battleship == battleships[0]) ? battleships[1] : battleships[0];
-		foreachCell((x, y) -> setCell(x, y, battleship.getCellString(x, y)));
+		return true;
 	}
 
 	public static void main(String[] args) {

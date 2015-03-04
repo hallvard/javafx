@@ -39,16 +39,7 @@ public class Battleship implements IBattleship {
 
 	@Override
     public int countShips(Boolean hit) {
-		int count = 0;
-		for (Cell cell : board) {
-			char c = cell.getCharacter();
-			if (c != IBattleship.CELL_OCEAN && c != IBattleship.CELL_EMPTY) {
-				if (hit == null || cell.isHit() == hit) {
-					count++;
-				}
-			}
-		}
-        return count;
+		return (int) board.stream().filter(cell -> cell.isShip() && (hit == null || cell.isHit() == hit)).count();
     }
 
 	@Override

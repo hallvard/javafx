@@ -14,6 +14,10 @@ public class Cell {
 		return character;
 	}
 
+	public boolean isShip() {
+		return character != IBattleship.CELL_OCEAN && character != IBattleship.CELL_EMPTY;
+	}
+
 	public void setHit(boolean hit) {
 		this.hit = hit;
 	}

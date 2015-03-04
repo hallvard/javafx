@@ -1,0 +1,20 @@
+emfs
+/games/ #java #package
+	FxmlApp.java			 	@ git@github.com:hallvard/javafx/games/src/games/FxmlApp.java;
+	FxmlBuilderFactory.java 	@ git@github.com:hallvard/javafx/games/src/games/FxmlBuilderFactory.java;
+	FxmlGame.java				@ git@github.com:hallvard/javafx/games/src/games/FxmlGame.java;
+	imagegrid/ #java #package
+		ImageGrid.java			@ git@github.com:hallvard/javafx/games/src/games/imagegrid/ImageGrid.java;
+		ImageGridGame.java		@ git@github.com:hallvard/javafx/games/src/games/imagegrid/ImageGridGame.java;
+		;
+	battleship/ #java #package
+		hit64x64.png			@ git@github.com:hallvard/javafx/games/src/games/battleship/hit64x64.png;
+		miss64x64.png           @ git@github.com:hallvard/javafx/games/src/games/battleship/miss64x64.png;
+		ocean64x64.png          @ git@github.com:hallvard/javafx/games/src/games/battleship/ocean64x64.png;
+
+		battleship1/
+			IBattleship.java		@ git@github.com:hallvard/javafx/games/src/games/battleship/battleship1/IBattleship.java;
+			Cell.java				@ git@github.com:hallvard/javafx/games/src/games/battleship/battleship1/Cell.java;
+			Battleship.java			@ git@github.com:hallvard/javafx/games/src/games/battleship/battleship1/Battleship.java;
+			BattleshipFX.java		@ git@github.com:hallvard/javafx/games/src/games/battleship/battleship1/BattleshipFX.java;
+			BattleshipFX.fxml		@ git@github.com:hallvard/javafx/games/src/games/battleship/battleship1/BattleshipFX.fxml;

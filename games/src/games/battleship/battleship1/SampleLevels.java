@@ -1,4 +1,4 @@
-package games.battleship;
+package games.battleship.battleship1;
 
 public class SampleLevels {
 

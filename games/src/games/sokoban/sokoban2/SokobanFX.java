@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.time.Period;
 import java.util.List;
 
 import javafx.fxml.FXML;
@@ -56,10 +55,8 @@ public class SokobanFX extends ImageGridGame<String> implements IUpdateable {
 	public void updateState(boolean fullUpdate) {
 		if (fullUpdate) {
 			fillGrid(null);
-			imageGrid.setRowCount(sokoban.getHeight());
-			imageGrid.setColumnCount(sokoban.getWidth());
+			imageGrid.setDimensions(sokoban.getWidth(), sokoban.getHeight());
 		}
-		updateCells(0, 0, sokoban.getWidth(), sokoban.getHeight());
 		updateCells(0, 0, sokoban.getWidth(), sokoban.getHeight());
 		updateStatus();
 	}

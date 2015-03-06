@@ -2,30 +2,11 @@ package games.sokoban.sokoban2;
 
 public class Cell {
 
-	public static int char2StaticCellValue(char c) {
-		switch (c) {
-		case '#': 						return ISokoban.CELL_STATIC_WALL;
-		case '.': case '+': case '*':	return ISokoban.CELL_STATIC_TARGET;
-		}
-		return ISokoban.CELL_STATIC_EMPTY;
-	}
-
-	public static int char2DynamicCellValue(char c) {
-		switch (c) {
-		case '@': case '+': return ISokoban.CELL_DYNAMIC_PLAYER;
-		case '$': case '*': return ISokoban.CELL_DYNAMIC_BOX;
-		}
-		return ISokoban.CELL_DYNAMIC_EMPTY;
-	}
-
 	private int staticCellValue, dynamicCellValue;
 
-	public Cell(char c) {
-		if ("-_".indexOf(c) >= 0) {
-			c = ' ';
-		}
-		staticCellValue = char2StaticCellValue(c);
-		dynamicCellValue = char2DynamicCellValue(c);
+	public Cell(int staticCellValue, int dynamicCellValue) {
+		this.staticCellValue = staticCellValue;
+		this.dynamicCellValue = dynamicCellValue;
 	}
 
 	public int getStaticCellValue() {
@@ -37,7 +18,7 @@ public class Cell {
 	}
 
 	public Cell() {
-		this('#');
+		this(ISokoban.CELL_STATIC_EMPTY, ISokoban.CELL_DYNAMIC_EMPTY);
 	}
 	
 	public boolean isOccupied() {
@@ -64,21 +45,8 @@ public class Cell {
 		this.dynamicCellValue = ISokoban.CELL_DYNAMIC_EMPTY;
 	}
 	
-	public char toChar() {
-		switch (staticCellValue | dynamicCellValue) {
-		case ISokoban.CELL_STATIC_WALL: 									return '#';
-		case ISokoban.CELL_STATIC_EMPTY 	| ISokoban.CELL_DYNAMIC_EMPTY:	return ' ';
-		case ISokoban.CELL_STATIC_EMPTY 	| ISokoban.CELL_DYNAMIC_PLAYER: return '@';
-		case ISokoban.CELL_STATIC_EMPTY 	| ISokoban.CELL_DYNAMIC_BOX: 	return '$';
-		case ISokoban.CELL_STATIC_TARGET 	| ISokoban.CELL_DYNAMIC_EMPTY: 	return '.';
-		case ISokoban.CELL_STATIC_TARGET 	| ISokoban.CELL_DYNAMIC_PLAYER: return '+';
-		case ISokoban.CELL_STATIC_TARGET 	| ISokoban.CELL_DYNAMIC_BOX: 	return '*';
-		}
-		return ' ';
-	}
-	
 	@Override
 	public String toString() {
-		return String.valueOf(toChar());
+		return String.valueOf(DefaultSokobanPersistance.toChar(staticCellValue, dynamicCellValue));
 	}
 }

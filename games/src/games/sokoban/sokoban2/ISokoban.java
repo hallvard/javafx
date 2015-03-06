@@ -42,6 +42,19 @@ public interface ISokoban extends IUndoable, IPersistable {
 	public int countCells(Integer cellStatic, Integer cellDynamic);
 
 	/**
+	 * Gets the moves as a String, with l, r, u, d to indicate the directions, and case to indicate move (lower) and push (upper)
+	 * @return
+	 */
+	public String getMoves();
+
+	/**
+	 * Initializes game with the provided data.
+	 * @param lines lines of cell values, with two ints pr cell
+	 * @param moves moves encoded as for getMoves()
+	 */
+	public void init(int[][] lines, String moves);
+
+	/**
 	 * Moves the player in the indicated direction. Returns whether or not it was a push, or legal at all. 
 	 * @param dx
 	 * @param dy

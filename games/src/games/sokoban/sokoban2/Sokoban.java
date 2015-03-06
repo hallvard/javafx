@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Sokoban implements ISokoban {
 	
@@ -19,35 +20,45 @@ public class Sokoban implements ISokoban {
 	public Sokoban() {
 	}
 
-	private void init(String[] lines) {
+	@Override
+	public void init(int[][] lines, String moves) {
 		// first we compute the width, as the maximum length of the lines
 		width = 0;
 		for (int y = 0; y < lines.length; y++) {
-			width = Math.max(width, lines[y].length());
+			width = Math.max(width, lines[y].length) / 2;
 		}
 		grid = new ArrayList<Cell>(lines.length * width);
+		playerX = playerY = -1;
 		// fill the array with the characters in the lines
 		// note that lines may be shorter than the width, so some cells may not be set
 		for (int y = 0; y < lines.length; y++) {
-			String line = lines[y];
-			for (int x = 0; x < width; x++) {
-				Cell cell = (x < line.length() ? new Cell(line.charAt(x)) : new Cell(' '));
+			int[] line = lines[y];
+			for (int x = 0; x < width; x += 2) {
+				Cell cell = (x < line.length ? new Cell(line[x], line[x + 1]) : new Cell());
 				if (cell.isPlayer()) {
+					if (playerX >= 0 && playerY >= 0) {
+						throw new IllegalArgumentException("Cannot have more than one player");
+					}
 					playerX = x;
 					playerY = y;
 				}
 				grid.add(cell);
 			}
 		}
-	}
-	
-	public Sokoban(String[] lines) {
-		init(lines);
+		if (playerX < 0 && playerY < 0) {
+			throw new IllegalArgumentException("Must have a player");
+		}
+		this.moves = new ArrayList<Move>();
+		if (moves != null) {
+			for (int i = 0; i < moves.length(); i++) {
+				this.moves.add(new Move(moves.charAt(i)));
+			}
+		}
 	}
 	
 	@Override
 	public String toString() {
-		return toString("\n");
+		return toString("\n") + getMoves();
 	}
 	
 	public String toString(String separator) {
@@ -57,10 +68,10 @@ public class Sokoban implements ISokoban {
 		// for each cell
 		for (Cell cell : grid) {
 			// add the corresponding char
-			builder.append(cell.toChar());
+			builder.append(DefaultSokobanPersistance.toChar(cell.getStaticCellValue(), cell.getDynamicCellValue()));
 			num++;
-			// if end-of-line and not end of grid, add separator
-			if (num == width && num < grid.size()) {
+			// if end-of-line add separator
+			if (num == width) {
 				builder.append(separator);
 				num = 0;
 			}
@@ -146,37 +157,30 @@ public class Sokoban implements ISokoban {
 		return getCell(x, y).getDynamicCellValue();
 	}
 
+	private ISokobanPersistance sokobanPersistance;
+
+	public void setSokobanPersistance(ISokobanPersistance sokobanPersistance) {
+		this.sokobanPersistance = sokobanPersistance;
+	}
+	
 	@Override
 	public void load(InputStream inputStream) throws IOException {
-		Collection<String> lines = new ArrayList<String>();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-		String line = null;
-		while ((line = reader.readLine()) != null) {
-			if (line.startsWith(";")) {
-				continue;
-			}
-			lines.addAll(Arrays.asList(line.split("[\n\\|]+")));
-			lines.remove(null);
-		}
-		reader.close();
-		init(lines.toArray(new String[lines.size()]));
+		sokobanPersistance.load(this, inputStream);
 	}
 	
 	@Override
 	public void save(OutputStream outputStream) throws IOException {
-		PrintWriter writer = new PrintWriter(outputStream);
-		writer.print(this);
-		writer.flush();
-	}
-
-	public void init(String level) {
-		init(level.split("[\n\\|]+"));
+		sokobanPersistance.save(this, outputStream);
 	}
 
 	//
 	
-	private List<Move> moves = new ArrayList<Move>();
+	private List<Move> moves;
 	private int undoPos = 0;
+	
+	public String getMoves() {
+		return moves.stream().map(m -> m.toString()).collect(Collectors.joining());
+	}
 	
 	@Override
 	public Move movePlayer(int dx, int dy) {

@@ -22,7 +22,7 @@ public class Move {
 		this.isPush = Character.isUpperCase(c);
 	}
 	
-	private static String directionChars = "lrud";
+	public final static String directionChars = "lrud";
 
 	private static int[] directionVectors = {
 			-1, 0,

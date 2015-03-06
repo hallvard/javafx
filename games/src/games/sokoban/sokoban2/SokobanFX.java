@@ -102,17 +102,6 @@ public class SokobanFX extends ImageGridGame<String> implements IUpdateable {
 	private void updateAroundPlayer() {
 		updateCells(playerX - 3, playerY - 3, playerX + 3, playerY + 3);
 	}
-	
-//	private void updateAroundPlayer(Move moveCommand, int x, int y) {
-//		if (moveCommand != null) {
-//			updateCell(x, y);
-//			updateCell(x - moveCommand.dx, y - moveCommand.dy);
-//			if (moveCommand.isPush) {
-//				updateCell(x + moveCommand.dx, y + moveCommand.dy);
-//			}
-//		}
-//		updateStatus();
-//	}
 
 	@Override
 	protected void keyPressed(KeyEvent keyEvent) {

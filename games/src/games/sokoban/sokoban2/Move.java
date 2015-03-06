@@ -13,7 +13,7 @@ public class Move {
 	}
 
 	public Move(char c) {
-		int pos = directionChars.indexOf(c);
+		int pos = directionChars.indexOf(Character.toLowerCase(c));
 		if (pos < 0) {
 			throw new IllegalArgumentException(c + " is an illegal direction character");
 		}

@@ -1,14 +1,9 @@
 package games.sokoban.sokoban2;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,13 +28,13 @@ public class Sokoban implements ISokoban {
 		// note that lines may be shorter than the width, so some cells may not be set
 		for (int y = 0; y < lines.length; y++) {
 			int[] line = lines[y];
-			for (int x = 0; x < width; x += 2) {
+			for (int x = 0; x < width * 2; x += 2) {
 				Cell cell = (x < line.length ? new Cell(line[x], line[x + 1]) : new Cell());
 				if (cell.isPlayer()) {
 					if (playerX >= 0 && playerY >= 0) {
 						throw new IllegalArgumentException("Cannot have more than one player");
 					}
-					playerX = x;
+					playerX = x / 2;
 					playerY = y;
 				}
 				grid.add(cell);
@@ -49,10 +44,12 @@ public class Sokoban implements ISokoban {
 			throw new IllegalArgumentException("Must have a player");
 		}
 		this.moves = new ArrayList<Move>();
+		undoPos = 0;
 		if (moves != null) {
 			for (int i = 0; i < moves.length(); i++) {
 				this.moves.add(new Move(moves.charAt(i)));
 			}
+			undoPos = moves.length();
 		}
 	}
 	
@@ -157,7 +154,7 @@ public class Sokoban implements ISokoban {
 		return getCell(x, y).getDynamicCellValue();
 	}
 
-	private ISokobanPersistance sokobanPersistance;
+	private ISokobanPersistance sokobanPersistance = new DefaultSokobanPersistance();
 
 	public void setSokobanPersistance(ISokobanPersistance sokobanPersistance) {
 		this.sokobanPersistance = sokobanPersistance;

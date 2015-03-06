@@ -16,16 +16,16 @@ public class DefaultSokobanPersistance implements ISokobanPersistance {
 		switch (c) {
 		case '#': 						return ISokoban.CELL_STATIC_WALL;
 		case '.': case '+': case '*':	return ISokoban.CELL_STATIC_TARGET;
-		case ' ':						return ISokoban.CELL_STATIC_EMPTY;
+		case ' ': case '@': case '$':	return ISokoban.CELL_STATIC_EMPTY;
 		}
 		return -1;
 	}
 
 	public static int char2DynamicCellValue(char c) {
 		switch (c) {
-		case '@': case '+': return ISokoban.CELL_DYNAMIC_PLAYER;
-		case '$': case '*': return ISokoban.CELL_DYNAMIC_BOX;
-		case '#': case '.': return ISokoban.CELL_DYNAMIC_EMPTY;
+		case '@': case '+': 			return ISokoban.CELL_DYNAMIC_PLAYER;
+		case '$': case '*': 			return ISokoban.CELL_DYNAMIC_BOX;
+		case '#': case '.': case ' ': 	return ISokoban.CELL_DYNAMIC_EMPTY;
 		}
 		return -1;
 	}
@@ -65,7 +65,8 @@ public class DefaultSokobanPersistance implements ISokobanPersistance {
 					char c = split[row].charAt(col);
 					int s = char2StaticCellValue(c), d = char2DynamicCellValue(c);
 					if (s < 0 || d < 0) {
-						if (col == 0) {
+						if (col == 0 && lines != null) {
+							moves = line;
 							break outer;
 						} else {
 							throw new IllegalArgumentException("Illegal character: " + c);
@@ -87,7 +88,7 @@ public class DefaultSokobanPersistance implements ISokobanPersistance {
 	@Override
 	public void save(ISokoban sokoban, OutputStream outputStream) throws IOException {
 		PrintWriter writer = new PrintWriter(outputStream);
-		writer.print(this);
+		writer.print(sokoban);
 		writer.flush();
 	}
 }

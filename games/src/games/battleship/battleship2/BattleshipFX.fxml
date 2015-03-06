@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import games.imagegrid.ImageGrid?>
+ 
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="games.battleship.BattleshipFX"
+    prefHeight="700" prefWidth="650"
+    >
+    <fx:define>
+    	<!--
+    		Bytt ut 'Battleshipklassen' under med navnet på den klassen du har laget,
+    	 	som implementerer IBattleship-grensesnittet (la fx:id være).
+    		Pass på å bruke hele navnet, med pakken foran, f.eks. battleship.Battleship	
+   	 	 -->
+    	<games.battleship.Battleship fx:id="battleship1"/>
+    	<games.battleship.Battleship fx:id="battleship2"/>
+    </fx:define>
+	<top>
+		<HBox>
+			<Label text="P1's Level: "/>
+			<TextField fx:id="player1LevelTextField" HBox.hgrow="ALWAYS" promptText="Level" onAction="#startGame"
+				text="...XX........XX..XXX...XX..........................X.........X...XXX...X.........X..XX.............."
+			/>
+			
+			<Label text="P2's Level: "/>
+			<TextField fx:id="player2LevelTextField" HBox.hgrow="ALWAYS" promptText="Level" onAction="#startGame"
+				text=".XXX.......XXX....X.........X.........X....XX...X.............X..XXX....X.........X................."
+			/>
+			
+			<Button text="Start" onAction="#startGame"/>
+		</HBox>
+	</top>
+	<center>
+		<ImageGrid fx:id="imageGrid"
+			imageUrlFormat="/games/battleship/res/${key}.png"
+			onKeyPressed="#keyPressed"
+			onMousePressed="#mouseClicked" hgap="1" vgap="1"
+		>
+			<imageKeyMapEntries>
+				<java.util.Map.Entry key="~" value="ocean64x64"/>
+				<java.util.Map.Entry key="." value="miss64x64"/>
+				<java.util.Map.Entry key="X" value="hit64x64"/>
+			</imageKeyMapEntries>
+		</ImageGrid>
+	</center>
+	<bottom>
+		<Text fx:id="messageText" VBox.vgrow="ALWAYS">
+			<font>
+               	<Font name="Courier"/>
+           	</font>
+        </Text>
+	</bottom>
+</BorderPane>

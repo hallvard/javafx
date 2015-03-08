@@ -1,4 +1,4 @@
-package games.sokoban.sokoban2;
+package games;
 
 public interface IUpdateable {
 	public void updateState(boolean fullUpdate);

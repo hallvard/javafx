@@ -1,5 +1,8 @@
 package games.sokoban.sokoban2;
 
+import games.IUpdateable;
+import games.PersistableController;
+import games.UndoableController;
 import games.imagegrid.ImageGridGame;
 
 import java.io.File;

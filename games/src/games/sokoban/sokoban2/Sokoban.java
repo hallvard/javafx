@@ -180,7 +180,7 @@ public class Sokoban implements ISokoban {
 	}
 	
 	@Override
-	public Move movePlayer(int dx, int dy) {
+	public Boolean movePlayer(int dx, int dy) {
 		Boolean isPush = doMove(dx, dy);
 		if (isPush != null) {
 			Move moveCommand = new Move(dx, dy, isPush);
@@ -189,11 +189,10 @@ public class Sokoban implements ISokoban {
 			}
 			moves.add(moveCommand);
 			undoPos++;
-			return moveCommand;
 		}
-		return null;
+		return isPush;
 	}
-	
+
 	@Override
 	public boolean canUndo() {
 		return undoPos > 0;

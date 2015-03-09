@@ -60,5 +60,5 @@ public interface ISokoban extends IUndoable, IPersistable {
 	 * @param dy
 	 * @return Returns TRUE if the move was a push, FALSE if it was a move or null of it was illegal. 
 	 */
-	public Move movePlayer(int dx, int dy);
+	public Boolean movePlayer(int dx, int dy);
 }

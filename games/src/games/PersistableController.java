@@ -2,14 +2,21 @@ package games;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.util.List;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.stage.FileChooser;
 
 public class PersistableController {
 
@@ -30,6 +37,79 @@ public class PersistableController {
 		this.persistable = stateStore;
 	}
 
+	@FXML
+	private ComboBox<String> stateUrlCombo;
+
+	@FXML
+	private void browseStateFile() {
+		File file = new FileChooser().showOpenDialog(null);
+		if (file != null) {
+			stateUrlCombo.setValue(file.toURI().toString());
+		}
+	}
+
+	@FXML
+	private void saveStateToFile() {
+		File file = new FileChooser().showSaveDialog(null);
+		if (file != null) {
+			FileOutputStream outputStream = null;
+			try {
+				outputStream = new FileOutputStream(file);
+				persistable.save(outputStream);
+				outputStream.close();
+			} catch (IOException e) {
+				updateable.updateState(e.getMessage());
+			} finally {
+				try {
+					outputStream.close();
+				} catch (Exception e) {
+				}
+			}
+		}
+	}
+
+	@FXML
+	public void loadStateFromURL() {
+		loadStateFromURL(stateUrlCombo.getValue());
+	}
+
+	public void loadStateFromURL(String stateUrl) {
+		try {
+			loadStateFromURL(new URL(stateUrl));
+		} catch (IOException e) {
+			updateable.updateState(e.getMessage());
+		}
+	}
+	
+	public void loadStateFromURL(URL stateUrl) {
+		try {
+			loadStateFromInputStream(stateUrl.openStream(), stateUrl.toString());
+		} catch (IOException e) {
+			updateable.updateState(e.getMessage());
+		}
+	}
+	
+	public void loadStateFromInputStream(InputStream inputStream, String stateUrl) {
+		try {
+			persistable.load(inputStream);
+			if (stateUrl != null) {
+				List<String> items = stateUrlCombo.getItems();
+				if (items.contains(stateUrl)) {
+					items.add(stateUrl);
+					stateUrlCombo.getSelectionModel().select(items.size() - 1);
+				}
+			}
+			updateable.updateState(true);
+		} catch (IOException e) {
+			updateable.updateState(e.getMessage());
+		} finally {
+			try {
+				inputStream.close();
+			} catch (Exception e) {
+			}
+		}
+	}
+	
 	@FXML
 	private TextArea stateText;
 

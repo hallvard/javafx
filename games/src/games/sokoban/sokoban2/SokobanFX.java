@@ -40,12 +40,9 @@ public class SokobanFX extends ImageGridGame<String> implements IUpdateable {
 		persistableController.setStateStore(sokoban);
 		persistableController.setUpdate(this);
 		
-		startGame(SokobanFX.class.getResource("/games/sokoban/sample.sok").toString());
+		persistableController.loadStateFromURL(SokobanFX.class.getResource("/games/sokoban/sample.sok"));
 	}
 	
-	@FXML
-	private ComboBox<String> levelCombo;
-
 	@FXML
 	private Text messageText;
 	
@@ -68,36 +65,6 @@ public class SokobanFX extends ImageGridGame<String> implements IUpdateable {
 	public void updateState(int x1, int y1, int x2, int y2) {
 		updateCells(x1, y1, x2, y2);
 		updateStatus();
-	}
-
-	@FXML
-	private void chooseGame() {
-		File file = new FileChooser().showOpenDialog(null);
-		if (file != null) {
-			levelCombo.setValue(file.toURI().toString());
-		}
-	}
-
-	private void startGame(String levelUrl) {
-//		System.out.println("Loading " + levelString);
-		try {
-			InputStream inputStream = new URL(levelUrl).openStream();
-			sokoban.load(inputStream);
-			List<String> items = levelCombo.getItems();
-			if (items.contains(levelUrl)) {
-				items.add(levelUrl);
-				levelCombo.getSelectionModel().select(items.size() - 1);
-			}
-			updateState(true);
-			ensureKeyboardFocus();
-		} catch (IOException e) {
-			updateState(e.getMessage());
-		}
-	}
-
-	@FXML
-	private void startGame() {
-		startGame(levelCombo.getValue());
 	}
 
 	private int playerX, playerY;

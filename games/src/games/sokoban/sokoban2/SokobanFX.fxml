@@ -23,19 +23,6 @@
    	 	 -->
     	<games.sokoban.sokoban2.Sokoban fx:id="sokoban"/>
     </fx:define>
-	<top>
-		<HBox>
-			<Button text="Browse..." onAction="#chooseGame"/>
-			<ComboBox fx:id="levelCombo" HBox.hgrow="ALWAYS" promptText="Level" editable="true"
-				value="file:/Users/hal/java/git/javafx/games/src/games/sokoban/sample.sok"
-			/>
-			<Button text="Start" onAction="#startGame">
-			    <tooltip>
-			        <Tooltip text="Starts a game with the content of the resource referred to by this URL"/>
-			    </tooltip>
-			</Button>
-		</HBox>
-	</top>
 	<center>
 		<ImageGrid fx:id="imageGrid"
 			imageUrlFormat="/games/sokoban/${key}.png"
@@ -54,10 +41,10 @@
 		</ImageGrid>
 	</center>
 	<left>
-		<fx:include fx:id="undoable" source="../../Undoable.fxml"/>
+		<fx:include fx:id="persistable" source="../../Persistable.fxml"/>
 	</left>
 	<right>
-		<fx:include fx:id="persistable" source="../../Persistable.fxml"/>
+		<fx:include fx:id="undoable" source="../../Undoable.fxml"/>
 	</right>
 	<bottom>
 		<Text fx:id="messageText" VBox.vgrow="ALWAYS">

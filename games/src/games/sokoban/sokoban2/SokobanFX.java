@@ -57,8 +57,8 @@ public class SokobanFX extends ImageGridGame<String> implements IUpdateable {
 	@Override
 	public void updateState(boolean fullUpdate) {
 		if (fullUpdate) {
-			fillGrid(null);
 			imageGrid.setDimensions(sokoban.getWidth(), sokoban.getHeight());
+			fillGrid(null);
 		}
 		updateCells(0, 0, sokoban.getWidth(), sokoban.getHeight());
 		updateStatus();

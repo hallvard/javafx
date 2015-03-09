@@ -60,8 +60,9 @@ public class DefaultSokobanPersistance implements ISokobanPersistance {
 			}
 			String[] split = line.split("[\n\\|]+");
 			outer: for (int row = 0; row < split.length; row++) {
-				int[] values = new int[split[row].length() * 2];
-				for (int col = 0; col < split[row].length(); col++) {
+				int columns = split[row].length();
+				int[] values = new int[columns * 2];
+				for (int col = 0; col < columns; col++) {
 					char c = split[row].charAt(col);
 					int s = char2StaticCellValue(c), d = char2DynamicCellValue(c);
 					if (s < 0 || d < 0) {

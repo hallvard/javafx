@@ -20,7 +20,7 @@ public class Sokoban implements ISokoban {
 		// first we compute the width, as the maximum length of the lines
 		width = 0;
 		for (int y = 0; y < lines.length; y++) {
-			width = Math.max(width, lines[y].length) / 2;
+			width = Math.max(width, lines[y].length / 2);
 		}
 		grid = new ArrayList<Cell>(lines.length * width);
 		playerX = playerY = -1;

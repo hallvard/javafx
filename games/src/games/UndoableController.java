@@ -1,6 +1,5 @@
-package games.sokoban.sokoban2;
+package games;
 
-import games.IUndoable;
 import javafx.fxml.FXML;
 
 public class UndoableController {
@@ -23,6 +22,7 @@ public class UndoableController {
 	}
 	
 	@FXML
+	public
 	void undo() {
 		if (undoable.canUndo()) {
 			undoable.undo();
@@ -37,6 +37,7 @@ public class UndoableController {
 	}
 
 	@FXML
+	public
 	void redo() {
 		if (undoable.canRedo()) {
 			undoable.redo();

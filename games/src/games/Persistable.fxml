@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Tooltip?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="games.sokoban.sokoban2.PersistableController">
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="games.PersistableController">
     <fx:define>
 		<ContextMenu fx:id="clipboardMenu">
 			<items>

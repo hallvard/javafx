@@ -1,6 +1,4 @@
-package games.sokoban.sokoban2;
-
-import games.IPersistable;
+package games;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -64,6 +62,7 @@ public class PersistableController {
 	}
 
 	@FXML
+	public
 	void copyToClipboard() {
 		ClipboardContent content = new ClipboardContent();
 		content.putString(stateText.getText());
@@ -71,6 +70,7 @@ public class PersistableController {
 	}
 
 	@FXML
+	public
 	void pasteFromClipboard() {
 		String levelString = Clipboard.getSystemClipboard().getString();
 		if (levelString != null) {

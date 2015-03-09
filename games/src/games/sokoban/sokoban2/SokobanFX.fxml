@@ -54,10 +54,10 @@
 		</ImageGrid>
 	</center>
 	<left>
-		<fx:include fx:id="undoable" source="Undoable.fxml"/>
+		<fx:include fx:id="undoable" source="../../Undoable.fxml"/>
 	</left>
 	<right>
-		<fx:include fx:id="persistable" source="Persistable.fxml"/>
+		<fx:include fx:id="persistable" source="../../Persistable.fxml"/>
 	</right>
 	<bottom>
 		<Text fx:id="messageText" VBox.vgrow="ALWAYS">

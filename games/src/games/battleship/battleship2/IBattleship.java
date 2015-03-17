@@ -2,16 +2,26 @@ package games.battleship.battleship2;
 
 import games.IPersistable;
 
+import java.util.Collection;
+import java.util.List;
+
 public interface IBattleship extends IPersistable {
 	
 	public static final char CELL_OCEAN = '~';
 	public static final char CELL_EMPTY = '.';
+    public static final char CELL_SHIP_HIT = 'X';
 	
 	/**
 	 * Initializes a game with a String representation of a level. All other game state should be cleared.
 	 * @param level The level represented as a String.
 	 */
 	public void init(String level);
+
+    /*
+     * Initializes a game with a String representation of all the cells' hit state and the ships on the board.
+     *
+     */
+    public void init(String hits, Ship... ships);
 
 	/**
 	 * @return The width/height of the grid, as the height and width should be equal.
@@ -24,7 +34,7 @@ public interface IBattleship extends IPersistable {
 	 * @param y The y-coordinate of the cell
 	 * @return The ship type.
 	 */
-	public Ship getCellShip(int x, int y);
+	public Cell getCell(int x, int y);
 	
 	/**
 	 * Gets the hit state of the cell, i.e. if it has been fired at.
@@ -33,6 +43,13 @@ public interface IBattleship extends IPersistable {
 	 * @return The hit state of the cell.
 	 */
 	public boolean isCellHit(int x, int y);
+
+
+    /**
+     * @return All ships placed on the board
+     */
+    public Collection<Ship> getShips();
+
 
 	/**
 	 * Counts the cells of a ship type that are hit or not.
@@ -46,7 +63,7 @@ public interface IBattleship extends IPersistable {
 	 * Fires a shot for the current player. 
 	 * @param x The x-coordinate of the cell
 	 * @param y The y-coordinate of the cell
-	 * @return True if the shot hits a ship that has not already been hit, else false.
+	 * @return Null if no ship at coordinate. True if the ship was sunk, false if not.
 	 */
-	public boolean fire(int x, int y);
+	public Boolean fire(int x, int y);
 }

@@ -35,6 +35,11 @@ public class Cell {
 	}
 
 	public String toString() {
-		return String.valueOf(isHit() ? getCharacter() : IBattleship.CELL_OCEAN);
+		char c;
+        if (isHit())
+            c = (isShip()) ? IBattleship.CELL_SHIP_HIT : IBattleship.CELL_EMPTY;
+        else
+            c = IBattleship.CELL_OCEAN;
+        return String.valueOf(c);
 	}
 }

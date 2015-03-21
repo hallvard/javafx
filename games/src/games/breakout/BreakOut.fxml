@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.collections.FXCollections?>
+
+<AnchorPane prefHeight="600" prefWidth="800" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
+	fx:controller="games.breakout.BreakOut"
+	fx:id="pane"
+	>
+   <children>
+      <Group fx:id="playerShape">
+         <children>
+            <Circle fill="DODGERBLUE" layoutX="163.0" layoutY="265.0" radius="43.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="WHITE" layoutX="163.0" layoutY="274.0" radius="26.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="DODGERBLUE" layoutX="163.0" layoutY="258.0" radius="29.0" stroke="DODGERBLUE" strokeType="INSIDE" />
+            <Circle fill="WHITE" layoutX="146.0" layoutY="258.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="WHITE" layoutX="180.0" layoutY="258.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+         </children>
+      </Group>
+      <Rectangle fx:id="brick1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="52.0" layoutX="319.0" layoutY="289.0" stroke="BLACK" strokeType="INSIDE" width="52.0" />
+      <Rectangle fx:id="brick2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="52.0" layoutX="267.0" layoutY="439.0" stroke="BLACK" strokeType="INSIDE" width="52.0" />
+      <Rectangle fx:id="brick3" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="52.0" layoutX="285.0" layoutY="98.0" stroke="BLACK" strokeType="INSIDE" width="52.0" />
+      <Rectangle fx:id="brick4" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="52.0" layoutX="556.0" layoutY="124.0" stroke="BLACK" strokeType="INSIDE" width="52.0" />
+      <Rectangle fx:id="brick5" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="52.0" layoutX="566.0" layoutY="376.0" stroke="BLACK" strokeType="INSIDE" width="52.0" />
+   </children>
+	<fx:define>
+		<FXCollections fx:id="bricks" fx:factory="observableArrayList">
+			<fx:reference source="brick1"/>
+			<fx:reference source="brick2"/>
+			<fx:reference source="brick3"/>
+			<fx:reference source="brick4"/>
+			<fx:reference source="brick5"/>
+		</FXCollections>
+	</fx:define>
+</AnchorPane>

@@ -7,10 +7,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -18,7 +22,46 @@ import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public abstract class FxmlGame {
+public abstract class FxmlGame implements EventHandler<KeyEvent> {
+
+	@Override
+	public void handle(KeyEvent event) {
+		handleKeyEvent(event);
+	}
+	
+	protected void handleKeyEvent(KeyEvent event) {
+		if (event.getEventType() == KeyEvent.KEY_PRESSED) {
+			keyPressed(event);
+		}
+	}
+
+	protected void keyPressed(KeyEvent keyEvent) {
+		KeyCode code = keyEvent.getCode();
+		boolean consumed = false;
+		consumed = keyPressed(code);
+		if (! consumed) {
+			if (code == KeyCode.LEFT) {
+				consumed = keyPressed(-1,  0);
+			} else if (code == KeyCode.RIGHT) {
+				consumed = keyPressed( 1,  0);
+			} else if (code == KeyCode.UP) {
+				consumed = keyPressed( 0, -1);
+			} else if (code == KeyCode.DOWN) {
+				consumed = keyPressed( 0,  1);
+			}
+		}
+		if (consumed) {
+			keyEvent.consume();
+		}
+	}
+
+	protected boolean keyPressed(KeyCode code) {
+		return false;
+	}
+
+	protected boolean keyPressed(int dx, int dy) {
+		return false;
+	}
 
 	public int randomInt(int min, int max) {
 		return min + (int) (Math.random() * (max - min + 1));

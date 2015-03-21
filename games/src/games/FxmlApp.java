@@ -29,7 +29,13 @@ public class FxmlApp extends Application {
         fxmlLoader.setBuilderFactory(new FxmlBuilderFactory());
         Parent root = (Parent) fxmlLoader.load();
         controller = fxmlLoader.getController();
-        primaryStage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        if (controller instanceof FxmlGame) {
+        	scene.setOnKeyPressed((FxmlGame) controller);
+        	scene.setOnKeyReleased((FxmlGame) controller);
+        	scene.setOnKeyTyped((FxmlGame) controller);
+        }
+		primaryStage.setScene(scene);
         primaryStage.show();
 	}
 	

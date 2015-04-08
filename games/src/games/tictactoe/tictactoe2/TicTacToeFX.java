@@ -67,12 +67,7 @@ public class TicTacToeFX extends ImageGridGame<Boolean> implements IUpdateable {
 
 	@Override
 	public void updateState(boolean fullUpdate) {
-		updateState(0, 0, ticTacToe.getWidth(), ticTacToe.getHeight());
-	}
-
-	@Override
-	public void updateState(int x1, int y1, int x2, int y2) {
-		updateCells(x1, y1, x2, y2);
+		updateCells(0, 0, ticTacToe.getWidth(), ticTacToe.getHeight());
 		updateStatus();
 	}
 

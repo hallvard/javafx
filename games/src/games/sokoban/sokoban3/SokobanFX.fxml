@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import games.imagegrid.ImageGrid?>
+<?import javafx.scene.control.ComboBox?>
+<?import com.sun.javafx.scene.control.skin.ContextMenuContent?>
+<?import javafx.scene.control.TextArea?>
+ 
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="games.sokoban.sokoban3.SokobanFX"
+    prefHeight="600" prefWidth="500"
+    >
+    <fx:define>
+    	<!--
+    		Bytt ut 'sokobanpakken.Sokobanklassen' under med det fulle navnet på klassen du har laget og
+    	 	som implementerer ISokoban-grensesnittet. La fx:id="sokoban" være.
+   	 	 -->
+    	<games.sokoban.sokoban3.Sokoban fx:id="sokoban"/>
+    </fx:define>
+	<center>
+		<ImageGrid fx:id="imageGrid"
+			imageUrlFormat="/games/sokoban/${key}.png"
+			onKeyPressed="#keyPressed"
+			onMouseClicked="#mouseClicked"
+		>
+            <imageKeyMapEntries>
+				<java.util.Map.Entry key="#" 	value="wall16x16"/>
+				<java.util.Map.Entry key=" " 	value="empty16x16"/>
+				<java.util.Map.Entry key="." 	value="target16x16"/>
+				<java.util.Map.Entry key="\@" 	value="player16x16"/>
+				<java.util.Map.Entry key="+" 	value="player_on_target16x16"/>
+				<java.util.Map.Entry key="\$" 	value="box16x16"/>
+				<java.util.Map.Entry key="*" 	value="box_on_target16x16"/>
+			</imageKeyMapEntries>
+		</ImageGrid>
+	</center>
+	<left>
+		<fx:include fx:id="persistable" source="../../Persistable.fxml"/>
+	</left>
+	<right>
+		<fx:include fx:id="undoable" source="../../Undoable.fxml"/>
+	</right>
+	<bottom>
+		<Text fx:id="messageText" VBox.vgrow="ALWAYS">
+			<font>
+               	<Font name="Courier"/>
+           	</font>
+        </Text>
+	</bottom>
+</BorderPane>

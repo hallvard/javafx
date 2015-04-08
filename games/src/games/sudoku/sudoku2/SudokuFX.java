@@ -51,8 +51,6 @@ public class SudokuFX extends ImageGridGame<String> implements IUpdateable{
 	protected void initialize() {
 		super.initialize();
 		
-		
-		
 		undoableController.setUndoRedo(sudoku);
 		undoableController.setUpdate(this);
 		persistableController.setStateStore(sudoku);
@@ -122,7 +120,7 @@ public class SudokuFX extends ImageGridGame<String> implements IUpdateable{
 
 	private void updateMessage() {
 		if(sudoku.isSolved()){
-			messageText.setText("Gratulerer! Du har en gyldig løsning.");
+			messageText.setText("Gratulerer! Du har en gyldig lï¿½sning.");
 		} else if(! sudoku.isLegalGrid()){
 			messageText.setText("Tildeling av verdier er ugyldig.");
 		}
@@ -162,13 +160,6 @@ public class SudokuFX extends ImageGridGame<String> implements IUpdateable{
 	public static void main(String[] args){
 		launch(SudokuFX.class);
 	}
-
-
-	@Override
-	public void updateState(int x1, int y1, int x2, int y2) {
-		updateState(true);
-	}
-
 
 	@Override
 	public void updateState(String text) {

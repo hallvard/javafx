@@ -62,4 +62,12 @@ public interface ISokoban extends IUndoable, IPersistable, ObservableGrid {
 	 * @return Returns TRUE if the move was a push, FALSE if it was a move or null of it was illegal. 
 	 */
 	public Boolean movePlayer(int dx, int dy);
+	
+	/**
+	 * Moves the player to the indicated cell, using a sequence of moves. Returns the sequence of moves as a String (see getMoves).
+	 * @param x
+	 * @param y
+	 * @return Returns the sequence of moves as a String (see getMoves) or null if the move was impossible.
+	 */
+	public String movePlayerTo(int x, int y);
 }

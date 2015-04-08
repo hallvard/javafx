@@ -150,6 +150,12 @@ public class SokobanFX extends ImageGridGame<String> implements IUpdateable, Gri
 		ensureKeyboardFocus();
 	}
 
+	@Override
+	protected boolean mouseClicked(int x, int y) {
+		sokoban.movePlayerTo(x, y);
+		return true;
+	}
+
 	// GridListener
 
 	@Override

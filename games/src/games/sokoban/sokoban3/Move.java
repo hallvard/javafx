@@ -1,51 +1,26 @@
 package games.sokoban.sokoban3;
 
 public class Move {
-	
-	final int dx, dy;
+
+	final Direction direction;
 	final boolean isPush;
 
-	public Move(int dx, int dy, boolean isPush) {
-		super();
-		this.dx = dx;
-		this.dy = dy;
+	public Move(Direction direction, boolean isPush) {
+		this.direction = direction;
 		this.isPush = isPush;
 	}
 
 	public Move(char c) {
-		int pos = directionChars.indexOf(Character.toLowerCase(c));
-		if (pos < 0) {
-			throw new IllegalArgumentException(c + " is an illegal direction character");
-		}
-		this.dx = directionVectors[pos * 2];
-		this.dy = directionVectors[pos * 2 + 1];
+		this.direction = Direction.directionFor(c);
 		this.isPush = Character.isUpperCase(c);
-	}
-	
-	public final static String directionChars = "lrud";
-
-	private static int[] directionVectors = {
-			-1, 0,
-			1, 0,
-			0, -1,
-			0, 1
-	};
-
-	public static char directionChar(int dx, int dy) {
-		for (int i  = 0; i < directionVectors.length; i += 2) {
-			if (dx == directionVectors[i] && dy == directionVectors[i + 1]) {
-				return directionChars.charAt(i / 2);
-			}
-		}
-		throw new IllegalArgumentException(dx + "," + dy + " is an illegal direction vector");
 	}
 	
 	@Override
 	public String toString() {
-		char direction = directionChar(dx, dy);
+		char directionChar = direction.directionChar();
 		if (isPush) {
-			direction = Character.toUpperCase(direction);
+			directionChar = Character.toUpperCase(directionChar);
 		}
-		return String.valueOf(direction);
+		return String.valueOf(directionChar);
 	}
 }

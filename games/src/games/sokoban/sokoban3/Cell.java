@@ -49,4 +49,16 @@ public class Cell {
 	public String toString() {
 		return String.valueOf(DefaultSokobanPersistance.toChar(staticCellValue, dynamicCellValue));
 	}
+	
+	//
+	
+	private Direction direction;
+	
+	public Direction getDirection() {
+		return direction;
+	}
+	
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
 }

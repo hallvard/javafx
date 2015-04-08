@@ -7,7 +7,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.stream.Collectors;
 
 public class Sokoban implements ISokoban {
@@ -188,7 +190,7 @@ public class Sokoban implements ISokoban {
 	public Boolean movePlayer(int dx, int dy) {
 		Boolean isPush = doMove(dx, dy);
 		if (isPush != null) {
-			Move moveCommand = new Move(dx, dy, isPush);
+			Move moveCommand = new Move(Direction.directionFor(dx, dy), isPush);
 			while (moves.size() > undoPos) {
 				moves.remove(moves.size() - 1);
 			}
@@ -209,7 +211,7 @@ public class Sokoban implements ISokoban {
 		if (canUndo()) {
 			undoPos--;
 			moveCommand = moves.get(undoPos);
-			undoMove(moveCommand.dx, moveCommand.dy, moveCommand.isPush);
+			undoMove(moveCommand.direction.dx, moveCommand.direction.dy, moveCommand.isPush);
 		}
 	}
 
@@ -223,7 +225,7 @@ public class Sokoban implements ISokoban {
 		if (canRedo()) {
 			Move moveCommand = moves.get(undoPos);
 			undoPos++;
-			doMove(moveCommand.dx, moveCommand.dy);
+			doMove(moveCommand.direction.dx, moveCommand.direction.dy);
 		}
 	}
 
@@ -252,5 +254,70 @@ public class Sokoban implements ISokoban {
 		for (GridListener gridListener : gridListeners) {
 			gridListener.gridChanged(this, x, y, w, h);
 		}
+	}
+
+	//
+	
+	private CharSequence computeMovesToGoal(int goalX, int goalY) {
+		Cell goalValue = getCell(goalX, goalY);
+		if (goalValue.isOccupied()) {
+			return null;
+		}
+		// we extend a boundary, like riples in the water, from the starting point
+		Queue<Integer> boundary = new LinkedList<Integer>();
+		boundary.add(playerX);
+		boundary.add(playerY);
+		// as long as there are more cells to consider
+		StringBuilder moves = null;
+		while (boundary.size() > 0) {
+			// remove current position
+			int x = boundary.poll(), y = boundary.poll();
+			for (Direction direction : Direction.DIRECTIONS) {
+				int nx = x + direction.dx, ny = y + direction.dy;
+				Cell cell = getCell(nx, ny);
+				// if this is a new and unoccupied cell
+				if (cell.getDirection() == null && (! cell.isOccupied())) {
+					// note the direction we came from
+					cell.setDirection(direction);
+					// if this is goal, walk backwards (the opposite direction) and collect moves
+					if (nx == goalX && ny == goalY) {
+						moves = new StringBuilder(getWidth() + getHeight());
+						while (nx != playerX || ny != playerY) {
+							Cell moveCell = getCell(nx, ny);
+							Direction moveDirection = moveCell.getDirection();
+							moves.append(Direction.directionChar(moveDirection.dx, moveDirection.dy));
+							nx -= moveDirection.dx;
+							ny -= moveDirection.dy;
+						}
+						moves.reverse();
+						break;
+					}
+					// enqueue this position, so we can consider it later
+					boundary.offer(nx);
+					boundary.offer(ny);
+				}
+			}
+		}
+		for (Cell cell : grid) {
+			cell.setDirection(null);
+		}
+		return moves;
+	}
+	
+	private void doMoves(CharSequence moves) {
+		for (int i = 0; i < moves.length(); i++) {
+			Direction direction = Direction.directionFor(moves.charAt(i));
+			movePlayer(direction.dx, direction.dy);
+		}
+	}
+	
+	@Override
+	public String movePlayerTo(int x, int y) {
+		CharSequence moves = computeMovesToGoal(x, y);
+//		System.out.println(moves);
+		if (moves != null) {
+			doMoves(moves);
+		}
+		return moves.toString();
 	}
 }

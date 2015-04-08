@@ -7,14 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventTarget;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -35,9 +33,9 @@ public abstract class ImageGridGame<T> extends FxmlGame {
 	}
 
 	protected void ensureKeyboardFocus() {
-		imageGrid.requestFocus();
+//		imageGrid.requestFocus();
 	}
-	
+
 	//
 	
 	protected void tick() {
@@ -132,31 +130,7 @@ public abstract class ImageGridGame<T> extends FxmlGame {
 
 	@FXML
 	protected void keyPressed(KeyEvent keyEvent) {
-		KeyCode code = keyEvent.getCode();
-		boolean consumed = false;
-		consumed = keyPressed(code);
-		if (! consumed) {
-			if (code == KeyCode.LEFT) {
-				consumed = keyPressed(-1,  0);
-			} else if (code == KeyCode.RIGHT) {
-				consumed = keyPressed( 1,  0);
-			} else if (code == KeyCode.UP) {
-				consumed = keyPressed( 0, -1);
-			} else if (code == KeyCode.DOWN) {
-				consumed = keyPressed( 0,  1);
-			}
-		}
-		if (consumed) {
-			keyEvent.consume();
-		}
-	}
-
-	protected boolean keyPressed(KeyCode code) {
-		return false;
-	}
-
-	protected boolean keyPressed(int dx, int dy) {
-		return false;
+		super.keyPressed(keyEvent);
 	}
 
 	// cursor

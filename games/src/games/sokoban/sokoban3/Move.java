@@ -1,6 +1,6 @@
 package games.sokoban.sokoban3;
 
-public class Move {
+public class Move implements IMoves {
 
 	final Direction direction;
 	final boolean isPush;
@@ -11,16 +11,29 @@ public class Move {
 	}
 
 	public Move(char c) {
-		this.direction = Direction.directionFor(c);
-		this.isPush = Character.isUpperCase(c);
+		this.direction = Direction.valueOf(c);
+		this.isPush = isPush(c);
+	}
+
+	public static boolean isPush(char c) {
+		return Character.isUpperCase(c);
+	}
+
+	public static char toPush(char c) {
+		return Character.toUpperCase(c);
+	}
+	
+	@Override
+	public String getMoves() {
+		char directionChar = direction.toChar();
+		if (isPush) {
+			directionChar = toPush(directionChar);
+		}
+		return String.valueOf(directionChar);
 	}
 	
 	@Override
 	public String toString() {
-		char directionChar = direction.directionChar();
-		if (isPush) {
-			directionChar = Character.toUpperCase(directionChar);
-		}
-		return String.valueOf(directionChar);
+		return toString();
 	}
 }

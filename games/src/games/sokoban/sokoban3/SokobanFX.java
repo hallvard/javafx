@@ -74,7 +74,7 @@ public class SokobanFX extends ImageGridGame<String> implements IUpdateable, Gri
 //		System.out.println(code);
 		if (code == KeyCode.BACK_SPACE) {
 			undoableController.undo();
-		} else if (code == KeyCode.SPACE) {
+		} else if (code == KeyCode.SPACE || code == KeyCode.DELETE) {
 			undoableController.redo();
 		} else if (code == KeyCode.COPY) {
 			persistableController.copyToClipboard();
@@ -150,10 +150,50 @@ public class SokobanFX extends ImageGridGame<String> implements IUpdateable, Gri
 		ensureKeyboardFocus();
 	}
 
+	private int lastX = -1, lastY = -1;
+	
 	@Override
 	protected boolean mouseClicked(int x, int y) {
-		sokoban.movePlayerTo(x, y);
+		if (lastX < 0 || lastY < 0) {
+			return super.mouseDragged(x, y);
+		}
+		if (sokoban.getStaticCellValue(x, y) == ISokoban.CELL_STATIC_EMPTY && sokoban.getDynamicCellValue(x, y) == ISokoban.CELL_DYNAMIC_EMPTY) {
+			sokoban.movePlayerTo(x, y);
+		}
 		return true;
+	}
+	
+	@Override
+	protected Boolean mousePressed(int x, int y) {
+		if (sokoban.getDynamicCellValue(x, y) != ISokoban.CELL_DYNAMIC_BOX) {
+			return super.mousePressed(x, y);
+		}
+		lastX = x;
+		lastY = y;
+		return false;
+	}
+	
+	@Override
+	protected boolean mouseDragged(int x, int y) {
+		if (lastX < 0 || lastY < 0) {
+			return super.mouseDragged(x, y);
+		}
+		if (x != lastX || y != lastY) {
+			String moves = sokoban.moveBox(lastX, lastY, (int) Math.signum(x - lastX), (int) Math.signum(y - lastY));
+			if (moves != null) {
+				lastX = x;
+				lastY = y;
+//				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	protected boolean mouseReleased(int x, int y) {
+		lastX = -1;
+		lastY = -1;
+		return super.mouseReleased(x, y);
 	}
 
 	// GridListener

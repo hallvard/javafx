@@ -232,10 +232,10 @@ public abstract class ImageGridGame<T> extends FxmlGame {
 	
 	@FXML
 	protected void mouseDragged(MouseEvent mouseEvent) {
-		if (dragStart != null && dragNode != null) {
-			Node child = mouseEvent.getPickResult().getIntersectedNode();
-			Boolean result = applyCell((x, y) -> mouseDragged(x, y), child);
-			if (result != null) {
+		Node child = mouseEvent.getPickResult().getIntersectedNode();
+		Boolean result = applyCell((x, y) -> mouseDragged(x, y), child);
+		if (result != null) {
+			if (dragStart != null && dragNode != null) {
 				relocateDragNode(mouseEvent);
 			}
 			mouseEvent.consume();
@@ -253,10 +253,10 @@ public abstract class ImageGridGame<T> extends FxmlGame {
 	
 	@FXML
 	protected void mouseReleased(MouseEvent mouseEvent) {
-		if (dragStart != null && dragNode != null) {
+//		if (dragStart != null && dragNode != null) {
 			Node child = mouseEvent.getPickResult().getIntersectedNode();
 			applyCell((x, y) -> mouseReleased(x, y), child);
-		}
+//		}
 		dragStart = null;
 		if (dragNode != null) {
 			relocateDragNode(mouseEvent);

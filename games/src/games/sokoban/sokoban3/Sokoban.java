@@ -48,7 +48,7 @@ public class Sokoban implements ISokoban {
 		if (playerX < 0 && playerY < 0) {
 			throw new IllegalArgumentException("Must have a player");
 		}
-		this.moves = new ArrayList<Move>();
+		this.moves = new ArrayList<IMoves>();
 		undoPos = 0;
 		if (moves != null) {
 			for (int i = 0; i < moves.length(); i++) {
@@ -111,7 +111,8 @@ public class Sokoban implements ISokoban {
 
 	private int playerX = -1, playerY = -1;
 
-	private Boolean doMove(int dx, int dy) {
+	private Boolean doMove(Direction direction) {
+		int dx = direction.dx, dy = direction.dy;
 		// a legal move is 1 in one direction and 0 in the other
 		final int x = playerX, y = playerY;
 		boolean isPush = false;
@@ -135,7 +136,8 @@ public class Sokoban implements ISokoban {
 		return null;
 	}
 
-	private void undoMove(int dx, int dy, boolean wasPush) {
+	private void undoMove(Direction direction, boolean wasPush) {
+		int dx = direction.dx, dy = direction.dy;
 		final int x = playerX, y = playerY;
 		Cell cell = getCell(x, y);
 		Cell backward = getCell(x - dx, y - dy);
@@ -179,7 +181,7 @@ public class Sokoban implements ISokoban {
 
 	//
 	
-	private List<Move> moves;
+	private List<IMoves> moves;
 	private int undoPos = 0;
 	
 	public String getMoves() {
@@ -188,16 +190,20 @@ public class Sokoban implements ISokoban {
 	
 	@Override
 	public Boolean movePlayer(int dx, int dy) {
-		Boolean isPush = doMove(dx, dy);
+		Direction direction = Direction.valueOf(dx, dy);
+		Boolean isPush = (direction != null ? doMove(direction) : null);
 		if (isPush != null) {
-			Move moveCommand = new Move(Direction.directionFor(dx, dy), isPush);
-			while (moves.size() > undoPos) {
-				moves.remove(moves.size() - 1);
-			}
-			moves.add(moveCommand);
-			undoPos++;
+			pushMoves(new Move(direction, isPush));
 		}
 		return isPush;
+	}
+
+	private void pushMoves(IMoves moveCommand) {
+		while (moves.size() > undoPos) {
+			moves.remove(moves.size() - 1);
+		}
+		moves.add(moveCommand);
+		undoPos++;
 	}
 
 	@Override
@@ -205,13 +211,30 @@ public class Sokoban implements ISokoban {
 		return undoPos > 0;
 	}
 	
+	private void doMoves(CharSequence moves, Boolean pushEach) {
+		for (int i = 0; i < moves.length(); i++) {
+			char c = moves.charAt(i);
+			Direction direction = Direction.valueOf(c);
+			if (Boolean.TRUE.equals(pushEach)) {
+				movePlayer(direction.dx, direction.dy);
+			} else {
+				doMove(direction);
+			}
+		}
+		if (Boolean.FALSE.equals(pushEach)) {
+			pushMoves(new Moves(moves));
+		}
+	}
+	
 	@Override
 	public void undo() {
-		Move moveCommand = null;
 		if (canUndo()) {
 			undoPos--;
-			moveCommand = moves.get(undoPos);
-			undoMove(moveCommand.direction.dx, moveCommand.direction.dy, moveCommand.isPush);
+			CharSequence moves = this.moves.get(undoPos).getMoves();
+			for (int i = moves.length() - 1; i >= 0; i--) {
+				char c = moves.charAt(i);
+				undoMove(Direction.valueOf(c), Move.isPush(c));
+			}
 		}
 	}
 
@@ -223,9 +246,9 @@ public class Sokoban implements ISokoban {
 	@Override
 	public void redo() {
 		if (canRedo()) {
-			Move moveCommand = moves.get(undoPos);
+			IMoves moveCommand = moves.get(undoPos);
 			undoPos++;
-			doMove(moveCommand.direction.dx, moveCommand.direction.dy);
+			doMoves(moveCommand.getMoves(), null);
 		}
 	}
 
@@ -250,7 +273,6 @@ public class Sokoban implements ISokoban {
 	}
 	
 	private void fireGridChanged(int x, int y, int w, int h) {
-//		System.out.println(x + "," + y + " " + w + "x" + h);
 		for (GridListener gridListener : gridListeners) {
 			gridListener.gridChanged(this, x, y, w, h);
 		}
@@ -285,7 +307,7 @@ public class Sokoban implements ISokoban {
 						while (nx != playerX || ny != playerY) {
 							Cell moveCell = getCell(nx, ny);
 							Direction moveDirection = moveCell.getDirection();
-							moves.append(Direction.directionChar(moveDirection.dx, moveDirection.dy));
+							moves.append(Direction.toChar(moveDirection.dx, moveDirection.dy));
 							nx -= moveDirection.dx;
 							ny -= moveDirection.dy;
 						}
@@ -304,20 +326,37 @@ public class Sokoban implements ISokoban {
 		return moves;
 	}
 	
-	private void doMoves(CharSequence moves) {
-		for (int i = 0; i < moves.length(); i++) {
-			Direction direction = Direction.directionFor(moves.charAt(i));
-			movePlayer(direction.dx, direction.dy);
-		}
-	}
-	
 	@Override
 	public String movePlayerTo(int x, int y) {
 		CharSequence moves = computeMovesToGoal(x, y);
-//		System.out.println(moves);
-		if (moves != null) {
-			doMoves(moves);
+		if (moves == null) {
+			return null;
 		}
+		doMoves(moves, true);
 		return moves.toString();
+	}
+	
+	@Override
+	public String moveBox(int x, int y, int dx, int dy) {
+		Cell box = getCell(x, y);
+		Direction direction = Direction.valueOf(dx, dy);
+		if ((! box.isBox()) || direction == null) {
+			return null;
+		}
+		Cell target = getCell(x + dx, y + dy);
+		if (target == null || (target.isOccupied() && (! target.isPlayer()))) {
+			return null;
+		}
+		Cell player = getCell(x - dx, y - dy);
+		if (player == null || (player.isOccupied() && (! player.isPlayer()))) {
+			return null;
+		}
+		CharSequence moves = player.isPlayer() ? "" : computeMovesToGoal(x - dx, y - dy);
+		if (moves == null) {
+			return null;
+		}
+		String movesPush = moves.toString() + Move.toPush(direction.toChar());
+		doMoves(movesPush, true);
+		return movesPush;
 	}
 }

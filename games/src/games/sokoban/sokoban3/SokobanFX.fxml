@@ -28,6 +28,9 @@
 			imageUrlFormat="/games/sokoban/${key}.png"
 			onKeyPressed="#keyPressed"
 			onMouseClicked="#mouseClicked"
+			onMousePressed="#mousePressed"
+			onMouseDragged="#mouseDragged"
+			onMouseReleased="#mouseReleased"
 		>
             <imageKeyMapEntries>
 				<java.util.Map.Entry key="#" 	value="wall16x16"/>

@@ -70,4 +70,12 @@ public interface ISokoban extends IUndoable, IPersistable, ObservableGrid {
 	 * @return Returns the sequence of moves as a String (see getMoves) or null if the move was impossible.
 	 */
 	public String movePlayerTo(int x, int y);
+
+	/**
+	 * Moves the box at the indication position in the indicated direction, using a sequence of moves and a pushes. Returns the sequence of moves and pushse as a String (see getMoves). 
+	 * @param dx
+	 * @param dy
+	 * @return Returns the sequence of moves and pushes as a String (see getMoves) or null if the move was impossible.
+	 */
+	public String moveBox(int x, int y, int dx, int dy);
 }

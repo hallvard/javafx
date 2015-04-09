@@ -9,6 +9,11 @@ public class Direction {
 		this.dy = dy;
 	}
 	
+	@Override
+	public String toString() {
+		return toChar() + ":" + dx + "," + dy;
+	}
+	
 	public final static Direction
 		UP = new Direction(0, -1),
 		DOWN = new Direction(0, 1),
@@ -26,11 +31,15 @@ public class Direction {
 			0, 1
 	};
 
-	public char directionChar() {
-		return directionChar(dx, dy);
+	public Direction opposite() {
+		return valueOf(-dx, -dy);
+	}
+	
+	public char toChar() {
+		return toChar(dx, dy);
 	}
 
-	public static char directionChar(int dx, int dy) {
+	public static char toChar(int dx, int dy) {
 		for (int i  = 0; i < directionVectors.length; i += 2) {
 			if (dx == directionVectors[i] && dy == directionVectors[i + 1]) {
 				return directionChars.charAt(i / 2);
@@ -39,11 +48,11 @@ public class Direction {
 		throw new IllegalArgumentException(dx + "," + dy + " is an illegal direction vector");
 	}
 	
-	public static Direction directionFor(int dx, int dy) {
-		return directionFor(directionChar(dx, dy));
+	public static Direction valueOf(int dx, int dy) {
+		return valueOf(toChar(dx, dy));
 	}
 
-	public static Direction directionFor(char c) {
+	public static Direction valueOf(char c) {
 		int pos = directionChars.indexOf(Character.toLowerCase(c));
 		if (pos < 0) {
 			throw new IllegalArgumentException(c + " is an illegal direction character");

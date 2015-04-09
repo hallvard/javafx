@@ -351,12 +351,16 @@ public class Sokoban implements ISokoban {
 		if (player == null || (player.isOccupied() && (! player.isPlayer()))) {
 			return null;
 		}
-		CharSequence moves = player.isPlayer() ? "" : computeMovesToGoal(x - dx, y - dy);
-		if (moves == null) {
+		CharSequence moves = "";
+		if (! player.isPlayer()) {
+			moves = movePlayerTo(x - dx, y - dy);
+			if (moves == null) {
+				return null;
+			}
+		}
+		if (movePlayer(dx, dy) == null) {
 			return null;
 		}
-		String movesPush = moves.toString() + Move.toPush(direction.toChar());
-		doMoves(movesPush, true);
-		return movesPush;
+		return moves.toString() + Move.toPush(direction.toChar());
 	}
 }

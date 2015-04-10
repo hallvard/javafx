@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import games.imagegrid.ImageGrid?>
+<?import javafx.scene.control.Button?>
+ 
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="games.tictactoe.tictactoe3.TicTacToeFX"
+    prefHeight="600" prefWidth="500"
+    >
+    <fx:define>
+    	<!--
+    		Bytt ut 'tictactoepakken.TicTacToeklassen' under med det fulle navnet på klassen du har laget og
+    	 	som implementerer ITicTacToe-grensesnittet. La fx:id="ticTacToe" være.
+   	 	 -->
+    	<games.tictactoe.tictactoe3.TicTacToe fx:id="ticTacToe"/>
+    </fx:define>
+	<top>
+		<VBox>
+			<children>
+				<Button text="Start" onAction="#startGame"/>
+				<Button text="Do AI move" onAction="#doAIMove"/>
+			</children>
+		</VBox>
+	</top>
+	<center>
+		<ImageGrid fx:id="imageGrid"
+			rowCount="3" columnCount="3"
+			cellSize="50"
+			onMousePressed="#mouseClicked"
+		>
+		</ImageGrid>
+	</center>
+	<bottom>
+		<VBox>
+		<children>
+			<Text fx:id="messageText" VBox.vgrow="ALWAYS">
+				<font>
+	               	<Font name="Courier"/>
+	           	</font>
+	        </Text>
+			<fx:include fx:id="undoable" source="../../Undoable.fxml"/>
+			<fx:include fx:id="persistable" source="../../Persistable.fxml"/>
+		</children>
+		</VBox>
+	</bottom>
+</BorderPane>

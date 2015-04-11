@@ -1,0 +1,8 @@
+emfs
+/games/ #java #package
+	IPersistable.java			@ git@github.com:hallvard/javafx/games/src/games/IPersistable.java;
+	IUndoable.java				@ git@github.com:hallvard/javafx/games/src/games/IUndoable.java;
+	sudoku/ #java #package
+		sudoku3/ #java #package
+			ISudoku.java	@ git@github.com:hallvard/javafx/games/src/games/sudoku/sudoku3/ISudoku.java;
+			Edit.java	@ git@github.com:hallvard/javafx/games/src/games/sudoku/sudoku3/Edit.java;

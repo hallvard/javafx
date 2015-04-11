@@ -4,8 +4,9 @@ import java.util.List;
 
 import games.IPersistable;
 import games.IUndoable;
+import games.imagegrid.ObservableGrid;
 
-public interface ISudoku extends IUndoable, IPersistable {
+public interface ISudoku extends IUndoable, IPersistable, ObservableGrid {
 
 	int BOARD_SIZE = 9;
 	int BLOCK_SIZE = (int) Math.sqrt(BOARD_SIZE);

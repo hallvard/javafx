@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import games.imagegrid.ImageGrid?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="games.sudoku.sudoku3.SudokuFX"
+    prefHeight="750" prefWidth="560">
+    <fx:define>
+    	<!--
+    		Bytt ut 'sudokupakken.Sudokuklassen' under med det fulle navnet på klassen du har laget og
+    	 	som implementerer ISudoku-grensesnittet. La fx:id="sudoku" være.
+   	 	 -->
+    	<games.sudoku.sudoku3.Sudoku fx:id="sudoku"/>
+    </fx:define>
+	<top>
+		<HBox>
+			<TextField fx:id="levelTextField" HBox.hgrow="ALWAYS" promptText="Level" onAction="#startGame"
+				text=".....2..38.273.45....6..87.9.8..5367..6...1..4513..9.8.84..3....79.512.62..8....."
+			/>
+			<Button text="Start" onAction="#startGame"/>
+		</HBox>
+	</top>
+	<center>
+		<ImageGrid fx:id="imageGrid" onKeyPressed="#keyPressed" cellSize="55" 
+			onMousePressed="#mouseClicked" hgap="1" vgap="1" />
+	</center>
+	<bottom>
+		<VBox>
+			<Text fx:id="legalDigitsText"/>
+			<Text fx:id="messageText">
+				<font>
+	               	<Font name="Courier"/>
+	               	<Font size="18" />
+	           	</font>
+	        </Text>
+	        <HBox>
+				<fx:include fx:id="undoable" source="../../Undoable.fxml"/>
+				<fx:include fx:id="persistable" source="../../Persistable.fxml"/>
+			</HBox>
+        </VBox>
+	</bottom>
+</BorderPane>

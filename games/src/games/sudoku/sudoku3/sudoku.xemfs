@@ -1,0 +1,23 @@
+emfs
+/games/ #java #package $repo="@github.com:hallvard/javafx/games/src/games/"
+	FxmlApp.java			 	@ git@github.com:hallvard/javafx/games/src/games/FxmlApp.java;
+	FxmlBuilderFactory.java 	@ git@github.com:hallvard/javafx/games/src/games/FxmlBuilderFactory.java;
+	FxmlGame.java				@ git@github.com:hallvard/javafx/games/src/games/FxmlGame.java;
+	IPersistable.java			@ git@github.com:hallvard/javafx/games/src/games/IPersistable.java;
+	IUndoable.java				@ git@github.com:hallvard/javafx/games/src/games/IUndoable.java;
+	IUpdateable.java			@ git@github.com:hallvard/javafx/games/src/games/IUpdateable.java;
+	PersistableController.java	@ git@github.com:hallvard/javafx/games/src/games/PersistableController.java;
+	UndoableController.java		@ git@github.com:hallvard/javafx/games/src/games/UndoableController.java;
+	Persistable.fxml			@ git@github.com:hallvard/javafx/games/src/games/Persistable.fxml;
+	Undoable.fxml				@ git@github.com:hallvard/javafx/games/src/games/Undoable.fxml;
+	
+	imagegrid/ #java #package
+		ImageGrid.java		@ git@github.com:hallvard/javafx/games/src/games/imagegrid/ImageGrid.java;
+		ImageGridGame.java		@ git@github.com:hallvard/javafx/games/src/games/imagegrid/ImageGridGame.java;
+		;
+	sudoku/ #java #package
+		sudoku3/ #java #package
+			ISudoku.java	@ git@github.com:hallvard/javafx/games/src/games/sudoku/sudoku3/ISudoku.java;
+			Edit.java	@ git@github.com:hallvard/javafx/games/src/games/sudoku/sudoku3/Edit.java;
+			SudokuFX.java	@ git@github.com:hallvard/javafx/games/src/games/sudoku/sudoku3/SudokuFX.java;
+			SudokuFX.fxml	@ git@github.com:hallvard/javafx/games/src/games/sudoku/sudoku3/SudokuFX.fxml;

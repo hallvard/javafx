@@ -1,11 +1,11 @@
 package games.battleship.battleship2;
 
-import games.IPersistable;
+import games.imagegrid.ObservableGrid;
 
 import java.util.Collection;
 import java.util.List;
 
-public interface IBattleship extends IPersistable {
+public interface IBattleship {
 	
 	public static final char CELL_OCEAN = '~';
 	public static final char CELL_EMPTY = '.';
@@ -21,34 +21,35 @@ public interface IBattleship extends IPersistable {
      * Initializes a game with a String representation of all the cells' hit state and the ships on the board.
      *
      */
-    public void init(String hits, Ship... ships);
+    public void init(String hits, List<ShipType> types, List<Ship> ships);
 
 	/**
 	 * @return The width/height of the grid, as the height and width should be equal.
 	 */
 	public int getSize();
-	
+
 	/**
-	 * Get the skip in that cell, or null if the cell is empty.
+	 * Get the ship in that cell, or null if the cell is empty.
 	 * @param x The x-coordinate of the cell
 	 * @param y The y-coordinate of the cell
 	 * @return The ship type.
 	 */
 	public Cell getCell(int x, int y);
-	
-	/**
-	 * Gets the hit state of the cell, i.e. if it has been fired at.
-	 * @param x The x-coordinate of the cell
-	 * @param y The y-coordinate of the cell
-	 * @return The hit state of the cell.
-	 */
-	public boolean isCellHit(int x, int y);
 
+    /*
+     * @return a list of all cells
+     */
+    public List<Cell> getCells();
 
     /**
      * @return All ships placed on the board
      */
     public Collection<Ship> getShips();
+
+    /**
+     * @return All ship types on the board
+     */
+    public Collection<ShipType> getShipTypes();
 
 
 	/**

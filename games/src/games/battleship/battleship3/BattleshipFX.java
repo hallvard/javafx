@@ -19,7 +19,10 @@ public class BattleshipFX extends ImageGridGame<String> implements IUpdateable, 
 	@FXML
 	private Text messageText;
 
-	@FXML private IBattleship battleship1;
+    @FXML
+    private IBattleshipGame game;
+
+	@FXML private IBattleship playerBoard;
 	@FXML private IEnemy enemy;
 
 	private IBattleship[] battleships;
@@ -31,11 +34,11 @@ public class BattleshipFX extends ImageGridGame<String> implements IUpdateable, 
 	protected void initialize() {
 		super.initialize();
 
-		persistableController.setStateStore(battleship1);
+		persistableController.setStateStore(game);
 		persistableController.setUpdate(this);
 
 		playerLevelTextFields = new TextField[]{player1LevelTextField, player2LevelTextField};
-		battleships = new IBattleship[]{battleship1, enemy};
+		battleships = new IBattleship[]{playerBoard, enemy};
 	}
 
 	private int player = 0, winner = -1; // 0 or 1, index into arrays
@@ -58,18 +61,18 @@ public class BattleshipFX extends ImageGridGame<String> implements IUpdateable, 
 				throw new IllegalArgumentException("The level sizes are not the same!");
 			}
 		}
+        game.init(playerBoard, enemy);
 		imageGrid.setDimensions(size, size);
 		updateCells();
 		updateState("Game started. It is Player " + player + "'s turn.");
 	}
 
 	private void updateCell(int x, int y) {
-		//setCell(x, y, String.valueOf(battleships[player].getCellShip(x, y)));
         setCell(x, y, battleships[player].getCell(x, y).toString());
 	}
 
 	private void updateCells() {
-		foreachCell((x, y) -> updateCell(x, y));
+		foreachCell(this::updateCell);
 	}
 
 	@Override
@@ -80,7 +83,6 @@ public class BattleshipFX extends ImageGridGame<String> implements IUpdateable, 
             update(battleship, hit, x, y);
             runDelayed(1500, () -> {
                 updateCells();
-                //updateState(status + " Player " + (player + 1) + randomResponse());
                 enemyFire();
             });
         }
@@ -93,9 +95,7 @@ public class BattleshipFX extends ImageGridGame<String> implements IUpdateable, 
         int y = gridLocation.getY();
         Boolean hit = enemy.fire(x, y);
         update(enemy, hit, x, y);
-        runDelayed(1500, () -> {
-            updateCells();
-        });
+        runDelayed(1500, this::updateCells);
     }
 
 	public static void main(String[] args) {
@@ -134,7 +134,7 @@ public class BattleshipFX extends ImageGridGame<String> implements IUpdateable, 
                 status = "Player " + (player + 1) + (hit ? " sunk your ship!" : " hit!");
             }
             player = (player + 1) % 2;
-            updateState(status);
+            updateState(status + " Player " + (player + 1) + randomResponse());
         }
     }
 }

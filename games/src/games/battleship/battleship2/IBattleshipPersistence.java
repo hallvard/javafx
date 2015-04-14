@@ -11,16 +11,16 @@ public interface IBattleshipPersistence {
 	 * @param battleship the IBattleship instance
 	 * @param inputStream The stream to read the state from, e.g. the standard representation
 	 * with lines separated by newlines or vertical bars.
-	 * @throws IOException
+	 * @throws java.io.IOException
 	 */
-	public void load(IBattleship battleship, InputStream inputStream) throws IOException;
+	public void load(IBattleshipGame battleship, InputStream inputStream) throws IOException;
 
 	/**
 	 * Saves the state of the IBattleship instance to the provided OutputStream, so it can be restored with load
 	 * @param battleship the IBattleship instance
 	 * @param outputStream The stream to write the state to
-	 * @throws IOException
+	 * @throws java.io.IOException
 	 */
-	public void save(IBattleship battleship, OutputStream outputStream) throws IOException;
+	public void save(IBattleshipGame battleship, OutputStream outputStream) throws IOException;
 	
 }

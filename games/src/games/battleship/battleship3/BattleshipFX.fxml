@@ -14,8 +14,9 @@
     	 	som implementerer IBattleship-grensesnittet (la fx:id være).
     		Pass på å bruke hele navnet, med pakken foran, f.eks. battleship.Battleship	
    	 	 -->
-    	<games.battleship.battleship3.Battleship fx:id="battleship1"/>
-    	<games.battleship.battleship3.HuntAndTarget fx:id="enemy"/>
+    	<games.battleship.battleship3.Battleship fx:id="playerBoard"/>
+    	<games.battleship.battleship3.HuntAndTargetEnemy fx:id="enemy"/>
+        <games.battleship.battleship3.BattleshipGame fx:id="game"/>
     </fx:define>
 	<top>
 		<HBox>

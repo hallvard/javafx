@@ -1,19 +1,17 @@
 package games.battleship.battleship2;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 public class Battleship implements IBattleship {
 
 	private int size;
 	private List<Cell> board;
 
-	private Collection<ShipType> shipTypes = new ArrayList<ShipType>();
-	private Collection<Ship> ships = new ArrayList<Ship>();
+	private Collection<ShipType> shipTypes = new ArrayList<>();
+	private Collection<Ship> ships = new ArrayList<>();
 	
 	private IBattleshipPersistence battleshipPersistence = new DefaultBattleshipPersistence();
 
@@ -45,19 +43,50 @@ public class Battleship implements IBattleship {
 
 			ShipType shipType = new ShipType(type, width, height);
 			Ship ship = new Ship(shipType, startColumn, startRow);
-			addShipType(shipType);
+			addShipTypes(shipType);
 			addShip(ship);
 		}
 	}
 
-	public Battleship(ShipType... shipTypes) {
+    public void init(String hits, List<ShipType> types, List<Ship> ships) {
+
+        board = new ArrayList<>();
+        size = (int) Math.sqrt(hits.length());
+        this.ships = ships;
+        this.shipTypes = types;
+
+        // Fill board list with empty cells
+        for (int i = 0; i < hits.length(); i++) {
+            board.add(new Cell(null));
+        }
+
+        // Place ships
+        for (Ship ship : ships) {
+            int x = ship.getX();
+            int y = ship.getY();
+            int width = ship.getShipType().getWidth();
+            int height = ship.getShipType().getHeight();
+
+            for (int row = y; row < y + height; row++) {
+                for (int col = x; col < x + width; col++) {
+                    Cell cell = new Cell(ship);
+                    cell.setHit(hits.charAt(row * size + col) == 'X');
+                    board.set(row * size + col, cell);
+                }
+            }
+        }
+    }
+
+    public Battleship(ShipType... shipTypes) {
 		this.shipTypes.addAll(Arrays.asList(shipTypes));
 	}
 	
-	public void addShipType(ShipType shipType) {
-		if (shipTypes.stream().noneMatch(st -> st.equals(shipType))) {
-			shipTypes.add(shipType);
-		}
+	public void addShipTypes(ShipType... types) {
+        for (ShipType shipType : types) {
+            if (shipTypes.stream().noneMatch(st -> st.equals(shipType))) {
+                shipTypes.add(shipType);
+            }
+        }
 	}
 
     public void addShip(Ship ship) {
@@ -70,29 +99,17 @@ public class Battleship implements IBattleship {
         }
     }
 	
-	public void init(String hits, Ship... ships) {
-		board = new ArrayList<Cell>();
-		size = (int) Math.sqrt(hits.length());
-		for (int i = 0; i < hits.length(); i++) {
-			char c = hits.charAt(i);
-			ShipType shipType = null;
-			if (c != IBattleship.CELL_EMPTY) {
-				Optional<ShipType> foundShipType = shipTypes.stream().filter(st -> st.getCharacter() == c).findFirst();
-				if (! foundShipType.isPresent()) {
-					throw new IllegalArgumentException("There is not ship type for the " + c);
-				}
-				shipType = foundShipType.get();
-			}
-			board.add(new Cell(shipType != null ? new Ship(shipType, i % size, i / size) : null));
-		}
-	}
-
     @Override
     public Collection<Ship> getShips() {
         return ships;
     }
 
-	@Override
+    @Override
+    public Collection<ShipType> getShipTypes() {
+        return shipTypes;
+    }
+
+    @Override
 	public int getSize() {
 		return size;
 	}
@@ -102,16 +119,15 @@ public class Battleship implements IBattleship {
 		return board.get(y * size + x);
 	}
 
-	public Ship getCellShip(int x, int y) {
-		Cell cell = getCell(x, y);
-		return cell.getShip();
-	}
+    @Override
+    public List<Cell> getCells() {
+        return board;
+    }
 
-	@Override
 	public boolean isCellHit(int x, int y) {
 		return getCell(x, y).isHit();
 	}
-	
+
 	public boolean isSunk(Ship ship) {
 		for (int dx = 0; dx < ship.getShipType().getWidth(); dx++) {
 			for (int dy = 0; dy < ship.getShipType().getHeight(); dy++) {
@@ -136,13 +152,5 @@ public class Battleship implements IBattleship {
         return (ship == null) ? null: isSunk(ship);
     }
 
-	@Override
-	public void load(InputStream inputStream) throws IOException {
-	    battleshipPersistence.load(this, inputStream);
-    }
 
-	@Override
-	public void save(OutputStream outputStream) throws IOException {
-		battleshipPersistence.save(this, outputStream);
-	}
 }

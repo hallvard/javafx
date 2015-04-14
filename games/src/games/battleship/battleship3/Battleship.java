@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.*;
 
-public class Battleship implements IEnemy {
+public class Battleship implements IBattleship {
 
 	private int size;
 	private List<Cell> board;
@@ -72,21 +72,33 @@ public class Battleship implements IEnemy {
         }
     }
 	
-	public void init(String hits, Ship... ships) {
-		board = new ArrayList<Cell>();
+	public void init(String hits, List<ShipType> types, List<Ship> ships) {
+
+        board = new ArrayList<>();
 		size = (int) Math.sqrt(hits.length());
+        this.ships = ships;
+        this.shipTypes = types;
+
+        // Fill board list with empty cells
 		for (int i = 0; i < hits.length(); i++) {
-			char c = hits.charAt(i);
-			ShipType shipType = null;
-			if (c != IBattleship.CELL_EMPTY) {
-				Optional<ShipType> foundShipType = shipTypes.stream().filter(st -> st.getCharacter() == c).findFirst();
-				if (! foundShipType.isPresent()) {
-					throw new IllegalArgumentException("There is not ship type for the " + c);
-				}
-				shipType = foundShipType.get();
-			}
-			board.add(new Cell(shipType != null ? new Ship(shipType, i % size, i / size) : null));
-		}
+            board.add(new Cell(null));
+        }
+
+        // Place ships
+        for (Ship ship : ships) {
+            int x = ship.getX();
+            int y = ship.getY();
+            int width = ship.getShipType().getWidth();
+            int height = ship.getShipType().getHeight();
+
+            for (int row = y; row < y + height; row++) {
+                for (int col = x; col < x + width; col++) {
+                    Cell cell = new Cell(ship);
+                    cell.setHit(hits.charAt(row * size + col) == 'X');
+                    board.set(row * size + col, cell);
+                }
+            }
+        }
 	}
 
     @Override
@@ -94,7 +106,12 @@ public class Battleship implements IEnemy {
         return ships;
     }
 
-	@Override
+    @Override
+    public Collection<ShipType> getShipTypes() {
+        return shipTypes;
+    }
+
+    @Override
 	public int getSize() {
 		return size;
 	}
@@ -104,16 +121,15 @@ public class Battleship implements IEnemy {
 		return board.get(y * size + x);
 	}
 
-	public Ship getCellShip(int x, int y) {
-		Cell cell = getCell(x, y);
-		return cell.getShip();
-	}
+    @Override
+    public List<Cell> getCells() {
+        return board;
+    }
 
-	@Override
 	public boolean isCellHit(int x, int y) {
 		return getCell(x, y).isHit();
 	}
-	
+
 	public boolean isSunk(Ship ship) {
 		for (int dx = 0; dx < ship.getShipType().getWidth(); dx++) {
 			for (int dy = 0; dy < ship.getShipType().getHeight(); dy++) {
@@ -138,16 +154,6 @@ public class Battleship implements IEnemy {
         return (ship == null) ? null: isSunk(ship);
     }
 
-	@Override
-	public void load(InputStream inputStream) throws IOException {
-	    battleshipPersistence.load(this, inputStream);
-    }
-
-	@Override
-	public void save(OutputStream outputStream) throws IOException {
-		battleshipPersistence.save(this, outputStream);
-	}
-
     @Override
     public void addGridListener(GridListener gridListener) {
         if (! listeners.contains(gridListener))
@@ -161,10 +167,4 @@ public class Battleship implements IEnemy {
 
     }
 
-    @Override
-    public GridLocation target() {
-        int x = (int) (Math.random() * getSize());
-        int y = (int) (Math.random() * getSize());
-        return new GridLocation(x, y);
-    }
 }

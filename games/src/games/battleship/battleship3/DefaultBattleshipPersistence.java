@@ -2,68 +2,101 @@ package games.battleship.battleship3;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
+// Example file content:
+/*
+..X...........X...X......X.......XX.........X........XX.X..X......X.....X..X........................
+H32,U13,
+H20,U63,
+...XXX.....XXXXX.......XX..................X...X...........................X...........X............
+H32,U13,
+H20,U63,
+*/
 
 public class DefaultBattleshipPersistence implements IBattleshipPersistence {
 
 	@Override
-	public void load(IBattleship battleship, InputStream inputStream) throws IOException {
+	public void load(IBattleshipGame game, InputStream inputStream) throws IOException {
+
 		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
-        String hits = reader.readLine();
+        // First read all lines
+        List<String> lines = new ArrayList<>(3);
+        String line;
+        while ((line = reader.readLine()) != null) {
+            if (line.length() == 0) { break;}
+            lines.add(line);
+        }
+        reader.close();
 
-		List<ShipType> shipTypes = new ArrayList<ShipType>();
-		List<Ship> ships = (List<Ship>) reader.lines().map(line -> {
-            int startRow = Character.getNumericValue(line.charAt(0));
-            int startColumn = Character.getNumericValue(line.charAt(1));
-            int endRow = Character.getNumericValue(line.charAt(2));
-            int endColumn = Character.getNumericValue(line.charAt(3));
-            int width = endColumn - startColumn;
-            int height = endRow - startRow;
+        // Create IBattleship objects from the lines
+        for (int i = 0; i < 2; i++) {
 
-            Optional<ShipType> shipType = shipTypes.stream().filter(st -> st.getHeight() == height && st.getWidth() == width).findAny();
-            if (! shipType.isPresent()) {
-                ShipType s = new ShipType((char) 0, width, height);
-                shipTypes.add(s);
-                return new Ship(s, width, height);
-            } else {
-                return new Ship(shipType.get(), width, height);
-            }
-        })
-		.collect(Collectors.toList());
+            String hits = lines.get(i * 3);
+            List<String> shipTypeInfo = Arrays.asList(lines.get(1 + i * 3).split(","));
+            List<String> shipInfo = Arrays.asList(lines.get(2 + i * 3).split(","));
 
-        battleship.init(hits, ships.toArray(new Ship[ships.size()]));
-	}
+            List<ShipType> shipTypes = new ArrayList<>();
+            shipTypeInfo.forEach(type -> {
+                char t = type.charAt(0);
+                int width = Character.getNumericValue(type.charAt(1));
+                int height = Character.getNumericValue(type.charAt(2));
+                shipTypes.add(new ShipType(t, width, height));
+            });
+
+            List<Ship> ships = new ArrayList<>();
+            shipInfo.forEach(ship -> {
+                char type = ship.charAt(0);
+                int startRow = Character.getNumericValue(ship.charAt(1));
+                int startColumn = Character.getNumericValue(ship.charAt(2));
+                ShipType shipType = shipTypes.stream().filter(t -> t.getCharacter() == type).findAny().get();
+                ships.add(new Ship(shipType, startColumn, startRow));
+            });
+
+            game.getBoards()[i].init(hits, shipTypes, ships);
+        }
+    }
 
 	@Override
-	public void save(IBattleship battleship, OutputStream outputStream) throws IOException {
+	public void save(IBattleshipGame game, OutputStream outputStream) throws IOException {
+
+        if (game == null || game.getBoards()[0] == null || game.getBoards()[0] == null || game.getBoards()[0].getCells() == null || game.getBoards()[1].getCells() == null) {
+            return;
+        }
 
 		PrintWriter writer = new PrintWriter(outputStream);
 
-        String hits = "";
+        for (IBattleship board : game.getBoards()) {
 
-        for (int y = 0; y < battleship.getSize(); y++) {
-            for (int x = 0; x < battleship.getSize(); x++) {
-                hits += (battleship.isCellHit(x, y)) ? 'X' : '.';
-            }
+            // First line is the hits string
+            StringBuilder hits = new StringBuilder();
+            board.getCells().forEach(c -> hits.append(c.isHit() ? 'X' : '.'));
+            writer.println(hits.toString());
+
+            // Second line contains ship types (character, width and height) separated by commas
+            StringBuilder typeSB = new StringBuilder();
+            board.getShipTypes().forEach(type -> {
+                char c = type.getCharacter();
+                int width = type.getWidth();
+                int height = type.getHeight();
+                typeSB.append(c).append(width).append(height).append(",");
+            });
+
+            writer.println(typeSB.toString());
+
+            // Third line is the string of ships (character of ship type, x and y) separated by commas
+            StringBuilder shipsSB = new StringBuilder();
+            board.getShips().forEach(ship -> {
+                char type = ship.getCharacter();
+                int x = ship.getX();
+                int y = ship.getY();
+                shipsSB.append(type).append(x).append(y).append(",");
+            });
+
+            writer.println(shipsSB.toString());
         }
-
-        writer.write(hits);
-
-        String level = Integer.toString(battleship.getSize()) + ",";
-
-        battleship.getShips().stream().map(ship -> {
-            char type = ship.getCharacter();
-            int x = ship.getX();
-            int y = ship.getY();
-            int width = ship.getShipType().getWidth();
-            int height = ship.getShipType().getHeight();
-            return "" + type + x + y + width + height;
-        }).collect(Collectors.toList());
-
-        writer.write(level);
 
         writer.flush();
 	}

@@ -1,4 +1,4 @@
-package games.battleship.battleship3;
+package games.battleship.battleship2;
 
 import java.util.ArrayList;
 import java.util.List;

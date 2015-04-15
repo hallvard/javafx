@@ -95,7 +95,6 @@ public class BattleshipFX extends ImageGridGame<String> implements IUpdateable {
                 runDelayed(2000, () -> {
                     updateCells();
                     updateState(status + " Player " + (player + 1) + randomResponse());
-                    System.out.println(status);
                 });
             }
         }
@@ -111,7 +110,6 @@ public class BattleshipFX extends ImageGridGame<String> implements IUpdateable {
         // TODO Auto-generated method stub
     }
 
-    @Override
     public void updateState(int x1, int y1, int x2, int y2) {
         updateState(true);
     }

@@ -1,9 +1,13 @@
 package games.battleship.battleship2;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 // Example file content:
 /*
@@ -20,30 +24,20 @@ public class DefaultBattleshipPersistence implements IBattleshipPersistence {
 	@Override
 	public void load(IBattleshipGame game, InputStream inputStream) throws IOException {
 
-		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        Scanner scanner = new Scanner(inputStream);
 
         // First read all lines
         List<String> lines = new ArrayList<>(6);
-        String line;
-        while ((line = reader.readLine()) != null) {
-            if (line.length() == 0) { break;}
-            System.out.println(line);
-            lines.add(line);
+        while (scanner.hasNextLine()) {
+            lines.add(scanner.nextLine());
         }
-        reader.close();
-        System.out.println(lines);
-
-        /*
-        if (lines.size() != 6) {
-            System.out.println(lines.size());
-            throw new IllegalArgumentException("The file format is not correct.");
-        }
-        */
+        scanner.close();
 
         // Create IBattleship objects from the lines
         for (int i = 0; i < 2; i++) {
 
             String hits = lines.get(i * 3);
+            System.out.println("hits: " + hits);
             List<String> shipTypeInfo = Arrays.asList(lines.get(1 + i * 3).split(","));
             List<String> shipInfo = Arrays.asList(lines.get(2 + i * 3).split(","));
 
@@ -72,13 +66,6 @@ public class DefaultBattleshipPersistence implements IBattleshipPersistence {
 	public void save(IBattleshipGame game, OutputStream outputStream) throws IOException {
 
         if (game == null || game.getBoards()[0] == null || game.getBoards()[1] == null || game.getBoards()[0].getCells() == null || game.getBoards()[1].getCells() == null) {
-            System.out.println("POOPS!");
-            System.out.print(game == null);
-            assert game != null;
-            System.out.print(game.getBoards()[0] == null);
-            System.out.print(game.getBoards()[1] == null);
-            System.out.print(game.getBoards()[0].getCells() == null);
-            System.out.print(game.getBoards()[1].getCells() == null);
             return;
         }
 

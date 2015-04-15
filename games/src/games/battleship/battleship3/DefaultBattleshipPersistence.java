@@ -1,9 +1,13 @@
 package games.battleship.battleship3;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 // Example file content:
 /*
@@ -20,16 +24,14 @@ public class DefaultBattleshipPersistence implements IBattleshipPersistence {
 	@Override
 	public void load(IBattleshipGame game, InputStream inputStream) throws IOException {
 
-		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        Scanner scanner = new Scanner(inputStream);
 
         // First read all lines
-        List<String> lines = new ArrayList<>(3);
-        String line;
-        while ((line = reader.readLine()) != null) {
-            if (line.length() == 0) { break;}
-            lines.add(line);
+        List<String> lines = new ArrayList<>(6);
+        while (scanner.hasNextLine()) {
+            lines.add(scanner.nextLine());
         }
-        reader.close();
+        scanner.close();
 
         // Create IBattleship objects from the lines
         for (int i = 0; i < 2; i++) {
@@ -62,7 +64,7 @@ public class DefaultBattleshipPersistence implements IBattleshipPersistence {
 	@Override
 	public void save(IBattleshipGame game, OutputStream outputStream) throws IOException {
 
-        if (game == null || game.getBoards()[0] == null || game.getBoards()[0] == null || game.getBoards()[0].getCells() == null || game.getBoards()[1].getCells() == null) {
+        if (game == null || game.getBoards()[0] == null || game.getBoards()[1] == null || game.getBoards()[0].getCells() == null || game.getBoards()[1].getCells() == null) {
             return;
         }
 

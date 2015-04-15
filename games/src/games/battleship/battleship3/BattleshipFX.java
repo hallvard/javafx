@@ -105,7 +105,6 @@ public class BattleshipFX extends ImageGridGame<String> implements IUpdateable, 
 	@Override
 	public void updateState(boolean fullUpdate) {}
 
-	@Override
 	public void updateState(int x1, int y1, int x2, int y2) {
 		updateState(true);
 	}

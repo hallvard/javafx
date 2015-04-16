@@ -1,11 +1,12 @@
-package games.battleship.battleship2;
+package games.battleship.battleship3;
 
+import games.IPersistable;
 import games.imagegrid.ObservableGrid;
 
 import java.util.Collection;
 import java.util.List;
 
-public interface IBattleship {
+public interface IBattleship extends ObservableGrid {
 	
 	public static final char CELL_OCEAN = '~';
 	public static final char CELL_EMPTY = '.';
@@ -40,7 +41,7 @@ public interface IBattleship {
      * @return a list of all cells
      */
     public List<Cell> getCells();
-
+	
     /**
      * @return All ships placed on the board
      */

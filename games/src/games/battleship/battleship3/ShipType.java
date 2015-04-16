@@ -1,4 +1,4 @@
-package games.battleship.battleship2;
+package games.battleship.battleship3;
 
 public class ShipType {
 

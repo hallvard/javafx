@@ -1,4 +1,4 @@
-package games.battleship.battleship2;
+package games.battleship.battleship3;
 
 public class Cell {
 
@@ -17,7 +17,7 @@ public class Cell {
 	public ShipType getShipType() {
 		return ship != null ? ship.getShipType() : null;
 	}
-
+	
 	public char getCharacter() {
 		return ship != null ? ship.getCharacter() : IBattleship.CELL_OCEAN;
 	}

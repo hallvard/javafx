@@ -1,17 +1,21 @@
-package games.battleship.battleship2;
+package games.battleship.battleship3;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import games.imagegrid.GridListener;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.*;
 
 public class Battleship implements IBattleship {
 
 	private int size;
 	private List<Cell> board;
 
-	private Collection<ShipType> shipTypes = new ArrayList<>();
-	private Collection<Ship> ships = new ArrayList<>();
+	private Collection<ShipType> shipTypes = new ArrayList<ShipType>();
+	private Collection<Ship> ships = new ArrayList<Ship>();
+
+    private List<GridListener> listeners = new ArrayList<>();
 	
 	private IBattleshipPersistence battleshipPersistence = new DefaultBattleshipPersistence();
 
@@ -43,20 +47,40 @@ public class Battleship implements IBattleship {
 
 			ShipType shipType = new ShipType(type, width, height);
 			Ship ship = new Ship(shipType, startColumn, startRow);
-			addShipTypes(shipType);
+			addShipType(shipType);
 			addShip(ship);
 		}
 	}
 
-    public void init(String hits, List<ShipType> types, List<Ship> ships) {
+	public Battleship(ShipType... shipTypes) {
+		this.shipTypes.addAll(Arrays.asList(shipTypes));
+	}
+	
+	public void addShipType(ShipType shipType) {
+		if (shipTypes.stream().noneMatch(st -> st.equals(shipType))) {
+			shipTypes.add(shipType);
+		}
+	}
+
+    public void addShip(Ship ship) {
+        //TODO: Do not accept collisions (ships on top of each other).
+        ships.add(ship);
+        for (int row = ship.getY(); row < ship.getY() + ship.getShipType().getHeight(); row++) {
+            for (int col = ship.getX(); col < ship.getX() + ship.getShipType().getWidth(); col++) {
+                board.set(row * size + col, new Cell(ship));
+            }
+        }
+    }
+	
+	public void init(String hits, List<ShipType> types, List<Ship> ships) {
 
         board = new ArrayList<>();
-        size = (int) Math.sqrt(hits.length());
+		size = (int) Math.sqrt(hits.length());
         this.ships = ships;
         this.shipTypes = types;
 
         // Fill board list with empty cells
-        for (int i = 0; i < hits.length(); i++) {
+		for (int i = 0; i < hits.length(); i++) {
             board.add(new Cell(null));
         }
 
@@ -75,30 +99,8 @@ public class Battleship implements IBattleship {
                 }
             }
         }
-    }
-
-    public Battleship(ShipType... shipTypes) {
-		this.shipTypes.addAll(Arrays.asList(shipTypes));
-	}
-	
-	public void addShipTypes(ShipType... types) {
-        for (ShipType shipType : types) {
-            if (shipTypes.stream().noneMatch(st -> st.equals(shipType))) {
-                shipTypes.add(shipType);
-            }
-        }
 	}
 
-    public void addShip(Ship ship) {
-        //TODO: Do not accept collisions (ships on top of each other).
-        ships.add(ship);
-        for (int row = ship.getY(); row < ship.getY() + ship.getShipType().getHeight(); row++) {
-            for (int col = ship.getX(); col < ship.getX() + ship.getShipType().getWidth(); col++) {
-                board.set(row * size + col, new Cell(ship));
-            }
-        }
-    }
-	
     @Override
     public Collection<Ship> getShips() {
         return ships;
@@ -152,5 +154,17 @@ public class Battleship implements IBattleship {
         return (ship == null) ? null: isSunk(ship);
     }
 
+    @Override
+    public void addGridListener(GridListener gridListener) {
+        if (! listeners.contains(gridListener))
+            listeners.add(gridListener);
+    }
+
+    @Override
+    public void removeGridListener(GridListener gridListener) {
+        if (listeners.contains(gridListener))
+            listeners.remove(gridListener);
+
+    }
 
 }

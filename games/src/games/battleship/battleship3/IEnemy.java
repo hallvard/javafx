@@ -8,6 +8,6 @@ public interface IEnemy extends IBattleship {
      * The second element is the x coordinate.
      * The third element is the y coordinate.
      */
-    public GridLocation target();
+    GridLocation target();
 
 }

@@ -1,22 +1,22 @@
 package games.battleship.battleship3;
 
 import games.imagegrid.GridListener;
-import games.imagegrid.ObservableGrid;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 public class Battleship implements IBattleship {
 
 	private int size;
 	private List<Cell> board;
 
-	private Collection<ShipType> shipTypes = new ArrayList<ShipType>();
-	private Collection<Ship> ships = new ArrayList<Ship>();
+	private Collection<ShipType> shipTypes = new ArrayList<>();
+	private Collection<Ship> ships = new ArrayList<>();
 
     private List<GridListener> listeners = new ArrayList<>();
 	
-	private IBattleshipPersistence battleshipPersistence = new DefaultBattleshipPersistence();
-
     public Battleship() {}
 
 	public void init(String level) {

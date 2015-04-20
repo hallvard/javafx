@@ -21,8 +21,8 @@ H20,U63,
 
 public class DefaultBattleshipPersistence implements IBattleshipPersistence {
 
-	@Override
-	public void load(IBattleshipGame game, InputStream inputStream) throws IOException {
+    @Override
+    public void load(IBattleshipGame game, InputStream inputStream) throws IOException {
 
         Scanner scanner = new Scanner(inputStream);
 
@@ -62,14 +62,14 @@ public class DefaultBattleshipPersistence implements IBattleshipPersistence {
         }
     }
 
-	@Override
-	public void save(IBattleshipGame game, OutputStream outputStream) throws IOException {
+    @Override
+    public void save(IBattleshipGame game, OutputStream outputStream) throws IOException {
 
         if (game == null || game.getBoards()[0] == null || game.getBoards()[1] == null) {
             return;
         }
 
-		PrintWriter writer = new PrintWriter(outputStream);
+        PrintWriter writer = new PrintWriter(outputStream);
 
         for (IBattleship board : game.getBoards()) {
 
@@ -108,6 +108,6 @@ public class DefaultBattleshipPersistence implements IBattleshipPersistence {
         }
 
         writer.flush();
-	}
+    }
 
 }

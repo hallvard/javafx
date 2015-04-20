@@ -2,29 +2,28 @@ package games.battleship.battleship2;
 
 public class ShipType {
 
-	private final char character;
-	private final int width, height;
+    private final char character;
+    private final int width, height;
 
-	public ShipType(char character, int width, int height) {
-		this.character = character;
-		this.width = width;
-		this.height = height;
-	}
+    public ShipType(char character, int width, int height) {
+        this.character = character;
+        this.width = width;
+        this.height = height;
+    }
 
-	public char getCharacter() {
-		return character;
-	}
+    public char getCharacter() {
+        return character;
+    }
 
-	public int getWidth() {
-		return width;
-	}
-	
-	public int getHeight() {
-		return height;
-	}
+    public int getWidth() {
+        return width;
+    }
 
-	public boolean equals(ShipType st) {
-		if (this == st) return true;
-		return getCharacter() == st.getCharacter() && getWidth() == st.getWidth() && getHeight() == st.getHeight();
-	}
+    public int getHeight() {
+        return height;
+    }
+
+    public boolean equals(ShipType st) {
+        return this == st || getCharacter() == st.getCharacter() && getWidth() == st.getWidth() && getHeight() == st.getHeight();
+    }
 }

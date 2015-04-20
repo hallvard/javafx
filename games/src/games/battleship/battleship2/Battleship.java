@@ -110,20 +110,20 @@ public class Battleship implements IBattleship {
     }
 
     @Override
+    public Ship getCellShip(int x, int y) {
+        return board.get(y * size + x).getShip();
+    }
+
+    @Override
 	public int getSize() {
 		return size;
 	}
 
-    @Override
-	public Cell getCell(int x, int y) {
+	private Cell getCell(int x, int y) {
 		return board.get(y * size + x);
 	}
 
     @Override
-    public List<Cell> getCells() {
-        return board;
-    }
-
 	public boolean isCellHit(int x, int y) {
 		return getCell(x, y).isHit();
 	}

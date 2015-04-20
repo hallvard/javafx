@@ -66,7 +66,11 @@ public class BattleshipFX extends ImageGridGame<String> implements IUpdateable {
     }
 
     private void updateCell(int x, int y) {
-        setCell(x, y, battleships[player].getCell(x, y).toString());
+        char cellChar = IBattleship.CELL_OCEAN;
+        if (battleships[player].isCellHit(x, y)) {
+           cellChar =  (battleships[player].getCellShip(x, y) == null) ? IBattleship.CELL_EMPTY : IBattleship.CELL_SHIP_HIT;
+        }
+        setCell(x, y, Character.toString(cellChar));
     }
 
     private void updateCells() {
@@ -107,7 +111,6 @@ public class BattleshipFX extends ImageGridGame<String> implements IUpdateable {
 
     @Override
     public void updateState(boolean fullUpdate) {
-        // TODO Auto-generated method stub
     }
 
     public void updateState(int x1, int y1, int x2, int y2) {

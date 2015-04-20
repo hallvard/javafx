@@ -19,7 +19,6 @@ public interface IBattleship {
 
     /*
      * Initializes a game with a String representation of all the cells' hit state and the ships on the board.
-     *
      */
     public void init(String hits, List<ShipType> types, List<Ship> ships);
 
@@ -27,19 +26,6 @@ public interface IBattleship {
 	 * @return The width/height of the grid, as the height and width should be equal.
 	 */
 	public int getSize();
-
-	/**
-	 * Get the ship in that cell, or null if the cell is empty.
-	 * @param x The x-coordinate of the cell
-	 * @param y The y-coordinate of the cell
-	 * @return The ship type.
-	 */
-	public Cell getCell(int x, int y);
-
-    /*
-     * @return a list of all cells
-     */
-    public List<Cell> getCells();
 
     /**
      * @return All ships placed on the board
@@ -51,6 +37,21 @@ public interface IBattleship {
      */
     public Collection<ShipType> getShipTypes();
 
+	/**
+	 * Get the ship in that cell, or null if the cell is empty.
+	 * @param x The x-coordinate of the cell
+	 * @param y The y-coordinate of the cell
+	 * @return The ship type.
+	 */
+	public Ship getCellShip(int x, int y);
+
+	/**
+	 * Gets the hit state of the cell, i.e. if it has been fired at.
+	 * @param x The x-coordinate of the cell
+	 * @param y The y-coordinate of the cell
+	 * @return The hit state of the cell.
+	 */
+	public boolean isCellHit(int x, int y);
 
 	/**
 	 * Counts the cells of a ship type that are hit or not.

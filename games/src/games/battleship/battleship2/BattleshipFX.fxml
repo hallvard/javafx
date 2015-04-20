@@ -16,7 +16,8 @@
             Pass på å bruke hele navnet, med pakken foran, f.eks. battleship.Battleship.
             GJør det samme for 'Spill-klassen' (som implementerer IBattleshipGame).
              -->
-		<games.battleship.battleship2.Battleship fx:id="playerBoard"/>
+		<games.battleship.battleship2.Battleship fx:id="battleship1"/>
+		<games.battleship.battleship2.Battleship fx:id="battleship2"/>
 		<games.battleship.battleship2.BattleshipGame fx:id="game"/>
     </fx:define>
 	<top>

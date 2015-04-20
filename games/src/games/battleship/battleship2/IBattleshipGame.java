@@ -2,9 +2,6 @@ package games.battleship.battleship2;
 
 import games.IPersistable;
 
-/**
- * Created by mats on 14.04.2015.
- */
 public interface IBattleshipGame extends IPersistable {
 
     /*

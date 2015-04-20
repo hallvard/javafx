@@ -65,7 +65,7 @@ public class DefaultBattleshipPersistence implements IBattleshipPersistence {
 	@Override
 	public void save(IBattleshipGame game, OutputStream outputStream) throws IOException {
 
-        if (game == null || game.getBoards()[0] == null || game.getBoards()[1] == null || game.getBoards()[0].getCells() == null || game.getBoards()[1].getCells() == null) {
+        if (game == null || game.getBoards()[0] == null || game.getBoards()[1] == null) {
             return;
         }
 
@@ -75,7 +75,13 @@ public class DefaultBattleshipPersistence implements IBattleshipPersistence {
 
             // First line is the hits string
             StringBuilder hits = new StringBuilder();
-            board.getCells().forEach(c -> hits.append(c.isHit() ? 'X' : '.'));
+
+            for (int x = 0; x < board.getSize(); x++) {
+                for (int y = 0; y < board.getSize(); y++) {
+                    hits.append(board.isCellHit(x, y) ? 'X' : '.');
+                }
+            }
+
             writer.println(hits.toString());
 
             // Second line contains ship types (character, width and height) separated by commas

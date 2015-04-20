@@ -6,7 +6,7 @@ public class RandomEnemy extends Battleship implements IEnemy {
     public GridLocation target() {
         int x = (int) (Math.random() * getSize());
         int y = (int) (Math.random() * getSize());
-        while (getCell(x, y).isHit()) {
+        while (isCellHit(x, y)) {
             x = (int) (Math.random() * getSize());
             y = (int) (Math.random() * getSize());
         }

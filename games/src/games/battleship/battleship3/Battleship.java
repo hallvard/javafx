@@ -1,10 +1,8 @@
 package games.battleship.battleship3;
 
 import games.imagegrid.GridListener;
+import games.imagegrid.ObservableGrid;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.*;
 
 public class Battleship implements IBattleship {
@@ -112,23 +110,23 @@ public class Battleship implements IBattleship {
     }
 
     @Override
-	public int getSize() {
-		return size;
-	}
-
-    @Override
-	public Cell getCell(int x, int y) {
-		return board.get(y * size + x);
-	}
-
-    @Override
-    public List<Cell> getCells() {
-        return board;
+    public Ship getCellShip(int x, int y) {
+        return board.get(y * size + x).getShip();
     }
 
-	public boolean isCellHit(int x, int y) {
-		return getCell(x, y).isHit();
-	}
+    @Override
+    public int getSize() {
+        return size;
+    }
+
+    private Cell getCell(int x, int y) {
+        return board.get(y * size + x);
+    }
+
+    @Override
+    public boolean isCellHit(int x, int y) {
+        return getCell(x, y).isHit();
+    }
 
 	public boolean isSunk(Ship ship) {
 		for (int dx = 0; dx < ship.getShipType().getWidth(); dx++) {

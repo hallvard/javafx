@@ -33,9 +33,13 @@ public class GridLocation {
         return "(" + getX() + ", " + getY() + ")";
     }
 
+    @Override
     public boolean equals(Object o) {
-        GridLocation gl = (GridLocation) o;
-        return gl.getX() == getX() && gl.getY() == getY();
+        if (o instanceof GridLocation) {
+            GridLocation gl = (GridLocation) o;
+            return this == gl || gl.getX() == getX() && gl.getY() == getY();
+        }
+        return false;
     }
 
 }

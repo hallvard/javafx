@@ -13,7 +13,7 @@ public interface IBattleshipPersistence {
 	 * with lines separated by newlines or vertical bars.
 	 * @throws java.io.IOException
 	 */
-	public void load(IBattleshipGame battleship, InputStream inputStream) throws IOException;
+	void load(IBattleshipGame battleship, InputStream inputStream) throws IOException;
 
 	/**
 	 * Saves the state of the IBattleship instance to the provided OutputStream, so it can be restored with load
@@ -21,6 +21,6 @@ public interface IBattleshipPersistence {
 	 * @param outputStream The stream to write the state to
 	 * @throws java.io.IOException
 	 */
-	public void save(IBattleshipGame battleship, OutputStream outputStream) throws IOException;
+	void save(IBattleshipGame battleship, OutputStream outputStream) throws IOException;
 	
 }

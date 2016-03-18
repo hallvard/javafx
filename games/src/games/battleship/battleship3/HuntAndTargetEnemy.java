@@ -13,7 +13,7 @@ public class HuntAndTargetEnemy extends Battleship implements IEnemy {
 
         if (! targetMode) {
             GridLocation loc = targetRandomly();
-            if (getCell(loc.getX(), loc.getY()).isShip()) {
+            if (getCellShip(loc.getX(), loc.getY()) != null) {
                 targetMode = true;
                 targetStack.addAll(0, loc.getNeighbors(getSize()));
             }
@@ -23,9 +23,9 @@ public class HuntAndTargetEnemy extends Battleship implements IEnemy {
         else {
             if (! targetStack.isEmpty())  {
                 GridLocation next = targetStack.remove(0);
-                if (getCell(next.getX(), next.getY()).isShip()) {
+                if (getCellShip(next.getX(), next.getY()) != null) {
                     next.getNeighbors(getSize()).stream()
-                            .filter(n -> (!targetStack.contains(n)) && !getCell(n.getX(), n.getY()).isHit())
+                            .filter(n -> (!targetStack.contains(n)) && !isCellHit(n.getX(), n.getY()))
                             .forEach(n ->
                                 targetStack.add(0, n)
                     );
@@ -43,7 +43,7 @@ public class HuntAndTargetEnemy extends Battleship implements IEnemy {
     private GridLocation targetRandomly() {
         int x = (int) (Math.random() * getSize());
         int y = (int) (Math.random() * getSize());
-        while (getCell(x, y).isHit()) {
+        while (isCellHit(x, y)) {
             x = (int) (Math.random() * getSize());
             y = (int) (Math.random() * getSize());
         }

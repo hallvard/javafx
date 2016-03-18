@@ -21,8 +21,8 @@ H20,U63,
 
 public class DefaultBattleshipPersistence implements IBattleshipPersistence {
 
-	@Override
-	public void load(IBattleshipGame game, InputStream inputStream) throws IOException {
+    @Override
+    public void load(IBattleshipGame game, InputStream inputStream) throws IOException {
 
         Scanner scanner = new Scanner(inputStream);
 
@@ -62,20 +62,26 @@ public class DefaultBattleshipPersistence implements IBattleshipPersistence {
         }
     }
 
-	@Override
-	public void save(IBattleshipGame game, OutputStream outputStream) throws IOException {
+    @Override
+    public void save(IBattleshipGame game, OutputStream outputStream) throws IOException {
 
-        if (game == null || game.getBoards()[0] == null || game.getBoards()[1] == null || game.getBoards()[0].getCells() == null || game.getBoards()[1].getCells() == null) {
+        if (game == null || game.getBoards()[0] == null || game.getBoards()[1] == null) {
             return;
         }
 
-		PrintWriter writer = new PrintWriter(outputStream);
+        PrintWriter writer = new PrintWriter(outputStream);
 
         for (IBattleship board : game.getBoards()) {
 
             // First line is the hits string
             StringBuilder hits = new StringBuilder();
-            board.getCells().forEach(c -> hits.append(c.isHit() ? 'X' : '.'));
+
+            for (int x = 0; x < board.getSize(); x++) {
+                for (int y = 0; y < board.getSize(); y++) {
+                    hits.append(board.isCellHit(x, y) ? 'X' : '.');
+                }
+            }
+
             writer.println(hits.toString());
 
             // Second line contains ship types (character, width and height) separated by commas
@@ -102,6 +108,6 @@ public class DefaultBattleshipPersistence implements IBattleshipPersistence {
         }
 
         writer.flush();
-	}
+    }
 
 }

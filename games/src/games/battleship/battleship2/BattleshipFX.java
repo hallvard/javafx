@@ -9,8 +9,10 @@ import javafx.scene.text.Text;
 
 public class BattleshipFX extends ImageGridGame<String> implements IUpdateable {
 
-    @FXML private TextField player1LevelTextField;
-    @FXML private TextField player2LevelTextField;
+    @FXML
+    private TextField player1LevelTextField;
+    @FXML
+    private TextField player2LevelTextField;
 
     private TextField[] playerLevelTextFields;
 
@@ -20,13 +22,21 @@ public class BattleshipFX extends ImageGridGame<String> implements IUpdateable {
     @FXML
     private IBattleshipGame game;
 
-    @FXML private IBattleship battleship1;
-    @FXML private IBattleship battleship2;
+    @FXML
+    private IBattleship battleship1;
+    @FXML
+    private IBattleship battleship2;
 
     private IBattleship[] battleships;
 
     @FXML
     private PersistableController persistableController;
+    private int player = 0, winner = -1; // 0 or 1, index into arrays
+    private String[] responses = {", you're up!", ", it's time to show who's boss.", ", fire at will!", ", don't just sit there.", ", you know what to do."};
+
+    public static void main(String[] args) {
+        launch(BattleshipFX.class);
+    }
 
     @FXML
     protected void initialize() {
@@ -38,9 +48,6 @@ public class BattleshipFX extends ImageGridGame<String> implements IUpdateable {
         playerLevelTextFields = new TextField[]{player1LevelTextField, player2LevelTextField};
         battleships = new IBattleship[]{battleship1, battleship2};
     }
-
-    private int player = 0, winner = -1; // 0 or 1, index into arrays
-    private String[] responses = {", you're up!", ", it's time to show who's boss.", ", fire at will!", ", don't just sit there.", ", you know what to do."};
 
     private String randomResponse() {
         return responses[(int) (Math.random() * responses.length)];
@@ -66,7 +73,11 @@ public class BattleshipFX extends ImageGridGame<String> implements IUpdateable {
     }
 
     private void updateCell(int x, int y) {
-        setCell(x, y, battleships[player].getCell(x, y).toString());
+        char cellChar = IBattleship.CELL_OCEAN;
+        if (battleships[player].isCellHit(x, y)) {
+            cellChar = (battleships[player].getCellShip(x, y) == null) ? IBattleship.CELL_EMPTY : IBattleship.CELL_SHIP_HIT;
+        }
+        setCell(x, y, Character.toString(cellChar));
     }
 
     private void updateCells() {
@@ -87,8 +98,7 @@ public class BattleshipFX extends ImageGridGame<String> implements IUpdateable {
                 String status;
                 if (hit == null) {
                     status = "Player " + (player + 1) + " missed!";
-                }
-                else {
+                } else {
                     status = "Player " + (player + 1) + (hit ? " sunk your ship!" : " hit!");
                 }
                 player = (player + 1) % 2;
@@ -101,17 +111,8 @@ public class BattleshipFX extends ImageGridGame<String> implements IUpdateable {
         return true;
     }
 
-    public static void main(String[] args) {
-        launch(BattleshipFX.class);
-    }
-
     @Override
     public void updateState(boolean fullUpdate) {
-        // TODO Auto-generated method stub
-    }
-
-    public void updateState(int x1, int y1, int x2, int y2) {
-        updateState(true);
     }
 
     @Override

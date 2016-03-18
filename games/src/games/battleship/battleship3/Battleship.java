@@ -2,23 +2,21 @@ package games.battleship.battleship3;
 
 import games.imagegrid.GridListener;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 public class Battleship implements IBattleship {
 
 	private int size;
 	private List<Cell> board;
 
-	private Collection<ShipType> shipTypes = new ArrayList<ShipType>();
-	private Collection<Ship> ships = new ArrayList<Ship>();
+	private Collection<ShipType> shipTypes = new ArrayList<>();
+	private Collection<Ship> ships = new ArrayList<>();
 
     private List<GridListener> listeners = new ArrayList<>();
 	
-	private IBattleshipPersistence battleshipPersistence = new DefaultBattleshipPersistence();
-
     public Battleship() {}
 
 	public void init(String level) {
@@ -112,23 +110,23 @@ public class Battleship implements IBattleship {
     }
 
     @Override
-	public int getSize() {
-		return size;
-	}
-
-    @Override
-	public Cell getCell(int x, int y) {
-		return board.get(y * size + x);
-	}
-
-    @Override
-    public List<Cell> getCells() {
-        return board;
+    public Ship getCellShip(int x, int y) {
+        return board.get(y * size + x).getShip();
     }
 
-	public boolean isCellHit(int x, int y) {
-		return getCell(x, y).isHit();
-	}
+    @Override
+    public int getSize() {
+        return size;
+    }
+
+    private Cell getCell(int x, int y) {
+        return board.get(y * size + x);
+    }
+
+    @Override
+    public boolean isCellHit(int x, int y) {
+        return getCell(x, y).isHit();
+    }
 
 	public boolean isSunk(Ship ship) {
 		for (int dx = 0; dx < ship.getShipType().getWidth(); dx++) {

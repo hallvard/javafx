@@ -12,7 +12,7 @@ public class PersonForm extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		Parent root = FXMLLoader.load(PersonForm.class.getResource("PersonPane.fxml"));
+		Parent root = FXMLLoader.load(PersonForm.class.getResource("PersonForm.fxml"));
 		primaryStage.setScene(new Scene(root));
 		primaryStage.show();
 	}

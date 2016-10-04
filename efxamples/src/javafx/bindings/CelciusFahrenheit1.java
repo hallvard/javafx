@@ -2,7 +2,6 @@ package javafx.bindings;
 
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.DoubleBinding;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -19,10 +18,13 @@ public class CelciusFahrenheit1 extends Application {
 		fahrenheitSlider.setShowTickMarks(true);
 		fahrenheitSlider.setShowTickLabels(true);
 		
-//		fahrenheitSlider.valueProperty().bind(
+		fahrenheitSlider.valueProperty().bind(
+				new CelciusFahrenheitBinding(celsiusSlider.valueProperty())
 //				Bindings.multiply(1.8, celsiusSlider.valueProperty()).add(32)
-//		);
-	
+		);
+//		celsiusSlider.valueProperty().bind(
+//				Bindings.subtract(fahrenheitSlider.valueProperty(), 32).divide(1.8)
+//				);
 		HBox root = new HBox(10, new Label("Celcius: "), celsiusSlider, new Label("Fahrenheit: "), fahrenheitSlider);
 		stage.setScene(new Scene(root));
 		stage.setTitle("Temperature Converter");

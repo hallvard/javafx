@@ -20,8 +20,7 @@ public class PersonController {
 
 	@FXML private DatePicker birthdayField;
 
-	@FXML
-	private void nameFieldChange(ReadOnlyStringProperty property, String oldValue, String newValue) {
+	public void nameFieldChange(ReadOnlyStringProperty property, String oldValue, String newValue) {
 		if (isNameValid(newValue)) {
 			nameFieldValid.setVisible(false);
 		} else {

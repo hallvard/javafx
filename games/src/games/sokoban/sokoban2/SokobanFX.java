@@ -4,22 +4,13 @@ import games.IUpdateable;
 import games.PersistableController;
 import games.UndoableController;
 import games.imagegrid.ImageGridGame;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
-import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 
 public class SokobanFX extends ImageGridGame<String> implements IUpdateable {
 
@@ -58,12 +49,6 @@ public class SokobanFX extends ImageGridGame<String> implements IUpdateable {
 			fillGrid(null);
 		}
 		updateCells(0, 0, sokoban.getWidth(), sokoban.getHeight());
-		updateStatus();
-	}
-
-	@Override
-	public void updateState(int x1, int y1, int x2, int y2) {
-		updateCells(x1, y1, x2, y2);
 		updateStatus();
 	}
 

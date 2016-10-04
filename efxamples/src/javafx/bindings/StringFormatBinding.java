@@ -41,7 +41,7 @@ public class StringFormatBinding extends StringBinding {
 		StringProperty stringProperty = new SimpleStringProperty();
 		stringProperty.bind(new StringFormatBinding("%02d:%02d", hour, min));
 		System.out.println(stringProperty.getValue());
-		hour.set(15);
+		hour.set(8);
 		System.out.println(stringProperty.getValue());
 	}
 }

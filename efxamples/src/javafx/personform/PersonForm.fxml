@@ -7,6 +7,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Button?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml"
 	fx:controller="javafx.personform.PersonController" hgap="20">
@@ -25,7 +26,7 @@
 	<Label text="Email:"
 		GridPane.columnIndex="0" 	GridPane.rowIndex="1"
 	/>
-    <TextField fx:id="emailField" promptText="Name" 	 	prefColumnCount="30"
+    <TextField fx:id="emailField" promptText="Email" 	 	prefColumnCount="30"
 		GridPane.columnIndex="1" 	GridPane.rowIndex="1"
     		onTextChange="#emailFieldChange"
     />

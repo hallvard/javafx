@@ -3,6 +3,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Spinner?>
+<?import java.lang.String?>
 
 <HBox xmlns:fx="http://javafx.com/fxml">
 	<TextField text="Type something here!"/>

@@ -1,0 +1,288 @@
+<html>
+	<head>
+		<title>Heisenberg (from Breaking Bad) converter</title>
+		<meta charset="UTF-8">
+		<style>
+		.elementIcon {
+			vertical-align: -6px;
+		}
+		.elementSymbolText {
+			background-color: green;
+			color: white;
+			border: solid 0px black:
+		}
+		.elementNameText {
+			background-color: green;
+			color: white;
+			border: solid 1px black:
+		}
+		#result {
+		 	font-family:Arial;
+		 	font-size:40px;
+		 }
+		</style>
+	</head>
+	<body>
+		<h1>Heisenberg (from Breaking Bad) converter</h1>
+		<script type='text/javascript' language='JavaScript'>
+	var elementsNamesSymbols = [
+		"Hydrogen", 	"H",
+		"Helium", 	"He",
+		"Lithium", 	"Li",
+		"Beryllium", 	"Be",
+		"Boron", 	"B",
+		"Carbon", 	"C",
+		"Nitrogen", 	"N",
+		"Oxygen", 	"O",
+		"Fluorine", 	"F",
+		"Neon", 	"Ne",
+		"Sodium", 	"Na",
+		"Magnesium", 	"Mg",
+		"Aluminum", 	"Al",
+		"Silicon", 	"Si",
+		"Phosphorus", 	"P",
+		"Sulfur", 	"S",
+		"Chlorine", 	"Cl",
+		"Argon", 	"Ar",
+		"Potassium", 	"K",
+		"Calcium", 	"Ca",
+		"Scandium", 	"Sc",
+		"Titanium", 	"Ti",
+		"Vanadium", 	"V",
+		"Chromium", 	"Cr",
+		"Manganese", 	"Mn",
+		"Iron", 	"Fe",
+		"Cobalt", 	"Co",
+		"Nickel", 	"Ni",
+		"Copper", 	"Cu",
+		"Zinc", 	"Zn",
+		"Gallium", 	"Ga",
+		"Germanium", 	"Ge",
+		"Arsenic", 	"As",
+		"Selenium", 	"Se",
+		"Bromine", 	"Br",
+		"Krypton", 	"Kr",
+		"Rubidium", 	"Rb",
+		"Strontium", 	"Sr",
+		"Yttrium", 	"Y",
+		"Zirconium", 	"Zr",
+		"Niobium", 	"Nb",
+		"Molybdenum", 	"Mo",
+		"Technetium", 	"Tc",
+		"Ruthenium", 	"Ru",
+		"Rhodium", 	"Rh",
+		"Palladium", 	"Pd",
+		"Silver", 	"Ag",
+		"Cadmium", 	"Cd",
+		"Indium", 	"In",
+		"Tin", 	"Sn",
+		"Antimony", 	"Sb",
+		"Tellurium", 	"Te",
+		"Iodine", 	"I",
+		"Xenon", 	"Xe",
+		"Cesium", 	"Cs",
+		"Barium", 	"Ba",
+		"Lanthanum", 	"La",
+		"Cerium", 	"Ce",
+		"Praseodymium", 	"Pr",
+		"Neodymium", 	"Nd",
+		"Promethium", 	"Pm",
+		"Samarium", 	"Sm",
+		"Europium", 	"Eu",
+		"Gadolinium", 	"Gd",
+		"Terbium", 	"Tb",
+		"Dysprosium", 	"Dy",
+		"Holmium", 	"Ho",
+		"Erbium", 	"Er",
+		"Thulium", 	"Tm",
+		"Ytterbium", 	"Yb",
+		"Lutetium", 	"Lu",
+		"Hafnium", 	"Hf",
+		"Tantalum", 	"Ta",
+		"Tungsten", 	"W",
+		"Rhenium", 	"Re",
+		"Osmium", 	"Os",
+		"Iridium", 	"Ir",
+		"Platinum", 	"Pt",
+		"Gold", 	"Au",
+		"Mercury", 	"Hg",
+		"Thallium", 	"Tl",
+		"Lead", 	"Pb",
+		"Bismuth", 	"Bi",
+		"Polonium", 	"Po",
+		"Astatine", 	"At",
+		"Radon", 	"Rn",
+		"Francium", 	"Fr",
+		"Radium", 	"Ra",
+		"Actinium", 	"Ac",
+		"Thorium", 	"Th",
+		"Protactinium", 	"Pa",
+		"Uranium", 	"U",
+		"Neptunium", 	"Np",
+		"Plutonium", 	"Pu",
+		"Americium", 	"Am",
+		"Curium", 	"Cm",
+		"Berkelium", 	"Bk",
+		"Californium", 	"Cf",
+		"Einsteinium", 	"Es",
+		"Fermium", 	"Fm",
+		"Mendelevium", 	"Md",
+		"Nobelium", 	"No",
+		"Lawrencium", 	"Lr",
+		"Rutherfordium", 	"Rf",
+		"Dubnium", 	"Db",
+		"Seaborgium", 	"Sg",
+		"Bohrium", 	"Bh",
+		"Hassium", 	"Hs",
+		"Meitnerium", 	"Mt",
+		"Darmstadtium", 	"Ds",
+		"Roentgenium", 	"Rg",
+		"Ununbium", 	"Uub",
+		"Ununtrium", 	"Uut",
+		"Ununquadium", 	"Uuq",
+		"Ununpentium", 	"Uup",
+		"Ununhexium", 	"Uuh",
+		"Ununseptium", 	"Uus",
+		"Ununoctium", 	"Uuo"
+	];
+
+	function elementCount() {
+		return elementsNamesSymbols.length / 2;
+	}
+
+	function elementName(i) {
+		return elementsNamesSymbols[i * 2];
+	}
+
+	function elementSymbol(i) {
+		return elementsNamesSymbols[i * 2 + 1];
+	}
+
+	function startsWithIgnoreCase(str, prefix) {
+		if (prefix.length > str.length) {
+			return false;
+		}
+		var i = 0;
+		while (i < prefix.length) {
+			if (str.charAt(i).toUpperCase() != prefix.charAt(i).toUpperCase()) {
+				return false;
+			}
+			i++;
+		}
+		return true;
+	}
+	
+	function indexOfNextSymbol(str) {
+		var len = 0;
+		var index = -1;
+		var i = 0;
+		while (i < elementCount()) {
+			var symbol = elementSymbol(i);
+			if (startsWithIgnoreCase(str, symbol) && symbol.length > len) {
+				index = i;
+				len = symbol.length
+			}
+			i++;
+		}
+		return index;
+	}
+
+	function heisenberg(str, elementCreator, target) {
+		var current = null;
+		while (str.length > 0) {
+			var nextIndex = indexOfNextSymbol(str);
+			if (nextIndex >= 0) {
+				if (current != null) {
+					target.appendChild(document.createTextNode(current));
+					current = null;
+				}
+				var symbolNode = elementCreator(nextIndex);
+				target.appendChild(symbolNode);
+				var symbol = elementSymbol(nextIndex);
+				str = str.substring(symbol.length);
+			} else {
+				if (current == null) {
+					current = "";
+				}
+				current = current + str.charAt(0);
+				str = str.substring(1);
+			}
+		}
+		if (current != null) {
+			target.appendChild(document.createTextNode(current));
+		}
+		return result;
+	}
+
+	function createTextElement(elementName, text) {
+		var element = document.createElement(elementName);
+		var i = 2;
+		while (i < arguments.length) {
+			element[arguments[i]] = arguments[i + 1];
+			i += 2;
+		}
+		element.appendChild(document.createTextNode(text));
+		return element;
+	}
+	
+	function wrapIn(node) {
+		var i = arguments.length - 1;
+		while (i > 0) {
+			var element = document.createElement(arguments[i]);
+			element.appendChild(node);
+			node = element;
+			i--;
+		}
+		return node;
+	}
+	
+	var linkSymbols = true;
+	var elementMode = 'icon'; // icon, name, symbol
+	
+	function createElementElement(index) {
+		var elementNum = index + 1;
+		var element = null;
+		if (elementMode == 'icon') {
+			element = document.createElement('img');
+			element.className = 'elementIcon';
+			element['src'] = elementSymbol(index) + ".png";
+		} else {
+			var text = (elementMode == 'name' ? elementName(index) : elementSymbol(index));
+			element = createTextElement('span', text);
+			element.className = (elementMode == 'name' ? 'elementName' : 'elementSymbol') + 'Text';
+			var sup = wrapIn(document.createTextNode(elementNum), 'sup', 'sup', 'sup', 'sub', 'sub', 'sub');
+			element.appendChild(sup);
+		}
+		if (linkSymbols) {
+			var link = wrapIn(element, 'a');
+			link['href'] = 'http://en.wikipedia.org/wiki/' + elementName(index);
+			var tooltip = elementName(index) + " has symbol " + elementSymbol(index) + " and number " + elementNum;
+			link['alt'] = tooltip;
+			link['title'] = tooltip;
+			element = link;
+		}
+		return element;
+	}
+
+	function convert() {
+		var str = document.forms['textForm'].elements['text'].value;
+		var target = document.getElementById('result')
+		target.innerHTML = ''
+		heisenberg(str, createElementElement, target);			
+	}
+		</script>
+		<form name='textForm' action='javascript:convert()'>
+			<input type='text' name='text' value='Type text here to convert. Click on symbol to explore element.' size='80' style='font-family:Arial; font-size:16px';' onKeyUp='javascript:convert()'/>
+			<!-- <input type='submit' value='Convert'/> -->
+			<p id='result'/>
+		</form>
+		<script type='text/javascript' language='JavaScript'>
+			var textField = document.forms['textForm'].elements['text'];
+			convert();
+			textField.focus();
+			textField.select();
+		</script>
+		<hr/>
+		<p>Suggestions for improvements and other feedback can be sent to <a href='mailto:hal@idi.ntnu.no'>Hallvard Trætteberg</a>.
+	</body>
+</html>

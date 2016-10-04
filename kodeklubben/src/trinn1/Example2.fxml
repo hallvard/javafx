@@ -6,5 +6,5 @@
  
 <HBox xmlns:fx="http://javafx.com/fxml">
     <TextField fx:id="textField" text="Type something here!"/>
-    <Button text="Click me!" onAction="#handleUpcaseAction"/>
+    <Button text="Click me!"/>
 </HBox>

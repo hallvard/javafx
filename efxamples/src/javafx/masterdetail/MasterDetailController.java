@@ -1,7 +1,11 @@
 package javafx.masterdetail;
 
+import java.util.List;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.scene.control.cell.TextFieldListCell;
+import javafx.util.StringConverter;
 
 public class MasterDetailController {
 
@@ -9,15 +13,35 @@ public class MasterDetailController {
 	private ListView<Person> personListView;	
 	@FXML
 	private PersonController personPaneController;
-
+	private List<Person> items;
+	
 	public void initialize() {
-		personListView.setCellFactory((list) -> new PersonCell());
-		Person person1 = new Person();
-		person1.setName("Hallvard Trætteberg");
-		person1.setEmail("hal@idi.ntnu.no");
-		Person person2 = new Person();
-		person2.setName("Marit Reitan");
-		personListView.getItems().addAll(person1, person2);
+		personListView.setCellFactory(
+			TextFieldListCell.forListView(new StringConverter<Person>() {
+				@Override
+				public String toString(Person person) {
+					return person.getName() + " -> " + person.getEmail();
+				}
+				@Override
+				public Person fromString(String s) {
+					int pos = s.indexOf(" -> ");
+					return new Person(s.substring(0, pos), s.substring(pos + 4));
+				}
+			})
+		);
+		personListView.setEditable(true);
+		personListView.setOnEditCommit((editEvent) -> {
+			Person person = personListView.getItems().get(editEvent.getIndex());
+			Person newPerson = editEvent.getNewValue();
+			person.setName(newPerson.getName());
+			person.setEmail(newPerson.getEmail());
+		});
+		
+		Person person1 = new Person("Hallvard Trætteberg", "hal@idi.ntnu.no");
+		Person person2 = new Person("Marit Reitan", null);
+		items = personListView.getItems();
+		items.add(person1);
+		items.add(person2);
 		personListView.getSelectionModel().selectedItemProperty().addListener(
 				(property, oldValue, newValue) -> { personPaneController.setModel(newValue);}
 		);
@@ -26,7 +50,7 @@ public class MasterDetailController {
 	@FXML
 	private void addPerson() {
 		Person person = new Person();
-		personListView.getItems().add(person);
-		personListView.getSelectionModel().select(personListView.getItems().size() - 1);
+		items.add(person);
+		personListView.getSelectionModel().select(items.size() - 1);
 	}
 }

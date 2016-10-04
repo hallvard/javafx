@@ -21,6 +21,13 @@ public class Person {
 		}
 	};
 	
+	public Person(String name, String email) {
+		setName(name);
+		setEmail(email);
+	}
+	public Person() {
+	}
+
 	public String getName() {
 		return nameProperty.getValue();
 	}

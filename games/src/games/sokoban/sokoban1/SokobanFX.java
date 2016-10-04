@@ -28,8 +28,7 @@ public class SokobanFX extends ImageGridGame<String> {
 		fillGrid(null);
 		String level = levelTextField.getText();
 		sokoban.init(level);
-		imageGrid.setRowCount(sokoban.getHeight());
-		imageGrid.setColumnCount(sokoban.getWidth());
+		imageGrid.setDimensions(sokoban.getWidth(), sokoban.getHeight());
 		for (int y = 0; y < sokoban.getHeight(); y++) {
 			for (int x = 0; x < sokoban.getWidth(); x++) {
 				updateCell(x, y);

@@ -1,10 +1,8 @@
 package javafx.personform;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.time.LocalDate;
-
-import javafx.beans.property.ObjectPropertyBase;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleStringProperty;
 
 public class Person {
 	
@@ -15,50 +13,58 @@ public class Person {
 		setName(name);
 		setEmail(email);
 	}
+
+	public static String NAME_PROPERTY = "name";
 	
-	private Property<String> nameProperty = new SimpleStringProperty();
-	private Property<String> emailProperty = new SimpleStringProperty();
-	private Property<LocalDate> birthdayProperty = new ObjectPropertyBase<LocalDate>(null) {
-		@Override
-		public Object getBean() {
-			return this;
-		}
-		@Override
-		public String getName() {
-			return "birthday";
-		}
-	};
+	private String name;
 	
 	public String getName() {
-		return nameProperty.getValue();
+		return name;
 	}
 	public void setName(String name) {
 		if (! name.matches("[\\p{L}\\.\\-\\s)]*")) {
 			throw new IllegalArgumentException("Illegal character in name");
 		}
-		nameProperty.setValue(name);
-	}
-	public Property<String> nameProperty() {
-		return nameProperty;
+		String oldValue = this.name;
+		this.name = name;
+		pcs.firePropertyChange(NAME_PROPERTY, oldValue, name);
 	}
 
+	public static String EMAIL_PROPERTY = "email";
+
+	private String email;
+	
 	public String getEmail() {
-		return emailProperty.getValue();
+		return email;
 	}
 	public void setEmail(String email) {
-		emailProperty.setValue(email);
+		String oldValue = this.email;
+		this.email = email;
+		pcs.firePropertyChange(EMAIL_PROPERTY, oldValue, email);
 	}
-	public Property<String> emailProperty() {
-		return emailProperty;
-	}
+
+	public static String BIRTHDAY_PROPERTY = "birthday";
+
+	private LocalDate birthday;
 	
 	public LocalDate getBirthday() {
-		return birthdayProperty.getValue();
+		return birthday;
 	}
 	public void setBirthday(LocalDate birthday) {
-		birthdayProperty.setValue(birthday);
+		LocalDate oldValue = this.birthday;
+		this.birthday = birthday;
+		pcs.firePropertyChange(BIRTHDAY_PROPERTY, oldValue, birthday);		
 	}
-	public Property<LocalDate> birthdayProperty() {
-		return birthdayProperty;
+	
+	//
+	
+	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		pcs.addPropertyChangeListener(listener);
+	}
+
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
+		pcs.removePropertyChangeListener(listener);
 	}
 }

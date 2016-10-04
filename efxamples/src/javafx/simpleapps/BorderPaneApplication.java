@@ -28,20 +28,7 @@ public class BorderPaneApplication extends Application {
 	public void start(Stage stage) throws Exception {
 		BorderPane root = new BorderPane(); // Root of the scene graph
 		
-		textField = new TextField("center");
-		textField.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent actionEvent) {
-				centerText.setText(textField.getText().toUpperCase());
-			}
-		});
-		textField.textProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-				centerText.setText(textField.getText());
-			}
-		});
-		
+		textField = new TextField("center");		
 		root.setTop(textField);
 		root.setBottom(new Text("bottom"));
 		root.setLeft(new Text("left"));
@@ -51,7 +38,7 @@ public class BorderPaneApplication extends Application {
 		
 		Pane shapesPane = new Pane();
 		shapesPane.setPrefSize(300, 300);
-		Line line = new Line(10, 10, 100, 100); // x1, y1, x2, y2
+		Line line = new Line(10, 200, 100, 100); // x1, y1, x2, y2
 		line.getStrokeDashArray().setAll(10.0d, 10.0d); // dashes
 		Rectangle rect = new Rectangle(150, 10, 30, 40); // x, y, w, h
 		rect.setFill(Color.BLUE);

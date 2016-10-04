@@ -14,7 +14,7 @@ public class Example3 extends Application {
 	public void start(Stage primaryStage) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader();
 		fxmlLoader.setController(new Example3Controller());
-		Parent root = (Parent) fxmlLoader.load(this.getClass().getResourceAsStream("Example3.fxml"));
+		Parent root = (Parent) fxmlLoader.load(this.getClass().getResourceAsStream("Example2.fxml"));
 		primaryStage.setScene(new Scene(root));
 		primaryStage.show();
 	}

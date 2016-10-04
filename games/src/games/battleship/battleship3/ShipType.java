@@ -24,7 +24,6 @@ public class ShipType {
 	}
 
 	public boolean equals(ShipType st) {
-		if (this == st) return true;
-		return getCharacter() == st.getCharacter() && getWidth() == st.getWidth() && getHeight() == st.getHeight();
+		return this == st || getCharacter() == st.getCharacter() && getWidth() == st.getWidth() && getHeight() == st.getHeight();
 	}
 }

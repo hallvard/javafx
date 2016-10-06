@@ -1,0 +1,32 @@
+.brick {
+	-fx-stroke: black;
+	-fx-stroke-width: 5;
+	-fx-fill: yellow;
+	-bx-friction: 0.0;
+	-bx-restitution: 1.0;
+}
+
+.ball {
+	-fx-stroke: blue;
+	-fx-stroke-width: 3;
+	-fx-fill: white;
+	-bx-density: 2.0;
+	-bx-restitution: 1.0;
+	-bx-friction: 0.0;
+}
+
+.wall {
+	-fx-stroke: black;
+	-fx-stroke-width: 5;
+	-fx-fill: red;
+	-bx-friction: 0.0;
+	-bx-restitution: 1.0;
+}
+
+.paddle {
+	-fx-stroke: black;
+	-fx-stroke-width: 2;
+	-fx-fill: blue;
+	-bx-friction: 0.0;
+	-bx-restitution: 1.0;
+}

@@ -7,17 +7,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import org.jbox2d.callbacks.ContactImpulse;
+import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.callbacks.DebugDraw;
-import org.jbox2d.collision.shapes.MassData;
+import org.jbox2d.collision.Manifold;
 import org.jbox2d.collision.shapes.Shape;
-import org.jbox2d.common.IViewportTransform;
-import org.jbox2d.common.OBBViewportTransform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.contacts.Contact;
 
 import fxmlbox2d.BodyDefBeanMapper;
 import fxmlbox2d.DefaultNodeBody;
@@ -42,7 +43,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import jbox2dutil.DebugDrawJavaFX;
 
-public class Box2d1 extends Application {
+public abstract class JBox2dApp extends Application {
 	
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -70,9 +71,6 @@ public class Box2d1 extends Application {
     	} else {
     		scene.setRoot(root);
     	}
-		initializeWorld();
-		updateBodyNodes();
-		dumpGeometry();
     	return scene;
     }
 
@@ -118,14 +116,21 @@ public class Box2d1 extends Application {
 			}
     		break;
     	}
-    	case SPACE: {
+    	case BACK_SPACE: {
     		toggleStep();
     		break;
     	}
+    	case LEFT: handleDirectionKey(-1, 0); break;
+    	case RIGHT: handleDirectionKey(1, 0); break;
+    	case UP: handleDirectionKey(0, -1); break;
+    	case DOWN: handleDirectionKey(0, 1); break;
     	default:
     	}
     }
     
+	protected void handleDirectionKey(int dx, int dy) {
+	}
+
 	private AnimationTimer worldTimer;
     private Consumer<Float> worldStepper;
 
@@ -160,7 +165,7 @@ public class Box2d1 extends Application {
 
     protected void initializeWorld() {
     	
-    	geometryHelper = new GeometryHelper(worldParent, 1.0);
+    	geometryHelper = new GeometryHelper(worldParent, getScaling());
     	nodeBodyMapper = new BodyDefBeanMapper();
     	nodeFixtureMapper = new FixtureDefBeanMapper();
     	nodeShapeMapper = new DefaultShapeMapper(geometryHelper);
@@ -176,9 +181,34 @@ public class Box2d1 extends Application {
     	
     	worldParent.getChildren().add(overlay);
     	world.setDebugDraw(debugDraw);
+    	
+    	world.setContactListener(new ContactListener() {
+    		@Override public void endContact(Contact contact) {}
+    		@Override public void preSolve(Contact contact, Manifold oldManifold) {}
+    		@Override public void postSolve(Contact contact, ContactImpulse impulse) {}
+
+    		@Override
+			public void beginContact(Contact contact) {
+				INodeBody<Node> nodeA = bodyNodeMapping.get(contact.getFixtureA().getBody()), nodeB = bodyNodeMapping.get(contact.getFixtureB().getBody());
+				handleCollision(nodeA, nodeB);
+			}
+		});
     }
 
-    private void updateCanvas() {
+	protected double getScaling() {
+		return 1.0;
+	}
+
+    protected void handleCollision(INodeBody<Node> nodeA, INodeBody<Node> nodeB) {
+    	if (nodeA != null && nodeB != null) {
+    		handleCollision(nodeA.getNode(), nodeB.getNode());
+    	}
+	}
+
+    protected void handleCollision(Node nodeA, Node nodeB) {
+    }
+
+	private void updateCanvas() {
     	GraphicsContext gc = overlay.getGraphicsContext2D();
     	Bounds bounds = overlay.getBoundsInLocal();
     	gc.clearRect(bounds.getMinX(), bounds.getMinX(), bounds.getWidth(), bounds.getHeight());
@@ -195,13 +225,19 @@ public class Box2d1 extends Application {
 
 	protected void updateBodyNodes() {
 		for (Body body : bodyNodeMapping.keySet()) {
-			INodeBody<?> nodeBody = bodyNodeMapping.get(body);
-			nodeBody.updateNode(geometryHelper);
+			if (body.getType() != BodyType.STATIC) {
+				INodeBody<?> nodeBody = bodyNodeMapping.get(body);
+				nodeBody.updateNode(geometryHelper);
+			}
 		}
 	}
 
 	private void createWorld() {
-    	world = new World(new Vec2(0.0f, -20.0f));
+    	world = createWorldInstance();
+		configureWorld();
+	}
+
+	protected void configureWorld() {
 		bodyNodeMapping = new HashMap<>();
 		Collection<Node> fixtureNodes = new ArrayList<>();
 		for (Node child : worldParent.getChildrenUnmodifiable()) {
@@ -221,6 +257,10 @@ public class Box2d1 extends Application {
 		}
 	}
 
+	protected World createWorldInstance() {
+		return new World(new Vec2(0.0f, -50.0f));
+	}
+
 	private void configureBody(Node child, BodyDef bodyDef) {
 		Bounds bounds = child.getBoundsInLocal();
 		double cx = (bounds.getMinX() + bounds.getMaxX()) / 2, cy = (bounds.getMinY() + bounds.getMaxY()) / 2;
@@ -230,9 +270,9 @@ public class Box2d1 extends Application {
 		Point2D bodyPosition = geometryHelper.fxPoint2world(childX, childY, child.getParent());
 		bodyDef.getPosition().set((float) bodyPosition.getX(), (float) bodyPosition.getY());
 		Body body = world.createBody(bodyDef);
-		if (bodyDef.getType() != BodyType.STATIC) {
+//		if (bodyDef.getType() != BodyType.STATIC) {
 			bodyNodeMapping.put(body, new DefaultNodeBody<Node>(child, body));
-		}
+//		}
 		if (child instanceof Parent) {
 			Iterable<Node> bodyChildren = ((Parent) child).getChildrenUnmodifiable();
 			int fixtureCount = 0;
@@ -255,8 +295,35 @@ public class Box2d1 extends Application {
 			}
 		}
 	}
+	
+	// world mutation
+	
+	private Body getBody(Node node) {
+		for (INodeBody<Node> nodeBody : bodyNodeMapping.values()) {
+			if (nodeBody.getNode() == node) {
+				return getBody(nodeBody);
+			}
+		}
+		return null;
+	}
+
+	private Body getBody(INodeBody<Node> nodeBody) {
+		return nodeBody.getBody();
+	}
+	
+	protected void setSpeed(Node node, double vx, double vy) {
+		Point2D vec = geometryHelper.fxVec2world(vx, vy);
+		getBody(node).setLinearVelocity(new Vec2((float) vec.getX(), (float) vec.getY()));
+	}
+
+	protected void applyForce(Node node, double fx, double fy) {
+		Point2D vec = geometryHelper.fxVec2world(fx, fy);
+		getBody(node).applyForceToCenter(new Vec2((float) vec.getX(), (float) vec.getY()));
+	}
+
+	//
 
 	public static void main(String[] args) {
-        launch(Box2d1.class, args);
-    }
+		launch(JBox2dApp.class, args);
+	}
 }

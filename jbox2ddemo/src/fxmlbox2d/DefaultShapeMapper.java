@@ -1,6 +1,5 @@
 package fxmlbox2d;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.jbox2d.collision.shapes.ChainShape;
@@ -10,8 +9,6 @@ import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
 
-import javafx.collections.ObservableList;
-import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.shape.Circle;
@@ -48,7 +45,7 @@ public class DefaultShapeMapper implements INodeMapper<Shape> {
 
 	protected Shape mapPolyline(Polyline node) {
 		double[] points = getTranslatedPoints(node.getPoints(), node.getLayoutX(), node.getLayoutY());
-		Vec2[] vertices = geometryHelper.fromPoints(points);
+		Vec2[] vertices = toVec2(points);
 		ChainShape chain = new ChainShape();
 		if (vertices[0].equals(vertices[vertices.length - 1])) {
 			chain.createLoop(vertices, vertices.length);
@@ -88,9 +85,17 @@ public class DefaultShapeMapper implements INodeMapper<Shape> {
 		}		
 	}
 
+	protected Vec2[] toVec2(double...points) {
+		Vec2[] vertices = new Vec2[points.length / 2];
+		for (int i = 0; i < points.length; i += 2) {
+			vertices[i / 2] = new Vec2((float) points[i], (float) points[i + 1]);
+		}
+		return vertices;
+	}
+
 	protected Shape mapPolygon(Polygon node) {
 		double[] points = getTranslatedPoints(node.getPoints(), node.getLayoutX(), node.getLayoutY());
-		Vec2[] vertices = geometryHelper.fromPoints(points);
+		Vec2[] vertices = toVec2(points);
 		PolygonShape polygon = new PolygonShape();
 		polygon.set(vertices, vertices.length);
 		return polygon;
@@ -100,9 +105,8 @@ public class DefaultShapeMapper implements INodeMapper<Shape> {
 		PolygonShape polygon = new PolygonShape();
 		double w = node.getWidth(), h = node.getHeight();
 		double[] corners = new double[] { 0, h, w, h, w, 0, 0, 0 };
-		double dx = node.getLayoutX() + node.getX(), dy = node.getLayoutY() + node.getY();
 		double rotate = node.getRotate();
-		Rotate rt = (rotate != 0.0 ? Transform.rotate(-rotate, w / 2, h / 2) : null);
+		Rotate rt = (rotate != 0.0 ? Transform.rotate(rotate, w / 2, h / 2) : null);
 		for (int i = 0; i < corners.length; i += 2) {
 			if (rt != null) {
 				Point2D transformed = rt.transform(corners[i], corners[i + 1]);
@@ -110,8 +114,10 @@ public class DefaultShapeMapper implements INodeMapper<Shape> {
 				corners[i + 1] = transformed.getY();
 			}
 		}
+		double dx = node.getLayoutX() + node.getX(), dy = node.getLayoutY() + node.getY();
 		translate(corners, dx, dy);
-		Vec2[] vertices = geometryHelper.fromPoints(corners);
+		Vec2[] vertices = new Vec2[4];
+		geometryHelper.set2Points(vertices, corners);
 		polygon.set(vertices, 4);
 		return polygon;
 	}

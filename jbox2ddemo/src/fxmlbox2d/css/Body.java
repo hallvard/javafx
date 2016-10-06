@@ -4,18 +4,20 @@ import java.util.List;
 
 import org.jbox2d.dynamics.BodyType;
 
-import javafx.beans.value.ObservableValue;
 import javafx.css.CssMetaData;
 import javafx.css.Styleable;
 import javafx.css.StyleableProperty;
 import javafx.css.StyleablePropertyFactory;
 import javafx.scene.Group;
 import javafx.scene.layout.Region;
-import javafx.scene.shape.Polyline;
 
 public class Body extends Group implements BodyDefBeanOwner {
 
 	private static final StyleablePropertyFactory<Body> SPF = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
+
+	public static  List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
+        return SPF.getCssMetaData();
+    }
 
 	private BodyDefBean<Body> bodyDefBean;
 	
@@ -31,7 +33,7 @@ public class Body extends Group implements BodyDefBeanOwner {
 
 	@Override
 	public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
-		return SPF.getCssMetaData();
+		return getClassCssMetaData();
 	}
 
 	public StyleableProperty<BodyType> bodyTypeProperty() {

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.layout.Pane?>
+<?import java.net.URL?>
+<?scenebuilder-stylesheet JBox2dExample.css?>
+<?import fxmlbox2d.css.*?>
+<?import javafx.scene.control.Button?>
+<?import fxmlbox2d.css.Body?>
+
+<Pane fx:id="worldParent" prefHeight="600" prefWidth="800" xmlns:fx="http://javafx.com/fxml">
+	<stylesheets>
+      <URL value="@JBox2dExample.css" />
+    </stylesheets>
+
+    <Brick layoutX="0.0" layoutY="0.0" width="800.0" height="10.0" styleClass="wall"/>
+    <Brick layoutX="0.0" layoutY="590.0" width="800.0" height="10.0" styleClass="wall"/>
+    <Brick layoutX="0.0" layoutY="0.0" width="10.0" height="600.0" styleClass="wall"/>
+    <Brick layoutX="790.0" layoutY="0.0" width="10.0" height="600.0" styleClass="wall"/>
+
+    <Brick layoutX="100.0" layoutY="50.0" width="50.0" height="30.0"/>
+    <Brick layoutX="154.0" layoutY="50.0" width="50.0" height="30.0"/>
+    <Brick layoutX="127.0" layoutY="82.0" width="50.0" height="30.0"/>
+
+	<Body fx:id="ball" layoutX="130.0" layoutY="150.0" bodyType="DYNAMIC">
+	    <Ball centerX="12.0" centerY="0.0" radius="20.0"/>
+	</Body>
+
+	<Body fx:id="paddle" layoutX="110.0" layoutY="350.0">
+	    <Brick width="50.0" height="30.0" styleClass="paddle" rotate="30"/>
+	</Body>    
+</Pane>

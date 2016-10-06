@@ -12,6 +12,10 @@ public class Ball extends Circle implements FixtureDefBeanOwner {
 
 	private static final StyleablePropertyFactory<Ball> SPF = new StyleablePropertyFactory<>(Circle.getClassCssMetaData());
 
+	public static  List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
+        return SPF.getCssMetaData();
+    }
+
 	private FixtureDefBean<Ball> fixtureDefBean;
 	
 	public Ball() {
@@ -26,10 +30,10 @@ public class Ball extends Circle implements FixtureDefBeanOwner {
 	
 	@Override
 	public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
-		List<CssMetaData<? extends Styleable, ?>> cssMetaData = SPF.getCssMetaData();
-		return cssMetaData;
+		return getClassCssMetaData();
 	}
 
+	@SuppressWarnings("unchecked")
 	public ObservableValue<Number> densityProperty() {
 		return (ObservableValue<Number>) fixtureDefBean.densityProperty();
 	}
@@ -40,6 +44,7 @@ public class Ball extends Circle implements FixtureDefBeanOwner {
 		this.fixtureDefBean.densityProperty().setValue(density);
 	}
 
+	@SuppressWarnings("unchecked")
 	public ObservableValue<Number> frictionProperty() {
 		return (ObservableValue<Number>) fixtureDefBean.frictionProperty();
 	}
@@ -50,6 +55,7 @@ public class Ball extends Circle implements FixtureDefBeanOwner {
 		this.fixtureDefBean.setFriction(friction);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ObservableValue<Number> restitutionProperty() {
 		return (ObservableValue<Number>) fixtureDefBean.restitutionProperty();
 	}
@@ -60,6 +66,7 @@ public class Ball extends Circle implements FixtureDefBeanOwner {
 		this.fixtureDefBean.setRestitution(restitution);
 	}
 
+	@SuppressWarnings("unchecked")
 	public ObservableValue<Boolean> sensorProperty() {
 		return (ObservableValue<Boolean>) this.fixtureDefBean.sensorProperty();
 	}

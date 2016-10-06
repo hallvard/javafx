@@ -12,6 +12,10 @@ public class Brick extends Rectangle implements FixtureDefBeanOwner {
 
 	private static final StyleablePropertyFactory<Brick> SPF = new StyleablePropertyFactory<>(Rectangle.getClassCssMetaData());
 
+	public static List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
+		return SPF.getCssMetaData();
+	}
+	
 	private FixtureDefBean<Brick> fixtureDefBean;
 	
 	public Brick() {
@@ -26,9 +30,10 @@ public class Brick extends Rectangle implements FixtureDefBeanOwner {
 
 	@Override
 	public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
-		return SPF.getCssMetaData();
+		return getClassCssMetaData();
 	}
 
+	@SuppressWarnings("unchecked")
 	public ObservableValue<Number> densityProperty() {
 		return (ObservableValue<Number>) this.fixtureDefBean.densityProperty();
 	}
@@ -39,6 +44,7 @@ public class Brick extends Rectangle implements FixtureDefBeanOwner {
 		this.fixtureDefBean.densityProperty().setValue(density);
 	}
 
+	@SuppressWarnings("unchecked")
 	public ObservableValue<Number> frictionProperty() {
 		return (ObservableValue<Number>) this.fixtureDefBean.frictionProperty();
 	}
@@ -49,6 +55,7 @@ public class Brick extends Rectangle implements FixtureDefBeanOwner {
 		this.fixtureDefBean.setFriction(friction);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ObservableValue<Number> restitutionProperty() {
 		return (ObservableValue<Number>) this.fixtureDefBean.restitutionProperty();
 	}
@@ -59,6 +66,7 @@ public class Brick extends Rectangle implements FixtureDefBeanOwner {
 		this.fixtureDefBean.setRestitution(restitution);
 	}
 
+	@SuppressWarnings("unchecked")
 	public ObservableValue<Boolean> sensorProperty() {
 		return (ObservableValue<Boolean>) this.fixtureDefBean.sensorProperty();
 	}

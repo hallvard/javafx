@@ -12,27 +12,22 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.Region;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Polyline;
 
 public class GeometryHelper {
 
 	private Region world;
 	
 	private IViewportTransform viewportTransform;
-	private double scale;
 	
 	public GeometryHelper(Region world, double scale) {
 		this.world = world;
 		OBBViewportTransform obb = new OBBViewportTransform();
 		obb.setTransform(new Mat22((float) scale, 0.0f, 0.0f, (float) scale));
-		obb.setCenter((float) (world.getPrefWidth() / 2 * scale), (float) (world.getPrefHeight() / 2 * scale));
-		obb.setExtents((float) (world.getPrefWidth() / 2 * scale), (float) (world.getPrefHeight() / 2 * scale));
+		obb.setCenter((float) (world.getWidth() / 2), (float) (world.getHeight() / 2));
+		obb.setExtents((float) (world.getWidth() / 2), (float) (world.getHeight() / 2));
 		obb.setYFlip(true);
 		this.viewportTransform = obb;
-		this.scale = scale;
 	}
 
 	public IViewportTransform getViewportTransform() {
@@ -96,21 +91,19 @@ public class GeometryHelper {
 		return set2End(new Vec2(), line);
 	}
 	
+	public Vec2[] set2Points(Vec2[] vertices, double... points) {
+		for (int i = 0; i < points.length; i += 2) {
+			Point2D result = fxVec2world(points[i], points[i + 1]);
+			vertices[i / 2] = new Vec2((float) result.getX(), (float) result.getY());
+		}
+		return vertices;
+	}
+
 	public Vec2[] set2Points(Vec2[] vertices, List<? extends Number> points) {
 		for (int i = 0; i < points.size(); i += 2) {
 			Point2D result = fxVec2world(points.get(i).doubleValue(), points.get(i + 1).doubleValue());
 			vertices[i / 2] = new Vec2((float) result.getX(), (float) result.getY());
 		}
 		return vertices;
-	}
-
-	public Vec2[] set2Points(Vec2[] vertices, double...points) {
-		for (int i = 0; i < points.length; i += 2) {
-			vertices[i / 2] = new Vec2((float) points[i], (float) points[i + 1]);
-		}
-		return vertices;
-	}
-	public Vec2[] fromPoints(double...points) {
-		return set2Points(new Vec2[points.length / 2], points);
 	}
 }

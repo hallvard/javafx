@@ -8,13 +8,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Example3 extends Application {
+public class Example4 extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader();
-		fxmlLoader.setController(new Example3Controller());
-		Parent root = (Parent) fxmlLoader.load(this.getClass().getResourceAsStream("Example2.fxml"));
+		Parent root = FXMLLoader.load(this.getClass().getResource("Example4.fxml"));
 		primaryStage.setScene(new Scene(root));
 		primaryStage.show();
 	}

@@ -86,9 +86,9 @@ public class PersonController {
 
 	public void setModel(Person model) {
 		if (this.model != null) {
-			model.nameProperty().removeListener(nameChangeListener);
-			model.emailProperty().removeListener(emailChangeListener);
-			model.birthdayProperty().removeListener(birthdayChangeListener);
+			this.model.nameProperty().removeListener(nameChangeListener);
+			this.model.emailProperty().removeListener(emailChangeListener);
+			this.model.birthdayProperty().removeListener(birthdayChangeListener);
 		}
 		this.model = model;
 		updateView();

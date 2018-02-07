@@ -10,8 +10,13 @@ public class PersonCell extends ListCell<Person> {
 	private ChangeListener<String> emailChangeListener = 
 			(property, oldValue, newValue) -> { setText(computeTextValue(getItem())); };
 	
+	public PersonCell() {
+		System.out.println("Created");
+	}
+			
 	@Override
 	protected void updateItem(Person item, boolean empty) {
+		System.out.println("Updated to view " + item + " (" + empty + ")");
 		Person oldItem = getItem();
 		if (oldItem == item) {
 			return;

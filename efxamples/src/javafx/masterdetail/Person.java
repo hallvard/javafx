@@ -2,24 +2,15 @@ package javafx.masterdetail;
 
 import java.time.LocalDate;
 
-import javafx.beans.property.ObjectPropertyBase;
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Person {
 	
 	private Property<String> nameProperty = new SimpleStringProperty();
 	private Property<String> emailProperty = new SimpleStringProperty();
-	private Property<LocalDate> birthdayProperty = new ObjectPropertyBase<LocalDate>(null) {
-		@Override
-		public Object getBean() {
-			return this;
-		}
-		@Override
-		public String getName() {
-			return "birthday";
-		}
-	};
+	private Property<LocalDate> birthdayProperty = new SimpleObjectProperty<>();
 	
 	public Person(String name, String email) {
 		setName(name);

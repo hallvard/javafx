@@ -2,7 +2,6 @@ package javafx.masterdetail;
 
 import java.time.LocalDate;
 
-import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.value.ChangeListener;

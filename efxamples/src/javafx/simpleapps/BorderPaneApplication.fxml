@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 <?import java.lang.Double?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Arc?>
+<?import javafx.scene.shape.Ellipse?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.shape.Ellipse?>
-<?import javafx.scene.text.Text?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="500" prefWidth="500" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<BorderPane prefHeight="500" prefWidth="500" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
 	<top>
 		<TextField id="textField" text="heisan" />
 	</top>
@@ -36,7 +31,7 @@
    					<Font name="Times" size="32" />
    				</font>
    			</Text>
-            <Arc fill="#a8ff1f" layoutX="282.0" layoutY="286.0" length="270.0" radiusX="97.0" radiusY="73.0" startAngle="45.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+            <Arc fill="#a8ff1f" layoutX="307.0" layoutY="322.0" length="270.0" radiusX="97.0" radiusY="73.0" startAngle="45.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
    </children>
 		</Pane>
 	</center>

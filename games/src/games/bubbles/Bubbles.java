@@ -58,7 +58,7 @@ public class Bubbles extends ImageGridGame<String> {
 	}
 
 	private int burstCells(String value, int x, int y, int limit) {
-		if (x < 0 || x >= imageGrid.getColumnCount() || y < 0 || y >= imageGrid.getRowCount()) {
+		if (x < 0 || x >= imageGrid.getGridColumnCount() || y < 0 || y >= imageGrid.getGridRowCount()) {
 			return 0;
 		}
 		String cell = getCell(x, y);
@@ -78,9 +78,9 @@ public class Bubbles extends ImageGridGame<String> {
 	}
 	
 	private void collapseCells() {
-		for (int x = 0; x < imageGrid.getColumnCount(); x++) {
+		for (int x = 0; x < imageGrid.getGridColumnCount(); x++) {
 			int dropCount = 0;
-			for (int y = imageGrid.getRowCount() - 1; y >= 0; y--) {
+			for (int y = imageGrid.getGridRowCount() - 1; y >= 0; y--) {
 				String cell = getCell(x, y);
 				if (cell == null) {
 					dropCount++;

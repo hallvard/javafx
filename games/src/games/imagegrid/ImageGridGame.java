@@ -50,11 +50,11 @@ public abstract class ImageGridGame<T> extends FxmlGame {
 	private List<T> cells = new ArrayList<T>();
 	
 	public boolean isValidXY(int x, int y) {
-		return x >= 0 && x < imageGrid.getColumnCount() && y >= 0 && y < imageGrid.getRowCount();
+		return x >= 0 && x < imageGrid.getGridColumnCount() && y >= 0 && y < imageGrid.getGridRowCount();
 	}
 
 	private int cellPos(int x, int y) {
-		return y * imageGrid.getColumnCount() + x;
+		return y * imageGrid.getGridColumnCount() + x;
 	}
 
 	public T getCell(int x, int y) {
@@ -83,14 +83,14 @@ public abstract class ImageGridGame<T> extends FxmlGame {
 	}
 	
 	public void foreachCell(CellProcedure proc, int startX, int startY, int width, int height) {
-		for (int x = startX; x < (startX + width) && x < imageGrid.getColumnCount(); x++) {
-			for (int y = startY; y < (startY + height) && y < imageGrid.getRowCount(); y++) {
+		for (int x = startX; x < (startX + width) && x < imageGrid.getGridColumnCount(); x++) {
+			for (int y = startY; y < (startY + height) && y < imageGrid.getGridRowCount(); y++) {
 				proc.applyCell(x, y);
 			}
 		}
 	}
 	public void foreachCell(CellProcedure proc) {
-		foreachCell(proc, 0, 0, imageGrid.getColumnCount(), imageGrid.getRowCount());
+		foreachCell(proc, 0, 0, imageGrid.getGridColumnCount(), imageGrid.getGridRowCount());
 	}
 	private void updateCell(int x, int y) {
 		imageGrid.setImage(getCell(x, y), x, y);
@@ -100,7 +100,7 @@ public abstract class ImageGridGame<T> extends FxmlGame {
 		foreachCell((x, y) -> setCell(x, y, value), startX, startY, width, height);
 	}
 	protected void fillGrid(T value) {
-		fillCells(value, 0, 0, imageGrid.getColumnCount(), imageGrid.getRowCount());
+		fillCells(value, 0, 0, imageGrid.getGridColumnCount(), imageGrid.getGridRowCount());
 	}
 
 	// count cells
@@ -111,19 +111,19 @@ public abstract class ImageGridGame<T> extends FxmlGame {
 
 	public int countCells(CellFunction<Integer> fun, int startX, int startY, int width, int height) {
 		int accum = 0;
-		for (int x = startX; x < (startX + width) && x < imageGrid.getColumnCount(); x++) {
-			for (int y = startY; y < (startY + height) && y < imageGrid.getRowCount(); y++) {
+		for (int x = startX; x < (startX + width) && x < imageGrid.getGridColumnCount(); x++) {
+			for (int y = startY; y < (startY + height) && y < imageGrid.getGridRowCount(); y++) {
 				accum += fun.applyCell(x, y);
 			}
 		}
 		return accum;
 	}
 	public int countCells(CellFunction<Integer> fun) {
-		return countCells(fun, 0, 0, imageGrid.getColumnCount(), imageGrid.getRowCount());
+		return countCells(fun, 0, 0, imageGrid.getGridColumnCount(), imageGrid.getGridRowCount());
 	}
 
 	public int countCellsIf(CellFunction<Boolean> fun) {
-		return countCells((x, y) -> fun.applyCell(x, y) ? 1 : 0, 0, 0, imageGrid.getColumnCount(), imageGrid.getRowCount());
+		return countCells((x, y) -> fun.applyCell(x, y) ? 1 : 0, 0, 0, imageGrid.getGridColumnCount(), imageGrid.getGridRowCount());
 	}
 
 	// keys

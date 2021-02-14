@@ -88,11 +88,11 @@ public class ImageGrid<T> extends GridPane {
 		getChildren().clear();
 	}
 	
-	public int getRowCount() {
+	public int getGridRowCount() {
 		return rows;
 	}
 
-	public int getColumnCount() {
+	public int getGridColumnCount() {
 		return columns;
 	}
 

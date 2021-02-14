@@ -10,7 +10,6 @@
 <?import javafx.scene.text.Text?>
 <?import games.imagegrid.ImageGrid?>
 <?import javafx.scene.control.ComboBox?>
-<?import com.sun.javafx.scene.control.skin.ContextMenuContent?>
 <?import javafx.scene.control.TextArea?>
  
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="games.sokoban.sokoban2.SokobanFX"

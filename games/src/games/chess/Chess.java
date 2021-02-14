@@ -54,11 +54,11 @@ public class Chess extends ImageGridGame<String> {
 		fillGrid(null);
 		for (int i = 0; i < initialRow.length; i++) {
 			setCell(i, 0, getPlayerPiece(false, initialRow[i]));
-			setCell(i, imageGrid.getRowCount() - 1, getPlayerPiece(true, initialRow[i]));
+			setCell(i, imageGrid.getGridRowCount() - 1, getPlayerPiece(true, initialRow[i]));
 		}
-		for (int i = 0; i < imageGrid.getColumnCount(); i++) {
+		for (int i = 0; i < imageGrid.getGridColumnCount(); i++) {
 			setCell(i, 1, getPlayerPiece(false, pawn));
-			setCell(i, imageGrid.getRowCount() - 2, getPlayerPiece(true, pawn));
+			setCell(i, imageGrid.getGridRowCount() - 2, getPlayerPiece(true, pawn));
 		}
 		player = true;
 	}

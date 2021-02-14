@@ -34,7 +34,7 @@ public class Eat extends ImageGridGame<Integer> {
 		fillGrid(-1);
 		playerDx = 0;
 		playerDy = 0;
-		movePlayerTo(imageGrid.getColumnCount() / 2, imageGrid.getRowCount() / 2);
+		movePlayerTo(imageGrid.getGridColumnCount() / 2, imageGrid.getGridRowCount() / 2);
 		points = 0;
 		startTime = System.currentTimeMillis();
 		newFood();
@@ -66,8 +66,8 @@ public class Eat extends ImageGridGame<Integer> {
 	void newFood() {
 		int x = playerX, y = playerY;
 		while (x == playerX && y == playerY) {
-			x = randomInt(0, imageGrid.getColumnCount() - 1);
-			y = randomInt(0, imageGrid.getRowCount() - 1);
+			x = randomInt(0, imageGrid.getGridColumnCount() - 1);
+			y = randomInt(0, imageGrid.getGridRowCount() - 1);
 		}
 		int value = randomInt(1, 9);
 		setCell(x, y, value);
